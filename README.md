@@ -1,5 +1,11 @@
 # Fluxos do FIDC
 
+## Abrir o fluxo online
+
+**[Abrir Fluxos do FIDC](https://amarallr.github.io/fluxos-fidc/)**
+
+Acesse diretamente no navegador, no computador ou celular, sem baixar arquivos ou instalar programas. O link é público e pode ser compartilhado.
+
 Simulação interativa e hipotética dos fluxos de um FIDC, com comparação entre partes independentes e Cedentes (D) + Cotistas (T) do mesmo grupo econômico.
 
 ## Abrir localmente
