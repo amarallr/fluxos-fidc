@@ -327,7 +327,19 @@ document.getElementById('group-t-rate').oninput=()=>{render()};
 document.getElementById('close-premises').onclick=()=>document.getElementById('premise-dialog').close();
 document.getElementById('fullscreen').onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen()}catch{document.getElementById('fullscreen').textContent='Use F11 para tela cheia'}};
 
+function alignFinancialGroups(){
+ const grids=[...document.querySelectorAll('.financial-grid')];
+ for(const grid of grids)grid.style.gridTemplateRows='';
+ if(!window.matchMedia('(min-width:1151px) and (orientation:landscape)').matches||!grids.length)return;
+ const height=kind=>Math.max(...grids.map(grid=>grid.querySelector('.group-'+kind).offsetHeight));
+ const gap=6;
+ const passivo=height('liabilities');
+ const pl=Math.max(height('equity'),height('assets')-passivo-gap);
+ for(const grid of grids)grid.style.gridTemplateRows=passivo+'px '+pl+'px auto';
+}
+
 function fitLandscape(){
+ alignFinancialGroups();
  const main=document.querySelector('main');main.style.zoom='1';main.style.width='';main.style.minHeight='';main.style.margin='';
  if(window.innerWidth<=1150||window.innerHeight>=window.innerWidth)return;
  const width=Math.max(1920,Math.min(2160,document.documentElement.clientWidth));
