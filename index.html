@@ -69,7 +69,7 @@
  .reason-card h4{height:48px;min-height:48px;font-size:13px;line-height:15px;overflow-wrap:anywhere}
  .reason-card table{font-size:12px}
  .reason-card tr,.reason-card td,.reason-card th{height:18px;line-height:16px}
- .all-reasons>.reason-key:last-child{min-height:150px;margin:6px 0 0;font-size:12px;line-height:15px}
+ .reserved-books>.reason-key:last-child{min-height:150px;margin:6px 0 0;font-size:12px;line-height:15px}
  .current{min-height:66px}
  .steps button{min-height:42px;font-size:14px;line-height:17px}
  .workbench .event{min-height:46px;height:46px}
@@ -125,7 +125,7 @@
  .current{min-height:54px;margin:6px 0}
  .current p{height:auto;min-height:32px;line-height:16px}
  .workbench .panel>svg{height:200px;max-height:200px}
- .all-reasons>.reason-key:last-child{height:62px;min-height:62px;margin:5px 0 0;font-size:12px;line-height:15px}
+ .reserved-books>.reason-key:last-child{height:62px;min-height:62px;margin:5px 0 0;font-size:12px;line-height:15px}
  .workbench .group-banner{min-height:42px}
  .workbench .event{min-height:38px;height:38px}
 }
@@ -137,7 +137,7 @@
  .workbench .panel>svg{height:130px;max-height:130px}
  .workbench .group-banner{min-height:30px}
  .workbench .event{min-height:28px;height:28px;font-size:10px}
- .all-reasons>.reason-key:last-child{min-height:42px;height:42px;font-size:9px;line-height:11px}
+ .reserved-books>.reason-key:last-child{min-height:42px;height:42px;font-size:9px;line-height:11px}
  .panel,.workbench,.reason-card{break-inside:avoid}
 }
 
@@ -220,7 +220,7 @@ function render(){document.querySelector('.current').classList.toggle('fiscal-co
 function compactLedgerNotes(){
  const panels=[...document.querySelectorAll('.panel')];
  const notes=panels.map((panel,index)=>{
-  const note=panel.querySelector('.all-reasons>.reason-key:last-child');
+  const note=panel.querySelector('.reserved-books>.reason-key:last-child');
   const detail=`<h3>${index===0?'Partes independentes':'Mesmo grupo econômico'}</h3><p>${note.innerHTML}</p>`;
   let summary='R$ milhões · —: abertura · Destaque somente nos valores alterados. PL de abertura não inclui encerramento do resultado. Detalhes em Premissas.';
   if(index===1&&step===8)summary='Agregação D + T: cotas mantidas e FIDC separado. PL: abertura 85 + incorporação de 66 na etapa 11 = 151. Somente valores alterados destacados.';
