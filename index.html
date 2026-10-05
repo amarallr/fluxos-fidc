@@ -57,6 +57,32 @@
 .steps button[data-step="10"]{background:#dcf5ee;border:2px solid #16715d;color:#115443;font-weight:700;grid-column:span 2}.steps button[data-step="10"].active{background:#16715d;color:white}.current.come-cotas .number{background:#16715d}.current.come-cotas h2{color:#115443}@media(max-width:700px){.steps button[data-step="10"]{grid-column:1/-1}}
 
 .reason-card.aggregation-highlight{border-color:#b8790e}.reason-card.aggregation-highlight h4{background:#ffedbd;color:#743700}.reason-card .summary-balance td:last-child{background:#ffedbd;font-weight:700;box-shadow:inset 3px 0 #b8790e}
+
+/* Landscape workbench: arrange account books horizontally within each entity. */
+@media screen and (min-width:1151px) and (orientation:landscape){
+ main{padding:10px 16px}
+ .workbench .panel>svg{height:150px;max-height:150px}
+ .reason-columns{gap:8px;align-items:start}
+ .reason-party{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px;align-content:start}
+ .reason-party h3{grid-column:1/-1;margin:0;min-height:42px;display:flex;align-items:center;font-size:14px}
+ .reason-card{margin:0;min-width:0;align-self:stretch}
+ .reason-card h4{height:48px;min-height:48px;font-size:13px;line-height:15px;overflow-wrap:anywhere}
+ .reason-card table{font-size:12px}
+ .reason-card tr,.reason-card td,.reason-card th{height:18px;line-height:16px}
+ .all-reasons>.reason-key:last-child{min-height:150px;margin:6px 0 0;font-size:12px;line-height:15px}
+ .current{min-height:66px}
+ .steps button{min-height:42px;font-size:14px;line-height:17px}
+ .workbench .event{min-height:46px;height:46px}
+}
+@media print{
+ .reason-party{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px}
+ .reason-party h3{grid-column:1/-1}
+ .reason-card{margin:0;min-width:0}
+ .reason-card h4{height:30px;min-height:30px;font-size:10px;line-height:11px}
+ .reason-card table{font-size:9px}
+ .reason-card tr,.reason-card td,.reason-card th{height:12px;line-height:11px}
+}
+
 </style></head><body><main>
 <header><div><h1>Fluxos do FIDC <span class="draft-status">Simulação preliminar · DRAFT</span></h1></div><span class="pill">Valores em R$ milhões</span></header>
 <section class="toolbar" aria-label="Controles da simulação"><div class="controls"><button id="play">Reproduzir</button><button id="prev">Etapa anterior</button><button id="next">Próxima etapa</button><button id="reset">Reiniciar</button><button id="fullscreen">Tela cheia</button><button id="premises">Premissas</button><label for="speed">Intervalo</label><select id="speed"><option value="4500">4,5 segundos</option><option value="7000">7 segundos</option><option value="2500">2,5 segundos</option></select></div><nav class="steps" id="steps" aria-label="Selecionar etapa"></nav></section>
