@@ -150,6 +150,12 @@
 .same-group .group-banner{font-weight:700;background:#124b76}
 
 .steps .step-item{position:relative;min-width:0}.steps .step-select{width:100%;height:100%}.steps .step-info{position:absolute;top:4px;right:4px;display:grid;place-items:center;width:15px;height:15px;min-height:15px!important;padding:0!important;border:1px solid #9aabb9;border-radius:50%;background:transparent;color:#687e91;font-family:Georgia,serif;font-size:10px!important;font-weight:400;line-height:1!important}.steps .step-select.active+.step-info{color:#d4e1eb;border-color:#9eafbe}.steps .step-info:hover{background:#ddecff;color:#175c91;border-color:#175c91}.steps .step-info:focus-visible{outline:3px solid #459bdc;outline-offset:2px}
+
+/* Keep fractional stage labels and monetary values in separate ledger columns. */
+.reason-card table{table-layout:auto}
+.reason-card th:first-child{width:3.2em}
+.reason-card th:last-child{width:auto}
+.reason-card td,.reason-card th{padding-left:2px;padding-right:2px}
 </style></head><body><main>
 <header><div><h1>Fluxos do FIDC <span class="draft-status">Simulação preliminar · DRAFT</span></h1></div><span class="pill">Valores em R$ milhões</span></header>
 <section class="toolbar" aria-label="Controles da simulação"><div class="controls"><button id="play">Reproduzir</button><button id="prev">Etapa anterior</button><button id="next">Próxima etapa</button><button id="reset">Reiniciar</button><button id="fullscreen">Tela cheia</button><label for="speed">Intervalo</label><select id="speed"><option value="4500">4,5 segundos</option><option value="7000">7 segundos</option><option value="2500">2,5 segundos</option></select></div><nav class="steps" id="steps" aria-label="Selecionar etapa"></nav></section>
