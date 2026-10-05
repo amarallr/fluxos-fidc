@@ -25,7 +25,7 @@ No computador em paisagem, as 13 etapas aparecem em uma única linha e a simula�
 - **11. Grupo:** agregação somente de Cedentes (D) + Cotistas (T), com FIDC (F) separado e cotas mantidas no ativo.
 - **12. Correção fiscal — recomposição do IRPJ/CSLL na Cedente/Cotista:** sob a hipótese de perda indedutível, reversão do benefício de R$ 5,10 milhões e recomposição dos tributos a pagar de R$ 28,90 milhões para R$ 34 milhões.
 
-- **13. IRRF Come cotas no FIDC:** em ambos os cenários, premissa expressa de FIDC não classificado como entidade de investimento, sujeito ao art. 26 da Lei 14.754/2023. Rendimento tributável de R$ 14 milhões × 15% = R$ 2,10 milhões, no último dia útil de maio ou novembro, sem retenções anteriores. O vínculo societário não determina esse enquadramento.
+- **13. IRRF Come cotas no FIDC:** no cenário B, premissa expressa de FIDC não classificado como entidade de investimento, sujeito ao art. 26 da Lei 14.754/2023. Rendimento tributável de R$ 14 milhões × 15% = R$ 2,10 milhões, no último dia útil de maio ou novembro, sem retenções anteriores. O vínculo societário não determina esse enquadramento.
 
 Lançamentos da etapa 13 (R$ milhões):
 
@@ -35,7 +35,7 @@ Lançamentos da etapa 13 (R$ milhões):
 | FIDC — retenção | Cotas integralizadas — patrimônio do fundo | IRRF a recolher — cotistas | 2,10 |
 | FIDC — recolhimento | IRRF a recolher — cotistas | Caixa / bancos | 2,10 |
 
-Após o recolhimento: cotas e caixa do FIDC de R$ 96,90 milhões; crédito de IRRF do cotista de R$ 2,10 milhões; IRRF a recolher zerado. O resultado do fundo permanece R$ 14 milhões. Para o cotista PJ da premissa, o IRRF é antecipação compensável com IRPJ (art. 32, II), sem nova despesa tributária e sem compensação com CSLL. A correção da etapa 12 permanece. Nos cenários A e B, a etapa 13 adota a mesma premissa de tributação periódica. O livro IRRF a recolher mostra crédito de 2,10 na retenção e débito de 2,10 no pagamento, com saldo final zero.
+Após o recolhimento: cotas e caixa do FIDC de R$ 96,90 milhões; crédito de IRRF do cotista de R$ 2,10 milhões; IRRF a recolher zerado. O resultado do fundo permanece R$ 14 milhões. Para o cotista PJ da premissa, o IRRF é antecipação compensável com IRPJ (art. 32, II), sem nova despesa tributária e sem compensação com CSLL. A correção da etapa 12 permanece. No cenário A, o FIDC é entidade de investimento, enquadrado nos arts. 18 e 24: sem come-cotas e sem lançamentos de IRRF na etapa 13; caixa e cotas permanecem em 99. No cenário B, o livro IRRF a recolher mostra crédito de 2,10 na retenção e débito de 2,10 no pagamento, com saldo final zero.
 
 Base tributável inicial hipotética de R$ 100 milhões. Os números e tratamentos são premissas didáticas; não constituem apuração de fundo real. A marca PRELIMINAR · DRAFT integra a simulação.
 
