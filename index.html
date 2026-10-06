@@ -311,6 +311,14 @@
  .financial-books .reason-card tr{height:20px}
  .financial-books .reason-card th:first-child{width:2.1em}
 }
+
+/* Compact equity and result boxes while reserving all future postings. */
+@media screen and (min-device-width:1151px) and (orientation:landscape){
+ .financial-books .group-equity .account-group-cards{grid-auto-rows:174px}
+ .financial-books .group-equity .reason-card{height:174px;min-height:174px;max-height:174px}
+ .financial-books .group-results .account-group-cards{grid-auto-rows:154px}
+ .financial-books .group-results .reason-card{height:154px;min-height:154px;max-height:154px}
+}
 </style></head><body><main>
 <header><div><h1>Fluxos do FIDC <span class="draft-status">Simulação preliminar · DRAFT</span></h1></div><span class="pill">Valores em R$ milhões</span></header>
 <section class="toolbar" aria-label="Controles da simulação"><div class="controls"><button id="play">Reproduzir</button><button id="prev">Etapa anterior</button><button id="next">Próxima etapa</button><button id="reset">Reiniciar</button><button id="fullscreen">Tela cheia</button><label for="speed">Intervalo</label><select id="speed"><option value="4500">4,5 segundos</option><option value="7000">7 segundos</option><option value="2500">2,5 segundos</option></select></div><nav class="steps" id="steps" aria-label="Selecionar etapa"></nav></section>
