@@ -183,10 +183,10 @@
 
 /* Reserve the same ledger box dimensions throughout the landscape sequence. */
 @media screen and (min-width:1151px) and (orientation:landscape){
- .financial-books .account-group-cards{grid-template-columns:180px;grid-auto-rows:180px;align-items:stretch}
- .financial-books .group-results .account-group-cards,.financial-books.financial-combined .book-party-combined .group-assets .account-group-cards{grid-template-columns:repeat(2,180px)}
- .financial-books.financial-combined .book-party-combined .group-results .account-group-cards{grid-template-columns:repeat(3,180px)}
- .financial-books .reason-card{width:180px;min-width:180px;max-width:180px;height:180px;min-height:180px;max-height:180px;align-self:stretch}
+ .financial-books .account-group-cards{grid-template-columns:200px;grid-auto-rows:200px;align-items:stretch}
+ .financial-books .group-results .account-group-cards,.financial-books.financial-combined .book-party-combined .group-assets .account-group-cards{grid-template-columns:repeat(2,200px)}
+ .financial-books.financial-combined .book-party-combined .group-results .account-group-cards{grid-template-columns:repeat(3,200px)}
+ .financial-books .reason-card{width:200px;min-width:200px;max-width:200px;height:200px;min-height:200px;max-height:200px;align-self:stretch}
  .financial-books .reason-card h4{height:48px;min-height:48px;max-height:48px}
 }
 @media print{
@@ -370,7 +370,7 @@ function fitLandscape(){
  alignFinancialGroups();
  const main=document.querySelector('main');main.style.zoom='1';main.style.width='';main.style.minHeight='';main.style.margin='';
  if(window.innerWidth<=1150||window.innerHeight>=window.innerWidth)return;
- const width=Math.max(2400,document.documentElement.clientWidth);
+ const width=Math.max(2640,document.documentElement.clientWidth);
  main.style.width=width+'px';main.style.minHeight='1080px';
  const height=main.getBoundingClientRect().height;
  const scale=Math.min(1,(document.documentElement.clientWidth-4)/width,(window.innerHeight-4)/height);
