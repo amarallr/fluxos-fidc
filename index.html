@@ -289,10 +289,10 @@
  .all-reasons h2{font-size:19px}
  .financial-books .reason-entity>h3{font-size:20.18px;height:40px;min-height:40px;max-height:40px}
  .account-group-heading{font-size:17.81px;line-height:20.18px}
- .financial-books .account-group-cards{grid-template-columns:220px;grid-auto-rows:214px}
- .financial-books .group-results .account-group-cards,.financial-books.financial-combined .book-party-combined .group-assets .account-group-cards{grid-template-columns:repeat(2,220px)}
- .financial-books.financial-combined .book-party-combined .group-results .account-group-cards{grid-template-columns:repeat(3,220px)}
- .financial-books .reason-card{width:220px;min-width:220px;max-width:220px;height:214px;min-height:214px;max-height:214px}
+ .financial-books .account-group-cards{grid-template-columns:226px;grid-auto-rows:214px}
+ .financial-books .group-results .account-group-cards,.financial-books.financial-combined .book-party-combined .group-assets .account-group-cards{grid-template-columns:repeat(2,226px)}
+ .financial-books.financial-combined .book-party-combined .group-results .account-group-cards{grid-template-columns:repeat(3,226px)}
+ .financial-books .reason-card{width:226px;min-width:226px;max-width:226px;height:214px;min-height:214px;max-height:214px}
  .financial-books .reason-card h4{font-size:16.62px;line-height:16.62px;height:57px;min-height:57px;max-height:57px}
  .financial-books .reason-card table{font-size:17.81px}
  .financial-books .reason-card th:first-child{width:auto}
@@ -586,7 +586,7 @@ function fitLandscape(){
  const landscape=window.screen.width>1150&&window.innerWidth>window.innerHeight;
  if(!landscape){alignFinancialGroups();document.getElementById('premise-dialog').style.zoom='1';return;}
  const browserZoom=Math.max(0.25,Math.min(5,window.outerWidth/window.innerWidth||1));
- const width=Math.max(2776,window.outerWidth||window.innerWidth);
+ const width=Math.max(2848,window.outerWidth||window.innerWidth);
  main.style.width=width+'px';main.style.minHeight='1080px';
  alignFinancialGroups();
  const height=main.getBoundingClientRect().height;
