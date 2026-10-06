@@ -1884,7 +1884,8 @@ header h1 {
     gap: 4px;
     margin-top: 4px;
   }
-  .steps .step-select {
+  .steps .step-select[data-step],
+  .steps .step-select[data-intro] {
     min-height: 46px;
     font-size: 16px;
     line-height: 18px;
@@ -2048,7 +2049,8 @@ header h1 {
     align-self: start;
     height: 76px;
   }
-  .steps .step-select,
+  .steps .step-select[data-step],
+  .steps .step-select[data-intro],
   .steps .step-alternatives .step-select {
     height: 76px;
     min-height: 76px;
