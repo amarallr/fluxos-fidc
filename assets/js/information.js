@@ -6,8 +6,8 @@ import {
   constitutionStages,
   readingSources,
   stageReadingData,
-} from "./data.js";
-import { bookData } from "./accounting.js";
+} from "./data.js?v=47a526d3aea3";
+import { bookData } from "./accounting.js?v=eeff23eba26a";
 function readingLink(key, label) {
   return '<a href="' + readingSources[key] + '" target="_blank" rel="noopener">' + label + "</a>";
 }
@@ -25,20 +25,20 @@ function renderStageInformation({ step, introStep }) {
           ? readingLink("cpc48", "CPC 48, item 5.7.1")
           : "Premissa e lançamentos do exemplo";
   const taxRef =
-    number === "13.b"
+    number === "12.b"
       ? "Hipótese ilustrativa; desconsideração fiscal não impõe automaticamente estes lançamentos"
-      : number === "12" || number === "6" || number === "9"
+      : number === "12.a" || number === "6" || number === "9"
         ? readingLink(
             "rir",
             "RIR/2018, art. 311 — critérios gerais de despesas no IRPJ; examinar também as regras específicas aplicáveis",
           )
-        : number === "13.a"
+        : number === "13"
           ? readingLink("law", "Lei 14.754/2023, arts. 24, 26, 31, I, e 32, II")
           : readingLink("law", "Lei 14.754/2023, arts. 18, 19, 23 e 24") +
             " · " +
             readingLink("cmn", "Resolução CMN 5.111/2023, art. 2º");
   const economicRef =
-    number === "11" || number === "12"
+    number === "11" || number === "12.a"
       ? readingLink(
           "cpc36",
           "CPC 36, itens 7 e B86 — controle e consolidação; distintos desta agregação econômica",
@@ -75,7 +75,7 @@ function renderStageInformation({ step, introStep }) {
     fmt(fundPL(false)) +
     "</strong>; <strong>B — " +
     fmt(fundPL(true)) +
-    "</strong>. O PL inclui o resultado acumulado; não corresponde somente ao saldo da conta Cotas integralizadas.</p><table><thead><tr><th>Referência final</th><th>PL do FIDC — A</th><th>PL do FIDC — B</th></tr></thead><tbody><tr><td>12 · Antes das alternativas</td><td>99,00</td><td>99,00</td></tr><tr><td>13.a · Come-cotas</td><td>99,00</td><td>96,90</td></tr><tr><td>13.b · Desconsideração ilustrativa</td><td>99,00</td><td>0,00</td></tr></tbody></table><p>Na alternativa B 13.b, investimento e perda nas cotas ficam zerados; Caixa de D + T = 184,00; despesa externa = 1,00; todas as contas de F ficam zeradas. Os saldos ilustram as premissas, não validam a operação ou a base tributável de um fundo real.</p>";
+    "</strong>. O PL inclui o resultado acumulado; não corresponde somente ao saldo da conta Cotas integralizadas.</p><table><thead><tr><th>Referência final</th><th>PL do FIDC — A</th><th>PL do FIDC — B</th></tr></thead><tbody><tr><td>12.a · Correção Fiscal IRPJ</td><td>99,00</td><td>99,00</td></tr><tr><td>13 · Come-cotas</td><td>99,00</td><td>96,90</td></tr><tr><td>12.b · Desconsideração ilustrativa</td><td>99,00</td><td>0,00</td></tr></tbody></table><p>Na alternativa B 12.b, investimento e perda nas cotas ficam zerados; Caixa de D + T = 184,00; despesa externa = 1,00; todas as contas de F ficam zeradas. Os saldos ilustram as premissas, não validam a operação ou a base tributável de um fundo real.</p>";
 }
 
 export function compactLedgerNotes({ step, introStep }) {
@@ -97,8 +97,8 @@ export function compactLedgerNotes({ step, introStep }) {
     if (step === 11)
       summary =
         index === 1
-          ? "13.b a partir de 12: receita reclassificada (15), cotas baixadas (100) e despesas revertidas (0,50 + 0,50). FIDC zerado; D + T: investimento e perda nas cotas zero; caixa 184 e despesa de administração/gestão 1. Sem come-cotas."
-          : "Cenário A: saldos da etapa 12 mantidos; sem ajuste de desconsideração.";
+          ? "12.b a partir de 12.a: receita reclassificada (15), cotas baixadas (100) e despesas revertidas (0,50 + 0,50). FIDC zerado; D + T: investimento e perda nas cotas zero; caixa 184 e despesa de administração/gestão 1. Sem come-cotas."
+          : "Cenário A: saldos da etapa 12.a mantidos; sem ajuste de desconsideração.";
     if (index === 0 && step === 10)
       summary =
         "FIDC entidade de investimento: sem come-cotas. Cotas e caixa de F mantidos em 99; sem lançamento de IRRF. Detalhes em Premissas.";

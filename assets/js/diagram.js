@@ -1,5 +1,5 @@
 /** Diagrama SVG do fluxo selecionado. */
-import { stages } from "./data.js";
+import { stages } from "./data.js?v=47a526d3aea3";
 function compactDiagram(svg) {
   const y = (value) => (value >= 194 ? value - 50 : value >= 40 ? value - 30 : value);
   return svg
@@ -50,7 +50,7 @@ export function graphic(group, { step, introStep }) {
     7: [["quota", "M260 140 L170 84", "10 · Cotas 99", 235, 104]],
     10: group
       ? [
-          ["quota", "M260 140 L170 84", "13.a · Cotas 96,90", 235, 104],
+          ["quota", "M260 140 L170 84", "13 · Cotas 96,90", 235, 104],
           ["money", "M410 266 L480 266", "IRRF 2,10", 467, 229],
         ]
       : [],
