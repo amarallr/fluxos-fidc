@@ -325,6 +325,11 @@
  .financial-books .group-results .account-group-cards{grid-template-columns:repeat(2,226px);grid-auto-flow:column}
  .financial-books.financial-combined .book-party-combined .group-results .account-group-cards{grid-template-columns:repeat(4,226px)}
 }
+
+/* The investment-entity scenario has no periodic IRRF movements. */
+@media screen and (min-device-width:1151px) and (orientation:landscape){
+ .financial-books .reason-card.compact-irrf-credit{height:120px;min-height:120px;max-height:120px;align-self:start}
+}
 </style></head><body><main>
 <header><div><h1>Fluxos do FIDC <span class="draft-status">Simulação preliminar · DRAFT</span></h1></div><span class="pill">Valores em R$ milhões</span></header>
 <section class="toolbar" aria-label="Controles da simulação"><div class="controls"><button id="play">Reproduzir</button><button id="prev">Etapa anterior</button><button id="next">Próxima etapa</button><button id="reset">Reiniciar</button><button id="fullscreen">Tela cheia</button><label for="speed">Intervalo</label><select id="speed"><option value="4500">4,5 segundos</option><option value="7000">7 segundos</option><option value="2500">2,5 segundos</option></select></div><nav class="steps" id="steps" aria-label="Selecionar etapa"></nav></section>
@@ -591,7 +596,7 @@ function renderReason(consolidated=false,correction=false,group=true){
   const changed=(value,old)=>introStep===null&&step>0&&Math.abs(value-old)>1e-8;
   const hidden=consolidated&&party==='D'&&['Caixa / bancos','PL de abertura','Tributos a pagar — IRPJ/CSLL'].includes(book[0]);
   const movement=(value,type)=>value?'<span class="'+(type==='D'?'debit-line':'credit-line')+'">'+amount(value)+' '+type+'</span>':'';
-  return `<article class="reason-card ${hidden?'consolidated-placeholder':''}" ${hidden?'aria-hidden="true"':''}><h4>${consolidated&&party==='T'&&book[0]==='Tributos a pagar'?'Tributos a pagar — IRPJ/CSLL':book[0]}</h4><table><thead><tr><th>Et.</th><th>Movimento</th><th>Saldo</th></tr></thead><tbody><tr class="opening-row ${changed(data.opening,previous.opening)?'changed-posting':''}"><td></td><td>${movement(Math.abs(data.opening),data.opening>0?'D':'C')}</td><td>${balance(data.opening)}</td></tr>${data.rows.map(r=>{
+  return `<article class="reason-card ${!group&&party==='T'&&book[0]==='IRRF a compensar — come-cotas'?'compact-irrf-credit ':''}${hidden?'consolidated-placeholder':''}" ${hidden?'aria-hidden="true"':''}><h4>${consolidated&&party==='T'&&book[0]==='Tributos a pagar'?'Tributos a pagar — IRPJ/CSLL':book[0]}</h4><table><thead><tr><th>Et.</th><th>Movimento</th><th>Saldo</th></tr></thead><tbody><tr class="opening-row ${changed(data.opening,previous.opening)?'changed-posting':''}"><td></td><td>${movement(Math.abs(data.opening),data.opening>0?'D':'C')}</td><td>${balance(data.opening)}</td></tr>${data.rows.map(r=>{
    const old=previous.rows.find(v=>v.stage===r.stage);
    const oldDebitBalance=old?old.balance+old.credit:previous.balance;
    const debitBalance=r.balance+r.credit;
