@@ -622,13 +622,27 @@ document.getElementById('fullscreen').onclick=async()=>{try{if(document.fullscre
 
 function alignFinancialGroups(){
  const grids=[...document.querySelectorAll('.financial-grid')];
- for(const grid of grids)grid.style.gridTemplateRows='';
+ for(const grid of grids){grid.style.gridTemplateRows='';grid.querySelector('.group-equity').style.paddingTop='';}
  if(!window.matchMedia('(min-device-width:1151px) and (orientation:landscape)').matches||!grids.length)return;
  const height=kind=>Math.max(...grids.map(grid=>grid.querySelector('.group-'+kind).offsetHeight));
  const gap=6;
  const passivo=height('liabilities');
  const pl=Math.max(height('equity'),height('assets')-passivo-gap);
  for(const grid of grids)grid.style.gridTemplateRows=passivo+'px '+pl+'px auto';
+ // Align the bottom of equity books with the second row of asset books.
+ for(const grid of grids){
+  const equity=grid.querySelector('.group-equity');
+  const equityCard=equity.querySelector('.reason-card');
+  const assets=grid.querySelector('.group-assets .account-group-cards');
+  const columns=getComputedStyle(assets).gridTemplateColumns.split(' ').length;
+  const secondRow=assets.children[columns];
+  if(!equityCard||!secondRow)continue;
+  const scale=grid.getBoundingClientRect().width/grid.offsetWidth||1;
+  const shift=Math.max(0,(secondRow.getBoundingClientRect().bottom-equityCard.getBoundingClientRect().bottom)/scale);
+  equity.style.paddingTop=shift+'px';
+ }
+ const alignedPl=Math.max(pl,height('equity'));
+ for(const grid of grids)grid.style.gridTemplateRows=passivo+'px '+alignedPl+'px auto';
 }
 
 function fitLandscape(){
