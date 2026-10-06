@@ -240,6 +240,16 @@
  .reserved-books>.reason-key:last-child{height:40px;min-height:40px;margin-top:4px}
 }
 @media(max-width:700px){.step-alternatives{grid-column:span 2}}
+
+/* Equal stage buttons, with the two terminal branches stacked and left aligned. */
+.step-alternatives .step-select{justify-content:flex-start;text-align:left}
+.step-alternatives .step-select>span:last-child{text-align:left}
+@media screen and (min-width:1151px) and (orientation:landscape){
+ .steps{grid-template-columns:repeat(13,minmax(0,1fr))!important;align-items:center}
+ .steps .step-item{height:64px;align-self:center}
+ .steps .step-select,.steps .step-alternatives .step-select{height:64px;min-height:64px;max-height:64px}
+ .steps .step-alternatives{height:130px;grid-template-rows:64px 64px;gap:2px}
+}
 </style></head><body><main>
 <header><div><h1>Fluxos do FIDC <span class="draft-status">Simulação preliminar · DRAFT</span></h1></div><span class="pill">Valores em R$ milhões</span></header>
 <section class="toolbar" aria-label="Controles da simulação"><div class="controls"><button id="play">Reproduzir</button><button id="prev">Etapa anterior</button><button id="next">Próxima etapa</button><button id="reset">Reiniciar</button><button id="fullscreen">Tela cheia</button><label for="speed">Intervalo</label><select id="speed"><option value="4500">4,5 segundos</option><option value="7000">7 segundos</option><option value="2500">2,5 segundos</option></select></div><nav class="steps" id="steps" aria-label="Selecionar etapa"></nav></section>
