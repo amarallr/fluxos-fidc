@@ -1,681 +1,459 @@
 <!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Fluxos do FIDC</title>
-<style>
-:root{color-scheme:light;--ink:#122b42;--muted:#526879;--blue:#1672c6;--gold:#b8790e;--purple:#7654b0;--line:#d8e3ec}*{box-sizing:border-box}body{margin:0;background:#eef3f7;color:var(--ink);font:16px/1.5 system-ui,sans-serif}main{max-width:1440px;margin:auto;padding:28px}h1{font-size:30px;margin:0}h2{font-size:20px;margin:0}p{margin:8px 0}.eyebrow{font-size:13px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}header{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:20px}.pill{background:#ddeaf4;border-radius:30px;padding:8px 15px;font-size:14px}.controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap}button,select{font:inherit;border:1px solid #b7c8d7;background:white;border-radius:8px;padding:9px 14px;color:var(--ink);cursor:pointer}button:hover{background:#e7f0f8}button:focus-visible,select:focus-visible{outline:3px solid #459bdc;outline-offset:2px}button:disabled{opacity:.45;cursor:default}#play{background:var(--ink);color:white;border-color:var(--ink)}.toolbar{background:white;padding:16px;border-radius:12px;margin-bottom:16px}.steps{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;margin-top:16px}.steps button{font-size:14px;padding:10px 4px}.steps button.active{background:var(--ink);color:white}.steps button.done{background:#e3eef7}.current{display:grid;grid-template-columns:auto 1fr;gap:14px;margin:18px 0 20px;align-items:center}.number{background:var(--ink);color:white;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-size:20px}.current p{margin:3px 0;color:var(--muted)}.panels{display:grid;grid-template-columns:1fr 1fr;gap:20px}.panel{background:white;border:1px solid var(--line);border-radius:14px;overflow:hidden}.panel-head{padding:16px 20px;border-bottom:1px solid var(--line)}.panel-head p{font-size:14px;color:var(--muted)}svg{display:block;width:100%;height:auto}svg text{font-family:system-ui,sans-serif;fill:var(--ink)}.node{fill:#f7fafc;stroke:#bdcddd;stroke-width:1.5}.node.active{stroke:var(--blue);stroke-width:3;fill:#e8f3fc}.group{fill:#dcecf9;stroke:#246da5;stroke-width:2.5}.group-banner{padding:12px 18px;background:#175c91;color:white;font-weight:600;font-size:16px}.panel.same-group{border:2px solid #246da5}.group-caption{fill:#124b76;font-weight:700}.wire{fill:none;stroke:var(--line);stroke-width:2}.flow{fill:none;stroke-width:4;stroke-dasharray:9 5;animation:travel 1s linear infinite}.money{stroke:var(--blue)}.credit{stroke:var(--gold)}.quota{stroke:var(--purple)}@keyframes travel{to{stroke-dashoffset:-28}}.flow-label{font-size:14px;font-weight:600;paint-order:stroke;stroke:white;stroke-width:5;stroke-linejoin:round}.ledger{padding:0 18px 18px}table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:8px 5px;border-bottom:1px solid #e3ebf2;text-align:right;font-variant-numeric:tabular-nums}th:first-child,td:first-child{text-align:left}th{color:var(--muted);font-weight:500}.aggregate{padding:10px 12px;background:#edf5fa;border-radius:8px;font-size:14px;margin-top:12px}.legend{display:flex;gap:22px;flex-wrap:wrap;font-size:14px;color:var(--muted);margin:16px 0}.swatch{display:inline-block;width:22px;height:4px;vertical-align:middle;margin-right:6px}.notes{margin-top:20px;padding:16px 20px;background:white;border-radius:12px;font-size:14px;color:var(--muted)}.notes summary{cursor:pointer;font-size:16px;color:var(--ink)}.event{min-height:48px;padding:10px 18px;background:#f3f7fa;font-size:14px;border-top:1px solid var(--line)}@media(max-width:900px) and (max-device-width:1150px){.panels{grid-template-columns:1fr}.steps{grid-template-columns:repeat(4,1fr)}header{align-items:flex-start}.pill{display:none}main{padding:16px}}@media(prefers-reduced-motion:reduce){.flow{animation:none}}@media print{.toolbar{display:none}.panels{grid-template-columns:1fr 1fr}main{padding:0}.panel{break-inside:avoid}}
-.tax-base{margin:16px 18px;padding:16px;border-left:4px solid #175c91;background:#eaf3fb;border-radius:8px}.tax-base h3{font-size:18px;margin:0 0 6px;color:var(--ink)}.tax-base p{font-size:14px;color:var(--muted)}.tax-base .base-drop{font-size:24px;color:#124b76;font-weight:600;margin:10px 0}.tax-base table{background:transparent}.tax-base .premise{font-size:13px}.tax-base table th{white-space:normal}main{max-width:1840px;padding:24px 32px}.panels{row-gap:0;column-gap:24px;grid-template-rows:repeat(6,auto)}.panel{display:grid;grid-template-rows:subgrid;grid-row:span 6;row-gap:0}.panel-top{min-width:0}.group-banner{min-height:72px;display:flex;align-items:center}.independent-banner{background:#e5edf4;color:var(--ink);font-weight:500}.panel-head{min-height:108px}.ledger table{table-layout:fixed}.ledger th:first-child{width:30%}.ledger td,.ledger th{overflow-wrap:anywhere}.ledger td{vertical-align:middle;height:46px}.ledger .aggregate{min-height:92px}.event{min-height:65px}.journal{padding:16px 18px;border-top:1px solid var(--line);min-width:0}.journal h3{font-size:18px;margin:0}.journal p{font-size:14px}.journal-scroll{overflow-x:auto}.journal table{font-size:14px;min-width:450px}.journal th,.journal td{vertical-align:top}.journal th:nth-child(2),.journal th:nth-child(4),.journal td:nth-child(2),.journal td:nth-child(4){text-align:left}.journal-tax{background:#edf5fa;padding:12px;border-radius:8px;margin-top:12px}.journal-tax p{margin-bottom:0}.tax-base{align-self:stretch}@media(min-width:901px){.panel>svg{max-height:410px;align-self:center}}@media(max-width:900px) and (max-device-width:1150px){main{padding:16px}.panels{grid-template-rows:none;row-gap:20px}.panel{display:block;grid-row:auto}.panel-head{min-height:0}.ledger td{height:auto}}@page{size:A4 landscape;margin:10mm}@media print{main{max-width:none;padding:0}header .pill{display:none}.panels{grid-template-columns:1fr 1fr;grid-template-rows:repeat(6,auto);gap:0 10px}.panel{display:grid;grid-template-rows:subgrid;grid-row:span 6;break-inside:auto}.panel>svg{max-height:210px}.group-banner{min-height:48px}.panel-head{min-height:75px}.ledger td{height:30px}.journal-scroll{overflow:visible}.journal table{min-width:0;font-size:12px}.journal,.tax-base,.notes{break-inside:avoid}.steps,.toolbar{display:none}}main{max-width:none;padding:16px 24px}header{margin-bottom:12px}header h1{font-size:26px}header p{margin:3px 0;font-size:14px}.toolbar{padding:10px 14px;margin-bottom:10px}.steps{margin-top:10px}.current{margin:10px 0 14px}.workbench{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(480px,1fr);gap:20px;align-items:start}.workbench .panels{grid-template-rows:repeat(5,auto);column-gap:14px}.workbench .panel{grid-row:span 5}.entry-focus{position:sticky;top:14px;background:white;border:1px solid var(--line);border-radius:12px;min-width:0}.entry-label{padding:10px 16px;background:#175c91;color:white;border-radius:11px 11px 0 0;font-weight:600;font-size:15px}.entry-focus .journal{border-top:0;padding:12px 16px}.entry-focus .journal table{min-width:0;table-layout:fixed}.entry-focus .journal th:first-child{width:18%}.entry-focus .journal th:nth-child(2),.entry-focus .journal th:nth-child(4){width:31%}.entry-focus .journal th:nth-child(3),.entry-focus .journal th:nth-child(5){width:10%}.entry-focus .journal td,.entry-focus .journal th{padding:7px 4px;overflow-wrap:anywhere}.entry-focus .journal-tax{padding:10px}.entry-focus .journal p{margin:6px 0}.workbench .group-banner{font-size:14px;min-height:66px;padding:10px 12px}.workbench .panel-head{padding:10px 12px;min-height:105px}.workbench .panel-head h2{font-size:17px}.workbench .panel-head p{font-size:14px}.workbench .event{padding:8px 12px}.workbench .ledger{padding:0 12px 12px}.workbench .tax-base{margin:12px}.entry-focus .journal-tax strong{color:var(--ink)}@media(max-width:1250px) and (max-device-width:1150px){.workbench{display:flex;flex-direction:column}.entry-focus{order:-1;position:static;width:100%}.workbench .panels{width:100%}.entry-focus .journal{display:grid;grid-template-columns:1.5fr 1fr;gap:8px 20px}.entry-focus .journal h3,.entry-focus .journal>p:first-of-type{grid-column:1/-1}.entry-focus .journal-scroll{grid-column:1;grid-row:3/5}.entry-focus .journal-tax{grid-column:2}.entry-focus .journal>.aggregate{grid-column:1}}@media(max-width:900px) and (max-device-width:1150px){.workbench .panels{grid-template-rows:none}.workbench .panel{grid-row:auto}}@media(max-width:650px) and (max-device-width:1150px){main{padding:12px}.entry-focus .journal{display:block}.entry-focus .journal-scroll{overflow-x:auto}.entry-focus .journal table{min-width:440px}.entry-label{font-size:14px}}@media print{.workbench{display:block}.entry-focus{position:static;break-inside:avoid;margin:16px 0}.workbench .panels{grid-template-rows:repeat(5,auto)}.workbench .panel{grid-row:span 5}.entry-focus .journal{display:block}}.group-result{padding:12px 16px;margin:0 12px 14px;background:#e7f1fb;border-left:4px solid #175c91;border-radius:6px}.group-result h3{font-size:16px;margin:0}.group-result p{font-size:14px;margin:6px 0}.group-result .premise{font-size:13px;color:var(--muted)}.neutral-result{background:#f3f7fa;border-left-color:#c0ceda}.entry-focus .group-result{margin:0 16px 12px}.workbench .panels{grid-template-rows:repeat(6,auto)}.workbench .panel{grid-row:span 6}@media(max-width:900px) and (max-device-width:1150px){.workbench .panel{grid-row:auto}.workbench .panels{grid-template-rows:none}}.top-group-result{margin:0 16px 12px;padding:10px;background:#e7f1fb;border-radius:6px;font-size:14px}.top-group-result p{margin:4px 0}main{padding:10px 16px}header{margin-bottom:8px}header h1{font-size:23px}.toolbar{padding:8px 10px}.controls{gap:6px}.controls button,.controls select{padding:6px 10px;font-size:14px}.steps{gap:4px;margin-top:6px}.steps button{padding:6px 4px}.current{margin:6px 0 10px;gap:10px}.current h2{font-size:18px}.current p{font-size:14px;margin:0}.number{width:34px;height:34px;font-size:18px}.workbench{grid-template-columns:minmax(0,1.35fr) minmax(450px,1fr);gap:14px}.workbench .panels{grid-template-rows:repeat(4,auto);column-gap:10px}.workbench .panel{grid-row:span 4}.workbench .group-banner{font-size:13px;min-height:48px;padding:6px 10px}.workbench .panel-head{padding:6px 10px;min-height:36px}.workbench .panel-head p{display:none}.workbench .panel-head h2{font-size:16px}.workbench .panel>svg{max-height:none;width:100%;height:auto}.workbench .event{font-size:13px;min-height:43px;padding:6px 10px}.workbench .ledger{padding:0 8px 8px}.ledger table{font-size:13px}.ledger td{height:33px;padding:5px 3px}.ledger th{padding:5px 3px}.ledger caption{font-size:14px}.ledger .aggregate{min-height:60px;padding:6px 8px;font-size:13px;margin-top:6px}.ledger>p{font-size:12px;margin:4px 0}.entry-focus{top:8px}.entry-label{padding:7px 12px;font-size:14px}.entry-focus .journal{padding:8px 12px}.entry-focus .journal h3{font-size:16px}.entry-focus .journal p{font-size:13px}.entry-focus .journal td,.entry-focus .journal th{padding:5px 3px;font-size:13px}.journal-premises{font-size:13px;margin-top:6px}.journal-tax{font-size:14px;margin-top:8px}.entry-focus .journal-tax{padding:8px}.top-group-result{margin:0 12px 8px;font-size:13px;padding:8px}.top-group-result p{margin:3px 0}dialog{max-width:900px;width:90vw;max-height:85vh;overflow:auto;border:1px solid var(--line);border-radius:12px;padding:18px;background:#eef3f7;color:var(--ink)}dialog::backdrop{background:#122b4280}dialog>.notes{margin-top:12px}#close-premises{float:right;margin-bottom:10px}html:fullscreen{background:#eef3f7}@media(min-width:1151px){.workbench{display:grid}.entry-focus{order:0}.entry-focus .journal{display:block}.workbench .panels{display:grid;grid-template-columns:1fr 1fr}.workbench .panel{display:grid;grid-template-rows:subgrid;grid-row:span 4}}@media(max-width:1150px) and (max-device-width:1150px){.workbench{display:flex}.entry-focus{position:static;order:-1;width:100%}.entry-focus .journal{display:block}.workbench .panels{width:100%}}@media print{dialog{display:none}.workbench{display:grid;grid-template-columns:1.35fr 1fr}.entry-focus{order:0}.workbench .panels{grid-template-rows:repeat(4,auto)}.workbench .panel{grid-row:span 4}.controls{display:none}}.accounts{padding:8px 10px}.accounts h3{font-size:15px;margin:4px 0}.account-key{font-size:12px;margin:3px 0;color:var(--muted)}.accounts table{font-size:13px;table-layout:fixed}.accounts th:first-child{width:27%;text-align:left}.accounts th,.accounts td{padding:5px 3px;vertical-align:middle}.accounts th{font-weight:500;overflow-wrap:anywhere}.account-value{display:block;font-variant-numeric:tabular-nums}.account-delta{display:block;font-size:12px;color:#175c91;white-space:nowrap;font-variant-numeric:tabular-nums}.account-foot{font-size:12px;color:var(--muted);margin:5px 0 8px}.dre th:first-child{width:30%}.dre th{white-space:normal}.dre td:last-child{background:#e7f1fb}.accounts table th:nth-child(n+2){text-align:right}.accounts .dre th:nth-child(n+2){font-size:12px}@media print{.account-delta{font-size:11px}}.group-tax-box{margin:8px 12px 12px;padding:10px;background:#f3f7fa;border-radius:6px;font-size:13px}.group-tax-box summary{font-weight:600;cursor:pointer;color:var(--ink)}.group-tax-box p{margin:6px 0}.group-tax-box table{font-size:13px}.group-tax-box th{font-weight:400;text-align:left}.group-tax-box td{white-space:nowrap}.group-tax-box th,.group-tax-box td{padding:4px 2px}.tax-rate-label{display:block;margin-top:8px}.tax-rate-label input{width:70px;margin-left:6px;padding:4px;font:inherit;border:1px solid #b7c8d7;border-radius:4px}.journal table th:nth-child(2),.journal table th:nth-child(3),.journal table td:nth-child(2),.journal table td:nth-child(3){color:#b42318}.debit-label{color:#b42318;font-weight:600}.accounts .negative-value{color:#b42318;font-weight:600}.journal table th:nth-child(4),.journal table th:nth-child(5),.journal table td:nth-child(4),.journal table td:nth-child(5){color:#175c91}.credit-label{color:#175c91;font-weight:600}.entry-blocks{display:grid;gap:8px}.entry-block{padding:7px 0;border-top:1px solid var(--line);min-width:0}.entry-block h4{font-size:14px;margin:0 0 4px;color:var(--ink)}.entry-line{display:grid;grid-template-columns:22px minmax(0,1fr) auto;align-items:start;gap:4px;font-size:14px;padding:2px 0;line-height:1.4}.entry-type{font-weight:600}.entry-amount{font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}.debit-line{color:#b42318}.credit-line{color:#175c91}.entry-focus .journal .no-entry{font-size:13px;color:var(--muted);margin:2px 0}.entry-account{overflow-wrap:anywhere}@media(max-width:650px) and (max-device-width:1150px){.entry-line{grid-template-columns:22px minmax(0,1fr)}.entry-amount{grid-column:2;text-align:left}.entry-blocks{gap:6px}}.accounts .positive-value{color:#175c91;font-weight:600}.accounts .zero-value{color:var(--muted);font-weight:400}.workbench .panel>svg text{font-size:17px!important}.workbench .panel>svg .flow-label{font-size:16px!important}.accounts h3{font-size:17px}.accounts table{font-size:15px}.accounts .dre th:nth-child(n+2){font-size:14px}.account-value{font-size:16px}.account-delta{font-size:14px}.account-key,.account-foot{font-size:13px}.entry-block h4{font-size:16px}.entry-line{font-size:16px}.entry-focus .journal h3{font-size:18px}.entry-focus .journal p,.entry-focus .journal .no-entry{font-size:14px}.journal-premises{font-size:14px}.entry-label{font-size:16px}.accounts th,.accounts td{padding:6px 3px}.entry-amount{font-size:15px}main{padding:8px 12px}.workbench{gap:12px;grid-template-columns:minmax(0,1.35fr) minmax(480px,1fr)}.workbench .panel>svg text{font-size:15px!important}.workbench .panel>svg .flow-label{font-size:15px!important}.controls button,.controls select,.controls label{font-size:16px}.controls button,.controls select{padding:5px 10px}.steps button{font-size:16px;padding:5px 4px}.toolbar{padding:7px 10px}.steps{margin-top:5px}.accounts h3{font-size:18px}.accounts table{font-size:16px}.accounts .dre th:nth-child(n+2){font-size:15px}.account-value{font-size:18px}.account-delta{font-size:16px}.accounts th,.accounts td{padding:4px 3px}.account-key,.account-foot{font-size:13px;line-height:1.3;margin:3px 0 6px}.entry-block h4{font-size:17px;margin-bottom:3px}.entry-line{font-size:17px;line-height:1.3;padding:1px 0}.entry-amount{font-size:17px}.entry-blocks{gap:5px}.entry-block{padding:5px 0}.entry-focus .journal h3{font-size:19px}.entry-focus .journal p,.journal-premises{font-size:15px}.entry-label{font-size:17px}.entry-focus .journal{padding:8px 10px}.workbench .group-banner{min-height:42px;padding:5px 8px}.workbench .panel-head{min-height:30px;padding:4px 8px}.workbench .event{min-height:36px;padding:4px 8px}.accounts{padding:5px 8px}.current{margin-bottom:8px}.top-group-result{margin:0 10px 6px;padding:6px}.group-tax-box{margin:6px 10px;padding:7px}.journal-premises{margin-top:4px}.entry-focus .journal-tax{margin-top:6px;padding:7px}@media(min-width:1151px){.workbench{display:grid}}@media(max-width:1150px) and (max-device-width:1150px){.workbench{display:flex}}@media print{main{padding:0}.workbench{display:grid;grid-template-columns:1.35fr 1fr}.accounts table{font-size:13px}.account-value{font-size:14px}.account-delta{font-size:12px}.entry-line,.entry-amount{font-size:13px}}.accounts .patrimony th:first-child{width:24%}.accounts .dre th:first-child{width:24%}.accounts table th:nth-child(n+2){font-size:13px}.accounts .dre th:nth-child(n+2){font-size:13px}.accounts .account-value{font-size:16px}.accounts .account-delta{font-size:14px} .accounts .patrimony th:first-child,.accounts .dre th:first-child{width:31%}.accounts table th:nth-child(n+2){font-size:14px}.accounts tbody th{font-weight:500;line-height:1.2}.accounts th,.accounts td{vertical-align:middle}.accounts .account-delta{display:inline-block;margin-left:4px;font-size:14px}.accounts td{white-space:normal}
-@media screen and (min-device-width:1151px) and (orientation:landscape){body{min-height:100vh}.workbench{align-items:start}.entry-focus{position:static}.accounts .account-foot{line-height:1.15}.accounts h3{margin:4px 0}.accounts th,.accounts td{padding-top:3px;padding-bottom:3px}.group-tax-box[open]{max-height:240px;overflow:auto}}
-@media print{main{width:100%!important;zoom:1!important;margin:0!important}.toolbar,.current .number{display:none}body{background:white}.accounts th,.accounts td{padding:2px}.accounts .account-value{font-size:12px}.accounts .account-delta{font-size:11px}.accounts table,.accounts table th:nth-child(n+2){font-size:11px}.entry-line,.entry-amount{font-size:12px}.workbench .panel>svg{max-height:170px}.workbench .panel>svg text{font-size:15px!important}}
-.reason-book{padding:8px 10px;border-top:1px solid var(--line);background:#f6faff;border-radius:0 0 12px 12px}.reason-book h3{font-size:18px;margin:0 0 5px}.reason-selects{display:flex;gap:8px;margin-bottom:5px}.reason-selects label{font-size:14px;flex:1;min-width:0}.reason-selects select{display:block;width:100%;font-size:15px;padding:3px 5px}.reason-book table{font-size:15px;table-layout:fixed}.reason-book th:first-child{width:36%}.reason-book td,.reason-book th{padding:3px}.reason-book th{font-size:14px}.reason-book p{font-size:13px;line-height:1.2;margin:4px 0}.reason-book .debit-line{color:#b42318}.reason-book .credit-line{color:#175c91}@media print{.reason-book table{font-size:11px}.reason-selects select{font-size:11px}.reason-book h3{font-size:14px}}
- .steps{grid-template-columns:repeat(12,minmax(0,1fr))}.steps button[data-step="9"]{grid-column:span 2}.steps button{font-size:16px}@media(max-width:900px) and (max-device-width:1150px){.steps{grid-template-columns:repeat(5,minmax(0,1fr))}}.draft-status{display:inline-block;margin-left:12px;padding:3px 9px;border:1px solid #b8790e;border-radius:5px;background:#fff4d6;color:#704900;font-size:15px;vertical-align:middle;line-height:1.3}.draft-note{padding:10px;border-left:4px solid #b8790e;background:#fff4d6;color:#704900}@media(max-width:650px) and (max-device-width:1150px){.draft-status{margin:5px 0;display:block;width:fit-content}}@media print{.draft-status{font-size:12px}}body::after{content:"PRELIMINAR · DRAFT";position:fixed;left:50%;top:52%;transform:translate(-50%,-50%) rotate(-24deg);font-family:system-ui,sans-serif;font-size:clamp(36px,7vw,120px);font-weight:800;letter-spacing:.06em;color:#175c91;opacity:.075;white-space:nowrap;pointer-events:none;user-select:none;z-index:20}@media print{body::after{position:fixed;font-size:76px;color:#526879;opacity:.10;print-color-adjust:exact;-webkit-print-color-adjust:exact}}
-.all-reasons{padding:7px 9px}.all-reasons h2{font-size:18px;margin:0}.reason-key{font-size:13px;line-height:1.2;margin:4px 0;color:var(--muted)}.reason-columns{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.reason-party{min-width:0}.reason-party h3{font-size:16px;margin:4px 0;padding:4px;background:#175c91;color:white;border-radius:4px}.reason-card{border:1px solid var(--line);border-radius:5px;margin:5px 0;background:#f8fbfe;overflow:hidden}.reason-card h4{font-size:14px;line-height:1.15;min-height:30px;margin:0;padding:4px 5px;background:#e7f1fb;display:flex;align-items:center}.reason-card table{font-size:14px;table-layout:fixed}.reason-card td,.reason-card th{padding:2px 3px;line-height:1.2;white-space:nowrap;overflow:visible}.reason-card th:first-child{width:11%}.reason-card th:last-child{width:35%}.reason-card .current-posting{background:#ffedbd;font-weight:600}.reason-card .opening-row{color:var(--muted)}.reason-card .debit-line,.reason-key .debit-line{color:#b42318}.reason-card .credit-line,.reason-key .credit-line{color:#175c91}.workbench{grid-template-columns:minmax(0,1.05fr) minmax(0,1.15fr)}.entry-focus{position:static}.top-group-result{font-size:13px}.all-reasons .reason-key:last-child{margin-bottom:0}@media(min-width:1151px){.workbench{display:grid}}@media(max-width:1150px) and (max-device-width:1150px){.workbench{display:flex}.entry-focus{order:0}}@media print{.workbench{display:grid;grid-template-columns:1.05fr 1.15fr}.reason-card table{font-size:10px}.reason-card h4{font-size:11px;min-height:22px}.reason-party h3{font-size:12px}.all-reasons h2{font-size:14px}.reason-key{font-size:10px}}
-.node.independent-cotista{fill:#ddecff;stroke:#175c91;stroke-width:2}.node.independent-cedente{fill:#f2e5ff;stroke:#7654b0;stroke-width:2}
-.workbench{display:block!important}.workbench .panels{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(4,auto);gap:0 12px}.workbench .panel{grid-row:span 4;display:grid;grid-template-rows:subgrid}.workbench .panel>svg{max-height:160px;align-self:center}.all-reasons{padding:5px 8px}.all-reasons h2{font-size:17px}.reason-card h4{min-height:26px;padding:3px 4px}.reason-card td,.reason-card th{padding:1px 3px}.reason-card{margin:4px 0}.reason-party h3{margin:3px 0;padding:3px}.group-tax-box{margin:10px 0}.reason-columns{gap:6px}.all-reasons .reason-key:last-child{font-size:12px}@media(max-width:900px) and (max-device-width:1150px){.workbench .panels{grid-template-columns:1fr;grid-template-rows:none;gap:12px}.workbench .panel{display:block;grid-row:auto}}@media print{.workbench .panels{grid-template-columns:1fr 1fr;gap:0 8px}.workbench .panel>svg{max-height:110px}.reason-card h4{min-height:20px}.all-reasons h2{font-size:13px}}
-
-@media screen{.workbench .panel>svg{height:300px;max-height:300px;width:100%;align-self:center}.workbench .panel>svg text{font-size:17px!important}.workbench .panel>svg .flow-label{font-size:16px!important}.workbench .panel>svg .group-caption{font-size:16px!important}}
-@media screen and (max-width:900px){.workbench .panel>svg{height:auto;max-height:none}}
-@media print{.workbench .panel>svg{height:180px;max-height:180px}}
-
-.workbench .panel>svg text{font-size:21px!important}.workbench .panel>svg .flow-label{font-size:19px!important}header h1{font-size:21px}.draft-status{font-size:13px}.pill{font-size:12px}.controls button,.controls select,.controls label,.steps button{font-size:14px}.current h2{font-size:16px}.current p{font-size:13px}.number{font-size:16px}.workbench .group-banner{font-size:13px}.workbench .panel-head h2{font-size:15px}.workbench .event{font-size:12px}.all-reasons h2{font-size:15px}.reason-party h3{font-size:14px}.reason-card h4{font-size:12px;min-height:24px}.reason-card table{font-size:12px}.reason-key,.all-reasons .reason-key:last-child{font-size:11px}.notes,.notes p,.notes table,.group-tax-box{font-size:13px}.notes h2{font-size:17px}.top-group-result{font-size:12px}
-.current{min-height:66px}.current p{height:40px;min-height:40px;line-height:18px}.workbench .event{height:42px;min-height:42px;display:flex;align-items:center}.reason-card h4{height:32px;min-height:32px}.reason-card tr{height:17px}.reason-card td,.reason-card th{height:17px}.reserved-posting td{border-bottom-color:transparent}.workbench .panel-head{height:36px;min-height:36px}@media(max-width:900px) and (max-device-width:1150px){.workbench .event,.workbench .panel-head{height:auto}.current p{height:auto;min-height:0}}@media print{.current{min-height:40px}.current p{min-height:20px}.reason-card h4{height:25px;min-height:25px}.reason-card tr,.reason-card td,.reason-card th{height:13px}}
-
-/* Balanced typography; reserved ledger rows keep stage geometry stable. */
-@media screen{.controls button,.controls select,.controls label,.steps button{font-size:16px}.workbench .panel>svg text{font-size:19px!important}.workbench .panel>svg .flow-label{font-size:18px!important}.workbench .group-banner{font-size:14px}.workbench .panel-head h2{font-size:16px}.workbench .event{font-size:14px}.current h2{font-size:17px}.current p{font-size:14px}.all-reasons h2{font-size:16px}.reason-party h3{font-size:15px}.reason-card h4{font-size:14px;line-height:16px;height:36px;min-height:36px}.reason-card table{font-size:14px}.reason-card tr,.reason-card td,.reason-card th{height:20px;line-height:18px}.reason-key,.all-reasons .reason-key:last-child{font-size:12px;line-height:14px}}
-@media print{main{min-height:0!important}}
-
-.reason-stage-body{position:relative}.aggregate-phase .reserved-books{visibility:visible}.consolidated-placeholder{visibility:hidden}.aggregate-overlay{position:absolute;inset:0;padding:8px 12px;background:#f2f7fc;border:1px solid #b7cfe3;border-radius:6px;font-size:14px;color:var(--ink)}.aggregate-overlay h3{font-size:16px;margin:5px 0}.aggregate-overlay p{font-size:13px;line-height:1.3;margin:6px 0}.aggregate-overlay table{font-size:14px}.aggregate-overlay th,.aggregate-overlay td{padding:5px}.aggregate-overlay th:first-child{width:45%}.aggregate-total{background:#dfebf6;font-weight:700}.aggregate-scope{padding:6px;background:white;border-left:3px solid #175c91}.aggregate-overlay .debit-line{color:#b42318}.aggregate-overlay .credit-line{color:#175c91}@media print{.aggregate-overlay{font-size:11px;padding:4px}.aggregate-overlay h3{font-size:12px}.aggregate-overlay table,.aggregate-overlay p{font-size:10px}.aggregate-overlay td,.aggregate-overlay th{padding:2px}}
-.independent-banner .header-cotista,.panel:not(.same-group) .reason-party .party-T,.panel.same-group .combined-party-heading{background:#ddecff;color:#175c91;border:1px solid #175c91}.independent-banner .header-cedente,.panel:not(.same-group) .reason-party .party-D{background:#f2e5ff;color:#7654b0;border:1px solid #7654b0}.independent-banner .header-cotista,.independent-banner .header-cedente{display:inline-block;padding:2px 5px;border-radius:5px;font-weight:600}/* Fiscal correction uses its own stage color. */
-.steps button[data-step="9"]{background:#fff0db;border:2px solid #b65b08;color:#743700;font-weight:700}.steps button[data-step="9"]:hover{background:#ffe1b5}.steps button[data-step="9"].active{background:#a84e06;border-color:#a84e06;color:#fff}.current.fiscal-correction .number{background:#a84e06;color:#fff}.current.fiscal-correction h2{color:#914200}.same-group.fiscal-correction .all-reasons>h2{color:#914200}.same-group.fiscal-correction .current-posting{background:#ffe1b5}
-
-/* Mobile layout: stack the workbench and keep dense tables usable. */
-@media(max-width:700px) and (max-device-width:1150px){
-  body{font-size:15px;overflow-x:hidden}
-  main{width:100%!important;min-height:0!important;margin:0!important;padding:10px!important;zoom:1!important}
-  header{display:block;margin-bottom:8px} header h1{font-size:20px;line-height:1.2} header p{font-size:13px}
-  .draft-status{font-size:11px;margin-top:5px}
-  .toolbar{padding:8px;margin-bottom:8px;border-radius:8px}
-  .controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
-  .controls button,.controls select,.controls label{font-size:13px;padding:7px 6px;min-height:38px}
-  .controls label{display:flex;align-items:center;gap:5px;grid-column:1/-1}
-  .steps{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:5px;margin-top:8px}
-  .steps button{font-size:12px!important;line-height:1.15;min-height:38px;padding:6px 4px;white-space:normal}
-  .steps button[data-step="9"],.steps button[data-step="10"]{grid-column:1/-1}
-  .current{display:grid;grid-template-columns:34px 1fr;gap:8px;margin:8px 0 10px;min-height:0!important}
-  .current .number{width:34px;height:34px;font-size:16px}.current h2{font-size:17px;line-height:1.2}.current p{font-size:13px;line-height:1.35;height:auto;min-height:0}
-  .workbench{display:flex!important;flex-direction:column!important;gap:10px!important}
-  .entry-focus{order:-1;width:100%!important;border-radius:8px}.entry-label{font-size:13px;padding:8px 10px}.entry-focus .journal{padding:8px 10px}
-  .entry-focus .journal table,.journal table{min-width:560px;font-size:12px}.journal-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
-  .entry-blocks{display:block}.entry-block{margin:6px 0}.entry-line{grid-template-columns:32px 1fr auto;font-size:12px}
-  .panels{display:flex!important;flex-direction:column!important;gap:10px!important;width:100%!important}.panel{display:block!important;grid-row:auto!important;border-radius:9px}.panel-head{height:auto!important;min-height:0!important;padding:8px 10px}.panel-head h2{font-size:16px}.panel-head p{display:block;font-size:13px;margin:3px 0}
-  .group-banner{min-height:0!important;padding:8px 10px!important;font-size:13px!important;line-height:1.25}.panel>svg{max-height:none!important;width:100%;height:auto}
-  .event{height:auto!important;min-height:0!important;padding:8px 10px;font-size:13px;line-height:1.3}
-  .all-reasons{padding:7px 8px}.all-reasons h2{font-size:16px}.reason-columns{display:flex;flex-direction:column;gap:8px}.reason-party h3{font-size:14px}.reason-card{overflow-x:auto}.reason-card table{min-width:390px;font-size:12px}.reason-card h4{font-size:13px;min-height:28px;height:auto;line-height:1.2}
-  .reason-key{font-size:11px;line-height:1.3}.accounts{overflow-x:auto}.accounts table{min-width:540px}.group-tax-box{font-size:13px;overflow-x:auto}.group-tax-box table{min-width:520px}
-  .notes{padding:10px;font-size:13px}.notes h2{font-size:17px}.notes table{min-width:560px}.notes>div{overflow-x:auto}
-  .aggregate-overlay{position:relative;inset:auto;overflow-x:auto;font-size:12px}.aggregate-overlay table{min-width:520px;font-size:12px}
-}
-@media(max-width:390px) and (max-device-width:1150px){.controls{grid-template-columns:1fr}.controls label{grid-column:auto}.steps button{font-size:11px!important}.current h2{font-size:16px}.workbench .panel>svg text{font-size:16px!important}.workbench .panel>svg .flow-label{font-size:14px!important}}
-.steps button[data-step="10"]{background:#dcf5ee;border:2px solid #16715d;color:#115443;font-weight:700;grid-column:span 2}.steps button[data-step="10"].active{background:#16715d;color:white}.current.come-cotas .number{background:#16715d}.current.come-cotas h2{color:#115443}@media(max-width:700px) and (max-device-width:1150px){.steps button[data-step="10"]{grid-column:1/-1}}
-
-.reason-card.aggregation-highlight{border-color:#b8790e}.reason-card.aggregation-highlight h4{background:#ffedbd;color:#743700}.reason-card .summary-balance td:last-child{background:#ffedbd;font-weight:700;box-shadow:inset 3px 0 #b8790e}
-
-/* Landscape workbench: arrange account books horizontally within each entity. */
-@media screen and (min-device-width:1151px) and (orientation:landscape){
- main{padding:10px 16px}
- .workbench .panel>svg{height:150px;max-height:150px}
- .reason-columns{gap:8px;align-items:start}
- .reason-party{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px;align-content:start}
- .reason-party h3{grid-column:1/-1;margin:0;min-height:42px;display:flex;align-items:center;font-size:14px}
- .reason-card{margin:0;min-width:0;align-self:stretch}
- .reason-card h4{height:48px;min-height:48px;font-size:13px;line-height:15px;overflow-wrap:anywhere}
- .reason-card table{font-size:12px}
- .reason-card tr,.reason-card td,.reason-card th{height:18px;line-height:16px}
- .reserved-books>.reason-key:last-child{min-height:150px;margin:6px 0 0;font-size:12px;line-height:15px}
- .current{min-height:66px}
- .steps button{min-height:42px;font-size:14px;line-height:17px}
- .workbench .event{min-height:46px;height:46px}
-}
-@media print{
- .reason-party{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px}
- .reason-party h3{grid-column:1/-1}
- .reason-card{margin:0;min-width:0}
- .reason-card h4{height:30px;min-height:30px;font-size:10px;line-height:11px}
- .reason-card table{font-size:9px}
- .reason-card tr,.reason-card td,.reason-card th{height:12px;line-height:11px}
-}
-
-
-.reason-card tr.changed-posting>td{background:#ffedbd;font-weight:400}
-.same-group.fiscal-correction tr.changed-posting>td{background:#ffedbd;font-weight:400}
-@media screen{
- .workbench .panel>svg text{font-size:26px!important}
- .workbench .panel>svg .flow-label{font-size:24px!important}
- .workbench .panel>svg .group-caption{font-size:24px!important}
-}
-@media screen and (min-device-width:1151px) and (orientation:landscape){
- .workbench .panel>svg{height:230px;max-height:230px}
-}
-@media print{.workbench .panel>svg text{font-size:24px!important}.workbench .panel>svg .flow-label{font-size:22px!important}}
-
-.combined-books>.combined-party-heading,.combined-books>.fund-party-heading{margin:3px 0;padding:3px;background:#175c91;color:white;border-radius:4px;font-size:15px;min-height:42px;display:flex;align-items:center}
-.combined-books>.combined-party-heading{grid-column:1/3;grid-row:1}
-.combined-books>.fund-party-heading{grid-column:3;grid-row:1}
-.combined-books>.book-party-T{grid-column:1;grid-row:2}
-.combined-books>.book-party-D{grid-column:2;grid-row:2}
-.combined-books>.book-party-F{grid-column:3;grid-row:2}
-@media screen and (min-device-width:1151px) and (orientation:landscape){
- main{padding-left:8px;padding-right:8px}
- .combined-books>.combined-party-heading,.combined-books>.fund-party-heading{font-size:14px;margin:0}
-}
-@media(max-width:700px) and (max-device-width:1150px){
- .reason-columns.combined-books{display:grid;grid-template-columns:minmax(0,1fr)}
- .combined-books>.combined-party-heading{grid-column:1;grid-row:1}
- .combined-books>.book-party-T{grid-column:1;grid-row:2}
- .combined-books>.book-party-D{grid-column:1;grid-row:3}
- .combined-books>.fund-party-heading{grid-column:1;grid-row:4}
- .combined-books>.book-party-F{grid-column:1;grid-row:5}
-}
-@media print{.combined-books>.combined-party-heading,.combined-books>.fund-party-heading{font-size:12px;min-height:24px}}
-
-/* One landscape page, with all thirteen stages on one row. */
-@media screen and (min-device-width:1151px) and (orientation:landscape){
- .steps{display:grid!important;grid-template-columns:repeat(14,minmax(0,1fr))!important;gap:5px}
- .steps button,.steps button[data-step="9"],.steps button[data-step="10"]{grid-column:auto!important;min-height:54px;padding:5px 3px;font-size:14px;line-height:17px}
- .step-index{display:block;font-weight:700;font-size:17px;line-height:20px;margin-bottom:2px}
- .steps button>span:last-child{display:block}
- .current{min-height:54px;margin:6px 0}
- .current p{height:auto;min-height:32px;line-height:16px}
- .workbench .panel>svg{height:200px;max-height:200px}
- .reserved-books>.reason-key:last-child{height:62px;min-height:62px;margin:5px 0 0;font-size:12px;line-height:15px}
- .workbench .group-banner{min-height:42px}
- .workbench .event{min-height:38px;height:38px}
-}
-.step-index{font-weight:700;margin-right:4px}
-@media print{
- @page{size:A4 landscape;margin:7mm}
- header{margin-bottom:4px}
- .current{min-height:36px;margin:4px 0}
- .workbench .panel>svg{height:130px;max-height:130px}
- .workbench .group-banner{min-height:30px}
- .workbench .event{min-height:28px;height:28px;font-size:10px}
- .reserved-books>.reason-key:last-child{min-height:42px;height:42px;font-size:9px;line-height:11px}
- .panel,.workbench,.reason-card{break-inside:avoid}
-}
-
-.same-group .group{fill:#c9e3fa;stroke:#175c91;stroke-width:3}
-.node.group-member{fill:#f1f8ff;stroke:#175c91;stroke-width:2.5}
-.same-group .group-link{fill:none;stroke:#175c91;stroke-width:2.5;stroke-dasharray:5 4}
-.same-group .reason-party .party-T,.same-group .reason-party .party-D{background:#ddecff;color:#175c91;border:1px solid #175c91}
-.workbench .panel>svg .economic-group-title{fill:#124b76;font-weight:750;font-size:26px!important}
-.workbench .panel>svg .economic-group-subtitle{fill:#124b76;font-weight:600;font-size:20px!important}
-.same-group .group-banner{font-weight:700;background:#124b76}
-
-.steps .step-item{position:relative;min-width:0}.steps .step-select{width:100%;height:100%}.steps .step-info{position:absolute;top:4px;right:4px;display:grid;place-items:center;width:15px;height:15px;min-height:15px!important;padding:0!important;border:1px solid #9aabb9;border-radius:50%;background:transparent;color:#687e91;font-family:Georgia,serif;font-size:10px!important;font-weight:400;line-height:1!important}.steps .step-select.active+.step-info{color:#d4e1eb;border-color:#9eafbe}.steps .step-info:hover{background:#ddecff;color:#175c91;border-color:#175c91}.steps .step-info:focus-visible{outline:3px solid #459bdc;outline-offset:2px}
-
-/* Keep fractional stage labels and monetary values in separate ledger columns. */
-.reason-card table{table-layout:auto}
-.reason-card th:first-child{width:3.2em}
-.reason-card th:last-child{width:auto}
-.reason-card td,.reason-card th{padding-left:2px;padding-right:2px}
-
-/* Accounts grouped as a balance sheet, with results in a separate lower band. */
-.financial-books{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:start;gap:8px}
-.financial-books.financial-combined{grid-template-columns:minmax(0,2fr) minmax(0,1fr)}
-.financial-books .reason-entity{display:block;min-width:0}
-.financial-books .reason-entity>h3{margin:0 0 5px;min-height:42px;display:flex;align-items:center}
-.financial-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;align-items:start}
-.account-group{min-width:0}
-.group-assets{grid-column:1;grid-row:1/3}
-.group-liabilities{grid-column:2;grid-row:1}
-.group-equity{grid-column:2;grid-row:2}
-.group-results{grid-column:1/-1;grid-row:3}
-.account-group-heading{margin:0 0 4px;padding:3px 5px;border-bottom:2px solid #b7cfe3;font-size:13px;line-height:16px;color:#175c91}
-.account-group-cards{display:grid;gap:5px;grid-template-columns:minmax(0,1fr)}
-.group-results .account-group-cards{grid-template-columns:repeat(2,minmax(0,1fr))}
-.financial-combined .book-party-combined .group-assets .account-group-cards{grid-template-columns:repeat(2,minmax(0,1fr))}
-.financial-combined .book-party-combined .group-results .account-group-cards{grid-template-columns:repeat(3,minmax(0,1fr))}
-.financial-books .reason-card{margin:0}
-@media(max-width:700px) and (max-device-width:1150px){
- .financial-books,.financial-books.financial-combined{display:grid;grid-template-columns:minmax(0,1fr)}
- .financial-grid{display:block}
- .account-group{margin-top:8px}
- .group-results .account-group-cards,.financial-combined .book-party-combined .group-assets .account-group-cards,.financial-combined .book-party-combined .group-results .account-group-cards{grid-template-columns:minmax(0,1fr)}
-}
-
-/* Reserve the same ledger box dimensions throughout the landscape sequence. */
-@media screen and (min-device-width:1151px) and (orientation:landscape){
- .financial-books .account-group-cards{grid-template-columns:200px;grid-auto-rows:200px;align-items:stretch}
- .financial-books .group-results .account-group-cards,.financial-books.financial-combined .book-party-combined .group-assets .account-group-cards{grid-template-columns:repeat(2,200px)}
- .financial-books.financial-combined .book-party-combined .group-results .account-group-cards{grid-template-columns:repeat(3,200px)}
- .financial-books .reason-card{width:200px;min-width:200px;max-width:200px;height:200px;min-height:200px;max-height:200px;align-self:stretch}
- .financial-books .reason-card h4{height:48px;min-height:48px;max-height:48px}
-}
-@media print{
- .financial-books .account-group-cards{grid-template-columns:110px;grid-auto-rows:120px}
- .financial-books .group-results .account-group-cards,.financial-books.financial-combined .book-party-combined .group-assets .account-group-cards{grid-template-columns:repeat(2,110px)}
- .financial-books.financial-combined .book-party-combined .group-results .account-group-cards{grid-template-columns:repeat(3,110px)}
- .financial-books .reason-card{width:110px;min-width:110px;max-width:110px;height:120px;min-height:120px;max-height:120px}
-}
-
-/* Improve readability while keeping the fixed ledger dimensions. */
-@media screen{
- .steps button{font-size:16px}
- .workbench .panel>svg text{font-size:22px!important}
- .workbench .panel>svg .flow-label{font-size:20px!important}
- .account-group-heading{font-size:14px}
- .financial-books .reason-entity>h3{font-size:16px}
-}
-@media screen and (min-device-width:1151px) and (orientation:landscape){
- .financial-books .reason-card h4{font-size:14px;line-height:14px}
- .financial-books .reason-card table{font-size:14px}
-}
-
-/* Compact landscape composition: clear alternatives and more room for the books. */
-.step-alternatives{display:grid;gap:3px;min-width:0;grid-template-rows:1fr 1fr}
-.alternatives-label{font-size:12px;line-height:14px;color:var(--muted);font-weight:600;text-align:center}
-.step-alternatives .step-select{display:flex;align-items:center;justify-content:center;gap:7px;padding-right:20px}
-.step-alternatives .step-index{margin:0}
-@media screen and (min-device-width:1151px) and (orientation:landscape){
- main{padding:6px 8px}
- header{margin-bottom:4px}
- .toolbar{padding:5px 8px;margin-bottom:5px}
- .steps{grid-template-columns:repeat(11,minmax(0,1fr)) minmax(0,1.5fr) minmax(0,2fr)!important;gap:4px;margin-top:4px;align-items:stretch}
- .steps .step-select{min-height:46px;font-size:16px;line-height:18px;padding:3px 18px 3px 3px}
- .steps .step-alternatives .step-select{min-height:28px;line-height:17px}
- .step-alternatives{gap:2px}
- .current{min-height:48px;margin:4px 0}
- .workbench .group-banner{min-height:32px;padding:3px 8px}
- .workbench .panel-head{height:30px;min-height:30px;padding:3px 8px}
- .workbench .panel>svg{height:167px;max-height:167px}
- .workbench .event{height:32px;min-height:32px;padding:3px 8px}
- .all-reasons{padding:4px 6px}
- .financial-books{gap:6px}
- .financial-books .reason-entity>h3{height:34px;min-height:34px;max-height:34px;font-size:17px;margin-bottom:4px;padding:2px 4px}
- .account-group-heading{font-size:15px;padding:2px 4px;line-height:17px}
- .financial-books .account-group-cards{grid-auto-rows:180px}
- .financial-books .reason-card{height:180px;min-height:180px;max-height:180px}
- .financial-books .reason-card table{font-size:15px}
- .financial-books .reason-card th:first-child{width:2.5em}
- .financial-books .reason-card th,.financial-books .reason-card td{padding:0 1px;line-height:16px;height:18px}
- .financial-books .reason-card tr{height:18px}
- .reserved-books>.reason-key:last-child{height:40px;min-height:40px;margin-top:4px}
-}
-@media(max-width:700px) and (max-device-width:1150px){.step-alternatives{grid-column:span 2}}
-
-/* Equal stage buttons, with the two terminal branches stacked and left aligned. */
-.step-alternatives .step-select{justify-content:flex-start;text-align:left}
-.step-alternatives .step-select>span:last-child{text-align:left}
-@media screen and (min-device-width:1151px) and (orientation:landscape){
- .steps{grid-template-columns:repeat(13,minmax(0,1fr))!important;align-items:center}
- .steps .step-item{height:64px;align-self:center}
- .steps .step-select,.steps .step-alternatives .step-select{height:64px;min-height:64px;max-height:64px}
- .steps .step-alternatives{height:130px;grid-template-rows:64px 64px;gap:2px}
-}
-
-/* Stage information stays readable independently of the fitted landscape canvas. */
-#premise-dialog .notes,#premise-dialog .notes p,#premise-dialog .notes table{font-size:15px;line-height:1.5}
-#premise-dialog .notes h2{font-size:20px;margin:14px 0 6px}
-#premise-dialog .notes h3{font-size:17px;margin:10px 0 4px}
-#premise-dialog .reading-reference{font-size:13px;color:var(--muted)}
-#premise-dialog .reading-perspective{padding:6px 12px;border-left:3px solid #b7cfe3;background:#f8fbfe;margin:8px 0}
-#premise-dialog .reference-map td,#premise-dialog .reference-map th{text-align:left;white-space:normal}
-#premise-dialog table{table-layout:auto}
-
-/* Raised terminal stages and larger landscape type with fixed expanded ledger boxes. */
-@media screen and (min-device-width:1157px) and (orientation:landscape){
- main{position:relative}
- header{min-height:44px;align-items:center;margin-bottom:2px}
- .toolbar{padding-top:2px}
- .toolbar .controls{position:absolute;top:6px;right:210px;flex-wrap:nowrap}
- .steps{align-items:start;margin-top:0}
- .steps .step-item{align-self:start;height:76px}
- .steps .step-select,.steps .step-alternatives .step-select{height:76px;min-height:76px;max-height:76px;font-size:19px;line-height:21.37px}
- .steps .step-alternatives{height:190px;grid-template-rows:76px 76px}
- .step-index{font-size:20.18px;line-height:23.74px}
- header h1{font-size:24.93px}header p{font-size:16.62px}
- .draft-status{font-size:15.43px}.pill{font-size:14.25px}
- .controls button,.controls select,.controls label{font-size:19px}
- .current h2{font-size:20.18px}.current p{font-size:16.62px;line-height:19px}
- .number{font-size:19px;width:36px;height:40px}
- .workbench .group-banner{font-size:16.62px;min-height:38px}
- .workbench .panel-head{height:36px;min-height:36px}
- .workbench .panel-head h2{font-size:19px}
- .workbench .panel>svg{height:190px;max-height:190px}
- .workbench .panel>svg text{font-size:26.12px!important}
- .workbench .panel>svg .flow-label{font-size:23.74px!important}
- .workbench .panel>svg .group-caption{font-size:28.49px!important}
- .workbench .panel>svg .economic-group-title{font-size:30.87px!important}
- .workbench .panel>svg .economic-group-subtitle{font-size:23.74px!important}
- .workbench .event{font-size:16.62px;height:38px;min-height:38px}
- .all-reasons h2{font-size:19px}
- .financial-books .reason-entity>h3{font-size:20.18px;height:40px;min-height:40px;max-height:40px}
- .account-group-heading{font-size:17.81px;line-height:20.18px}
- .financial-books .account-group-cards{grid-template-columns:226px;grid-auto-rows:214px}
- .financial-books .group-results .account-group-cards,.financial-books.financial-combined .book-party-combined .group-assets .account-group-cards{grid-template-columns:repeat(2,226px)}
- .financial-books.financial-combined .book-party-combined .group-results .account-group-cards{grid-template-columns:repeat(3,226px)}
- .financial-books .reason-card{width:226px;min-width:226px;max-width:226px;height:214px;min-height:214px;max-height:214px}
- .financial-books .reason-card h4{font-size:16.62px;line-height:16.62px;height:57px;min-height:57px;max-height:57px}
- .financial-books .reason-card table{font-size:17.81px}
- .financial-books .reason-card th:first-child{width:auto}
- .financial-books .reason-card th,.financial-books .reason-card td{padding-left:0;padding-right:0;line-height:19px;height:21.37px}
- .financial-books .reason-card tr{height:21.37px}
- .reason-key,.all-reasons .reason-key:last-child{font-size:14.25px;line-height:17.81px}
- .reserved-books>.reason-key:last-child{height:43px;min-height:43px}
-}
-
-/* One movement column; retain gross debit and credit rows and running balances. */
-.reason-card th:nth-child(2){text-align:right}
-@media screen and (min-device-width:1151px) and (orientation:landscape){
- .financial-books .account-group-cards{grid-auto-rows:234px}
- .financial-books .reason-card{height:234px;min-height:234px;max-height:234px}
- .financial-books .reason-card th,.financial-books .reason-card td{line-height:19px;height:20px;padding-left:2px;padding-right:2px}
- .financial-books .reason-card tr{height:20px}
- .financial-books .reason-card th:first-child{width:2.1em}
-}
-
-/* Compact equity and result boxes while reserving all future postings. */
-@media screen and (min-device-width:1151px) and (orientation:landscape){
- .financial-books .group-equity .account-group-cards{grid-auto-rows:174px}
- .financial-books .group-equity .reason-card{height:174px;min-height:174px;max-height:174px}
- .financial-books .group-results .account-group-cards{grid-auto-rows:190px}
- .financial-books .group-results .reason-card{height:190px;min-height:190px;max-height:190px}
-}
-
-/* A single aligned result row per entity; the combined group contains four books. */
-@media screen and (min-device-width:1151px) and (orientation:landscape){
- .financial-books .group-results .account-group-cards{grid-template-columns:repeat(2,226px);grid-auto-flow:column}
- .financial-books.financial-combined .book-party-combined .group-results .account-group-cards{grid-template-columns:repeat(4,226px)}
-}
-
-/* Compact IRRF credit books in A and in B before the aggregate phase (stage 11). */
-@media screen and (min-device-width:1151px) and (orientation:landscape){
- .financial-books .reason-card.compact-irrf-credit{height:144px;min-height:144px;max-height:144px;align-self:start}
-}
-
-/* Bring the shared result row closer to the balance-sheet books. */
-@media screen and (min-device-width:1151px) and (orientation:landscape){
- .financial-books .group-results{margin-top:-84px}
-}
-
-/* Preserve the cotista cash/investment column in the combined group. */
-@media screen and (min-device-width:1151px) and (orientation:landscape){
- .financial-combined .book-party-combined .group-assets .combined-quota-investment{grid-column:1;grid-row:2}
- .financial-combined .book-party-combined .group-assets .combined-irrf-credit{grid-column:2;grid-row:2}
-}
-</style></head><body><main>
-<header><div><h1>Fluxos do FIDC <span class="draft-status">Simulação preliminar · DRAFT</span></h1></div><span class="pill">Valores em R$ milhões</span></header>
-<section class="toolbar" aria-label="Controles da simulação"><div class="controls"><button id="play">Reproduzir</button><button id="prev">Etapa anterior</button><button id="next">Próxima etapa</button><button id="reset">Reiniciar</button><button id="fullscreen">Tela cheia</button><label for="speed">Intervalo</label><select id="speed"><option value="2500">2,5 segundos</option><option value="4500" selected>4,5 segundos</option><option value="7000">7,0 segundos</option></select></div><nav class="steps" id="steps" aria-label="Selecionar etapa"></nav></section>
-<section class="current" aria-live="polite"><div class="number" id="num"></div><div><h2 id="title"></h2><p id="description"></p></div></section>
-<div class="workbench"><div class="panels" id="panels"></div></div>
-<dialog id="premise-dialog"><button id="close-premises">Fechar</button><section class="notes" aria-label="Leitura econômica e hipótese tributária"><p class="draft-note"><strong>Simulação preliminar · DRAFT.</strong> Material em elaboração, sujeito a revisão das premissas, dos lançamentos e do tratamento tributário. Não constitui conclusão definitiva sobre uma operação ou fundo real.</p><h2>Cedentes e Cotistas com beneficiário econômico final comum</h2><p><strong>Premissa adicional desta leitura:</strong> D e T têm o mesmo beneficiário econômico final, que detém integralmente os interesses econômicos considerados no exemplo. Pertencer ao mesmo grupo, por si só, não prova essa identidade: ela precisa ser verificada, inclusive quanto a minoritários e cotistas externos.</p><section id="stage-perspectives" aria-live="polite"></section><section id="closing-check" aria-live="polite"></section><section id="ledger-notes"></section><div id="entry-content" aria-live="polite"></div><details class="group-tax-box"><summary>Diferença tributária do grupo · exemplo hipotético</summary><label class="tax-rate-label">Alíquota sobre o ganho de T — premissa (%) <input id="group-t-rate" type="number" min="0" max="100" step="0.1" value="15"></label><div id="group-tax-content" aria-live="polite"></div></details><div id="economic-reading" aria-live="polite" class="aggregate"></div><section class="reading-guidance"><h2>Critérios de entidade de investimento</h2><p>Para o enquadramento tributário, a <a href="https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/lei/l14754.htm" target="_blank" rel="noopener">Lei 14.754/2023, art. 23</a>, regulamentada pela <a href="https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?numero=5111&tipo=Resolu%C3%A7%C3%A3o+CMN" target="_blank" rel="noopener">Resolução CMN 5.111/2023, art. 2º</a>, exige gestão profissional com poderes efetivos de investimento e desinvestimento discricionários e propósito de retorno por apreciação do capital, renda ou ambos. Devem ser examinadas a estrutura, a atuação dos gestores e as hipóteses da resolução; a constituição formal, a relação entre cedente e cotista ou a concentração da carteira, isoladamente, não resolvem a classificação. A Resolução CVM 175 disciplina o funcionamento dos fundos, mas não substitui esses critérios tributários. Para o regime de FIDC, observar também o <a href="https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/lei/l14754.htm" target="_blank" rel="noopener">art. 19 da Lei 14.754/2023 — composição mínima de 67% de direitos creditórios e regras de enquadramento</a>.</p><p><strong>Premissas independentes:</strong> A é tratado como entidade de investimento, cumpridos os demais requisitos dos arts. 18 e 24. Em B, a alternativa 13.a assume expressamente o não enquadramento para demonstrar o art. 26. Ser do mesmo grupo não determina automaticamente come-cotas. A classificação tributária também não deve ser confundida com o conceito contábil de entidade de investimento do CPC 36.</p><h2>Operação registrada e tratamento contábil adequado</h2><p>Os lançamentos iniciais de B mostram a operação declarada, com perda de 15 e dedução pressuposta como indevida. Eles não representam aprovação desse tratamento. Se houver retenção substancial de riscos e benefícios, o <a href="https://www.cpc.org.br/Arquivos/Documentos/530_CPC_48_rev_19.pdf" target="_blank" rel="noopener">CPC 48, item 3.2.15</a> exige manter o recebível e reconhecer um passivo pela contraprestação recebida. Pode existir despesa financeira verdadeira ao longo do prazo; sua existência e dedutibilidade exigem análise própria. A etapa 12 separa recomposição fiscal e eliminação econômica no quadro D + T; não implementa uma nova sequência de contabilização como empréstimo garantido.</p><h2>Alcance da alternativa 13.b</h2><p>A etapa 13.b é uma recomposição econômica ilustrativa a partir de 12, excludente de 13.a. A receita financeira de F é reclassificada para cotas; o investimento é baixado contra caixa; o custo externo de 1 é representado em D + T. Os créditos nas despesas de F e o débito em Caixa não afirmam que administrador e gestor devolveram os valores. A desconsideração fiscal não implica automaticamente dissolução, liquidação jurídica, transferências bancárias, restituições ou esses lançamentos individuais. Tais fatos, se efetivos, exigem documentação e tratamento contábil próprio.</p><h2>Referências por assunto</h2><table class="reference-map"><thead><tr><th>Assunto</th><th>Dispositivo e aplicação</th></tr></thead><tbody>
-<tr><td>Baixa e retenção de riscos</td><td><a href="https://www.cpc.org.br/Arquivos/Documentos/530_CPC_48_rev_19.pdf" target="_blank" rel="noopener">CPC 48, itens 3.2.6, 3.2.15 e 3.2.16</a> — distinguir baixa, manutenção integral e envolvimento contínuo.</td></tr>
-<tr><td>Mensuração e resultado</td><td><a href="https://www.cpc.org.br/Arquivos/Documentos/530_CPC_48_rev_19.pdf" target="_blank" rel="noopener">CPC 48, itens 5.1.1, 5.4.1 e 5.7.1</a> — reconhecimento inicial, juros efetivos e valor justo por meio do resultado, conforme a classificação aplicável.</td></tr>
-<tr><td>Entidade de investimento</td><td><a href="https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/lei/l14754.htm" target="_blank" rel="noopener">Lei 14.754/2023, arts. 18, 19 e 23</a> e <a href="https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?numero=5111&tipo=Resolu%C3%A7%C3%A3o+CMN" target="_blank" rel="noopener">Resolução CMN 5.111/2023, art. 2º</a> — requisitos tributários e gestão profissional.</td></tr>
-<tr><td>Momento da retenção</td><td><a href="https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/lei/l14754.htm" target="_blank" rel="noopener">Lei 14.754/2023, arts. 24 e 26</a> — regime sem incidência periódica e regime periódico, respectivamente.</td></tr>
-<tr><td>Responsável e compensação</td><td><a href="https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/lei/l14754.htm" target="_blank" rel="noopener">Lei 14.754/2023, arts. 31, I, e 32, II</a> — administradora retém e recolhe; IRRF como antecipação de IRPJ para a PJ no regime indicado.</td></tr>
-<tr><td>Dedutibilidade</td><td><a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/decreto/d9580.htm" target="_blank" rel="noopener">RIR/2018, art. 311</a> — critérios gerais de despesas para IRPJ; verificar comprovação e demais regras específicas. A alíquota combinada de 34% e a correção de 5,10 são premissas numéricas do exemplo, não conclusões extraídas isoladamente desse artigo.</td></tr>
-<tr><td>Consolidação</td><td><a href="https://www.cpc.org.br/Arquivos/Documentos/448_CPC_36_R3_rev%2008.pdf" target="_blank" rel="noopener">CPC 36, itens 7 e B86</a> — controle, perímetro e eliminações. A agregação econômica D + T desta página mantém F separado e não equivale à consolidação.</td></tr>
-</tbody></table><p>Os números, a artificialidade pressuposta no cenário B e os ajustes econômicos são hipóteses didáticas. Esta página não atribui ao CARF jurisprudência uniforme sobre FIDC cativo nem apresenta conclusão sobre fundo real. Uma análise de precedentes deve identificar número do acórdão, órgão julgador, data, fatos e fundamentos aplicáveis.</p></section>
-<h2 style="margin-top:18px">Momento da tributação das cotas</h2><p>Até a etapa 12, não se simula data de incidência periódica. No cenário A, o FIDC é classificado como entidade de investimento e enquadrado nos arts. 18 e 24, sem tributação periódica. Na etapa 13.a, apenas o cenário B adota expressamente a premissa de FIDC não classificado como entidade de investimento (art. 26): último dia útil de maio ou novembro, rendimento tributável de 14, sem retenções anteriores, e IRRF de 15% = 2,10. O enquadramento é premissa didática independente do vínculo entre cedente e cotista. A administradora retém o imposto mediante redução das cotas e realiza o recolhimento ao Tesouro, com recursos do FIDC, por conta dos cotistas (art. 31, I). A saída de caixa e a baixa de IRRF a recolher são registradas no fundo; não constituem despesa própria da administradora. T é PJ no lucro real, presumido ou arbitrado, com IRRF compensável com IRPJ (art. 32, II); não é despesa tributária definitiva nem imposto sobre o lucro do fundo. Nos fundos enquadrados no art. 18 da Lei 14.754/2023, o art. 24 prevê IRRF na distribuição de rendimentos, amortização ou resgate. A mera valorização não gera IRRF neste regime. O enquadramento precisa ser verificado; outros regimes podem ter tributação periódica. A ausência de IRRF não resolve, por si só, o reconhecimento de tributos correntes ou diferidos do cotista pessoa jurídica. Nesta simulação, não se calculam esses efeitos adicionais.</p><h2 style="margin-top:18px">Planejamento tributário agressivo — hipótese simulada</h2><p>Neste cenário hipotético, a despesa de cessão é artificial, foi deduzida em D e o resultado correspondente beneficia T, do mesmo grupo. A simulação demonstra a dedução indevida e a permanência econômica do resultado no grupo; a adição fiscal da despesa indedutível recompõe a base. A premissa não é conclusão sobre um fundo real.</p><h2 style="margin-top:18px">Substância econômica, riscos e taxa de desconto</h2><p><strong>Na hipótese simulada, estruturas meramente formais entre partes relacionadas, sem efetiva assunção ou transferência dos riscos que justificariam a cessão, são utilizadas para gerar e deduzir despesas artificiais na cedente, reduzindo indevidamente as bases de IRPJ/CSLL. Isso pode ocorrer mesmo sem prejuízo econômico líquido para o grupo e ainda que a taxa de desconto coincida com a de mercado: o preço de mercado não supre a ausência de substância econômica.</strong></p><p>A análise deve verificar a execução dos contratos, a origem dos recursos, o destino dos rendimentos e quem efetivamente suporta os riscos. Havendo prejuízo fiscal ou base negativa, a dedução pode ampliá-los, sem necessariamente reduzir tributos correntes. A retenção de riscos não torna, isoladamente, fictício um custo financeiro real: sua existência, contabilização e dedutibilidade devem ser examinadas separadamente.</p><h2 style="margin-top:18px">Como verificar a hipótese de despesa artificial</h2><p><strong>Hipótese a testar:</strong> os 15 de deságio não têm fundamento econômico demonstrado, o resultado beneficia o mesmo grupo e a despesa reduz a base de IRPJ/CSLL de D. Circulação intragrupo e vínculo societário não bastam para comprovar artificialidade.</p><table><thead><tr><th>Ponto a verificar</th><th style="text-align:left">Evidência necessária</th></tr></thead><tbody><tr><td>Origem e destino do dinheiro</td><td style="text-align:left">Extratos conciliados: aporte de T → F, pagamento de F → D e recebimento dos devedores. A circulação comprova o caminho dos recursos, não a inexistência da despesa.</td></tr><tr><td>Transferência dos riscos</td><td style="text-align:left">Contratos, coobrigação, garantias, recompra, subordinação e perdas efetivas: identificar quem suporta a inadimplência e os demais riscos.</td></tr><tr><td>Fundamento do deságio de 15</td><td style="text-align:left">Laudo de preço e comparação de prazo, risco de crédito e taxas de mercado, em conjunto com a substância econômica e a transferência efetiva de riscos. O uso de taxa de mercado não legitima uma estrutura meramente formal; a diferença entre valor nominal de 100 e preço de 85, isoladamente, também não comprova artificialidade.</td></tr><tr><td>Beneficiário econômico</td><td style="text-align:left">Cadeia societária, titularidade, classes de cotas, direitos econômicos e cotistas externos: quantificar quanto do resultado efetivamente pertence ao grupo.</td></tr><tr><td>Dedução fiscal efetiva</td><td style="text-align:left">ECD, ECF, e-Lalur/e-Lacs e memória de apuração: confirmar se a despesa de 15 reduziu a base ou já foi adicionada fiscalmente.</td></tr><tr><td>Tributação em T</td><td style="text-align:left">Rendimentos, bases tributáveis, IRRF, compensações e períodos: verificar a carga total, além da retenção.</td></tr></tbody></table><p><strong>Teste contábil — CPC 48, item 3.2.15:</strong> se D retiver substancialmente os riscos e benefícios, deve manter o recebível e reconhecer um passivo pelos recursos recebidos. Isso pode tornar incorreta a baixa com perda imediata de 15, mas não exclui um custo financeiro verdadeiro ao longo do prazo.</p><p><strong>Distinguir as conclusões:</strong> despesa fictícia, despesa real contabilizada incorretamente e despesa real fiscalmente indedutível são situações diferentes. A eliminação intragrupo na consolidação também não prova despesa fictícia nas contas individuais; exige examinar o controle e o perímetro de consolidação.</p><p><strong>Não presumir uma economia de 34% menos 15%.</strong> O art. 32, II, da Lei 14.754/2023 trata o IRRF como antecipação do IRPJ para pessoas jurídicas no lucro real, presumido ou arbitrado. É necessário medir a tributação total em D e T, os períodos de reconhecimento e eventuais créditos; não apenas a retenção no fundo.</p><p>Referências: <a href="https://www.gov.br/receitafederal/pt-br/assuntos/orientacao-tributaria/tributos/CSLL" target="_blank" rel="noopener">RFB — apuração da CSLL</a> · <a href="https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/lei/l14754.htm" target="_blank" rel="noopener">Lei 14.754/2023, arts. 18, 23, 24, 26, 31 e 32</a> · <a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/decreto/d9580.htm" target="_blank" rel="noopener">RIR/2018, art. 311</a> · <a href="https://www.cpc.org.br/Arquivos/Documentos/530_CPC_48_rev_19.pdf" target="_blank" rel="noopener">CPC 48, seção 3.2</a> · <a href="https://www.cpc.org.br/Arquivos/Documentos/448_CPC_36_R3_rev%2008.pdf" target="_blank" rel="noopener">CPC 36, item B86(c)</a>.</p></section>
-<div class="legend"><span><i class="swatch" style="background:var(--blue)"></i>Dinheiro</span><span><i class="swatch" style="background:var(--gold)"></i>Recebíveis</span><span><i class="swatch" style="background:var(--purple)"></i>Cotas e valorização</span></div>
-<details class="notes" open><summary>Premissas do exemplo</summary><p>Aporte de 85; créditos nominais e contábeis de 100; aquisição por 85; recebimento integral; despesas totais de 1, divididas didaticamente entre A (0,5) e G (0,5). Sem inadimplência, outros custos ou remuneração do caixa; os tributos projetados seguem as premissas de D e T. Uma única classe de cotas. T é pessoa jurídica, com avaliação das cotas ao valor justo por meio do resultado neste exemplo. Os saldos incluem a provisão de IRPJ/CSLL de D, sem pagamento. T não tem imposto corrente lançado antes de evento tributável. Para D, parte-se de provisão inicial de 34 e PL de 66; a DRE do recorte apresenta apenas efeitos incrementais da cessão. Para T, a comparação de carga total futura continua separada dos lançamentos; na etapa 13.a do cenário B, 15% é a alíquota do IRRF antecipado. O fluxo não simula resgate, amortização ou distribuição; até a etapa 12 não simula incidência periódica; a etapa 13.a do cenário B demonstra come-cotas e recolhimento. No cenário A, o FIDC é entidade de investimento e não há come-cotas. Não calcula tributos diferidos ou outros ajustes fiscais do cotista PJ. No cenário 2, assume-se despesa artificial contabilizada e indevidamente deduzida, beneficiário econômico comum e titularidade integral; a etapa 12 reconhece a reversão do benefício de IRPJ/CSLL em D, mantida nas alternativas 13.a e 13.b.</p><p>Os saldos de caixa são relativos ao exemplo. Os devedores são externos ao grupo. No cenário 2, D e T são empresas distintas do mesmo grupo; A e G ficam fora do perímetro ilustrativo.</p><p>No cenário A, a perda de 15 em D pressupõe cessão que permita a baixa dos créditos. No cenário B, representa a operação declarada sob a hipótese de despesa artificial; o tratamento contábil adequado depende do exame dos riscos e benefícios, inclusive da manutenção do recebível e do reconhecimento de passivo, quando exigidos pelo CPC 48. O rendimento de 15 em F é apropriado ao longo do prazo: a etapa 7 resume essa evolução. A valorização em T representa sua participação no resultado de F e não deve ser somada a ele como outro ganho econômico.</p><p>O quadro do grupo agrega economicamente D e T e inclui o investimento em cotas. Não é demonstração contábil consolidada. A simulação não determina transferência de riscos, dedutibilidade, tributação ou enquadramento como entidade de investimentos. A constituição jurídica e os contratos antecedem o aporte; taxas podem ser pagas ao longo do prazo.</p></details>
-</dialog></main><script>
-const stages=[
- ['Preparação','O FIDC está constituído e os contratos estão preparados. T dispõe de 85; D possui recebíveis de 100.','Preparação'],
- ['Aporte de T','T integraliza 85 em F e reconhece o investimento em cotas. O caixa de T diminui e o caixa de F aumenta.','1. Aporte'],
- ['Emissão de cotas','Formalização das cotas de 85 já reconhecidas no aporte, sem novo lançamento. O aporte não é receita do fundo.','2. Cotas'],
- ['Cessão e pagamento','D transfere créditos de 100; F paga 85. As duas pernas integram a mesma operação.','3. Cessão'],
- ['Apropriação do rendimento','Ao longo do prazo, o ativo de F evolui de 85 para 100, no exemplo ao custo amortizado. As cotas refletem esse rendimento.','4. Rendimento'],
- ['Liquidação pelos devedores','Os clientes de D pagam 100 a F. O fundo troca os recebíveis por caixa.','5. Liquidação'],
- ['Pagamento das despesas','F paga 0,5 a A e 0,5 a G. O resultado líquido acumulado é 14 e o valor das cotas é 99.','6. Despesas'],
- ['Resultado nas cotas','T mantém cotas de 99: capital de 85 mais resultado líquido de 14. Nenhum resgate é presumido.','7. Resultado'],
- ['Visão agregada do grupo','Cenário 2: agregam-se somente Cedentes (D) + Cotistas (T). O FIDC permanece separado; base tributável inicial hipotética de R$ 100 milhões.','8. Grupo'],
- ['Correção fiscal IRPJ/CSLL','Cenário B: eliminação econômica no quadro D + T — débito no ganho nas cotas e crédito na perda na cessão, 15, zerando ambas as contas. Recomposição fiscal: base de 85 para 100 e reversão do benefício de 5,10. FIDC separado.','9. Correção fiscal IRPJ/CSLL'],
- ['IRRF Come cotas no FIDC','Cenário A: entidade de investimento, sem come-cotas. Cenário B: premissa de FIDC não enquadrado como entidade de investimento, na data semestral. Rendimento de 14 × 15% = 2,10 de IRRF, com redução de cotas e recolhimento. Cotista PJ reconhece IRRF a compensar.','13.a Come-cotas'],
- ['Desconsideração do FIDC','Alternativa do cenário B a partir da etapa 12: sem come-cotas. Débito de 15 em Receita financeira e crédito de 15 em Cotas integralizadas — patrimônio do fundo. Em seguida: débito de 100 em Cotas integralizadas e crédito de 100 em Caixa; débito de 1 em Caixa e créditos de 0,50 em Despesa de administração e de 0,50 em Despesa de gestão. Todas as contas do FIDC ficam zeradas. Em D + T: reversão da perda nas cotas (1), baixa do investimento contra caixa (100) e reconhecimento de despesa de administração/gestão contra caixa (1). Investimento e perda nas cotas zero; caixa agregado 184 e despesa 1. Ajuste ilustrativo, sem liquidação jurídica do fundo.','13.b Desconsideração do FIDC']];
-let step=0,timer=null,introStep=0;
-const displayStage=value=>value===10?'13.a':value===11?'13.b':value+3;
-const menuLabels=['Beneficiários','Constituição','Contratos','Aporte','Cotas','Cessão','Rendimento','Liquidação','Despesas','Resultado','Grupo','Correção fiscal IRPJ/CSLL','Come-cotas','Desconsideração do FIDC'];
-const constitutionStages=[
- ['Identificação dos beneficiários','No cenário 2, Cedentes (D) e Cotistas (T) representam o mesmo beneficiário econômico, sob a premissa de titularidade integral. Os recursos de T são do próprio grupo.','0.1 · Beneficiários'],
- ['Constituição do FIDC','T participa da estruturação do FIDC. No cenário 2, as cotas e seus rendimentos pertencerão ao mesmo grupo de D. A constituição, isoladamente, não movimenta os 85.','2 · Constituição'],
- ['Regulamento e contratos','A estrutura define Administradora (A), Gestora (G), regras das cotas e condições de cessão. Esses preparativos antecedem o aporte; não há novo lançamento nas contas do exemplo.','3 · Contratos']
-];
-function advance(){if(introStep!==null){if(introStep<2)introStep++;else{introStep=null;step=1;}}else step=Math.min(stages.length-1,step+1);}
-function retreat(){if(introStep!==null)introStep=Math.max(0,introStep-1);else if(step===1){step=0;introStep=2;}else step=Math.max(1,step-1);}
-
-const fmt=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1});
-const flowSets={1:[['money','M150 135 L150 210 L245 245','4 · 85 em caixa',145,195]],2:[['quota','M275 245 L195 175 L195 135','5 · Cotas: 85',260,170]],3:[['credit','M420 135 L420 210 L365 245','6 · Créditos: 100',435,185],['money','M365 270 L515 270 L515 135','6 · Pagamento: 85',475,302]],4:[['quota','M270 245 L195 175 L195 135','7 · Cotas: 85 → 100',270,170]],5:[['money','M150 415 L150 355 L225 285','8 · Recebimento: 100',145,345]],6:[['money','M285 320 L350 415','9a · 0,5',300,374],['money','M350 320 L485 415','9b · 0,5',460,360]],7:[['quota','M270 245 L195 175 L195 135','10 · Cotas: 99',260,170]]};
-
-function compactDiagram(svg){
- const y=value=>value>=194?value-50:value>=40?value-30:value;
- return svg.replace('viewBox="0 0 610 300"','viewBox="0 0 610 250"')
- .replace('height="115"','height="85"')
- .replace(/y="(\d+)"/g,(_,value)=>'y="'+y(Number(value))+'"')
- .replace(/d="([^"]+)"/g,(_,path)=>'d="'+path.replace(/([ML])(\d+) (\d+)/g,(_,command,x,value)=>command+x+' '+y(Number(value)))+'"');
-}
-function groupAlternativeSteps(){
- const menu=document.getElementById('steps');
- const alternatives=document.createElement('div');
- alternatives.className='step-alternatives';
- alternatives.setAttribute('role','group');
- alternatives.setAttribute('aria-label','Etapas alternativas após a correção fiscal');
- 
- for(const number of [10,11])alternatives.append(menu.querySelector('[data-step="'+number+'"]').closest('.step-item'));
- menu.append(alternatives);
-}
-
-function graphic(group){const box=(id,label,x,y,w=170)=>`<g><rect class="node ${group&&(id==='T'||id==='D')&&label!=='Devedores'?'group-member':!group&&id==='T'?'independent-cotista':!group&&id==='D'&&label==='Cedentes (D)'?'independent-cedente':''}" x="${x}" y="${y}" width="${w}" height="44" rx="8"/><text x="${x+w/2}" y="${y+28}" text-anchor="middle" font-size="19" style="${id==='A'?'font-size:24px!important':''}">${label}</text></g>`;const data={0:introStep===0?(group?[['quota','M210 84 L395 84','1 · Beneficiário comum',305,120]]:[]):introStep===1?[['quota','M125 84 L260 140','2 · Constituição',180,115]]:introStep===2?[['quota','M285 184 L350 244','3 · Contratos',285,218],['quota','M350 184 L500 244','3 · Contratos',465,213]]:[],1:[['money','M125 84 L260 140','4 · 85',170,115]],2:[['quota','M260 140 L170 84','5 · Cotas 85',235,102]],3:[['credit','M480 84 L350 140','6 · Créditos 100',420,114],['money','M350 172 L525 172 L525 84','6 · Caixa 85',490,196]],4:[['quota','M260 140 L170 84','7 · Cotas 100',240,104]],5:[['money','M110 244 L245 178','8 · 100',150,216]],6:[['money','M285 184 L350 244','9a · 0,5',285,218],['money','M350 184 L500 244','9b · 0,5',452,213]],7:[['quota','M260 140 L170 84','10 · Cotas 99',235,104]],10:group?[['quota','M260 140 L170 84','13.a · Cotas 96,90',235,104],['money','M410 266 L480 266','IRRF 2,10',467,229]]:[]};const svg=`<svg viewBox="0 0 610 300" role="img" aria-label="${group?'Mesmo grupo econômico':'Partes independentes'} — ${stages[step][0]}"><defs><marker id="compact${group}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>${group?'<rect class="group" x="15" y="5" width="580" height="115" rx="12"/><path class="group-link" d="M210 62 L395 62"/>':''}<path class="wire" d="${step===10&&group?'M125 84 L305 140 M480 84 L305 140 M110 244 L260 184 M305 184 L305 244':'M125 84 L305 140 M480 84 L305 140 M110 244 L260 184 M350 244 L305 184 M500 244 L350 184'}"/>${box('T','Cotistas (T)',40,40)}${box('D','Cedentes (D)',395,40)}${box('F',introStep===0?'FIDC (F) · futuro':'FIDC (F)',215,140,180)}${box('D','Devedores',25,244,170)}${box('A','Administradora (A)',step===10&&group?205:240,244,205)}${box(step===10&&group?'Treasury':'G',step===10&&group?'Tesouro':'Gestora (G)',step===10&&group?480:460,244,step===10&&group?125:145)}${(data[step]||[]).map(([cl,d,t,x,y])=>`<path class="flow ${cl}" d="${d}" marker-end="url(#compact${group})"/><text class="flow-label" x="${x}" y="${y}" text-anchor="middle" style="font-size:18px">${t}</text>`).join('')}</svg>`;return compactDiagram(svg)}
-function balances(s=step){return {Tcash:s<1?85:0,Tquota:s<1?0:s<4?85:s<6?100:99,Ccash:s<3?0:85,Ccredit:s<3?100:0,Fcash:s<1?0:s<3?85:s<5?0:s<6?100:99,Fcredit:s<3?0:s<4?85:s<5?100:0,Fr:s<4?0:s<6?15:14,Cresult:s<3?0:-15,Tr:s<4?0:s<6?15:14}}
-function cedentBase(group){const applied=step>=3;return `<section class="tax-base"><h3>Cedentes (D) · Base de IRPJ/CSLL</h3><div class="base-drop">${applied?'Base declarada: 100 − 15 = 85':'Base antes da cessão: 100'}</div>${group?`<table><thead><tr><th>Base inicial</th><th>Declarada</th><th>Adição fiscal</th><th>Corrigida</th></tr></thead><tbody><tr><td>100,0</td><td>${applied?'85,0':'100,0'}</td><td>${applied?'+15,0':'0,0'}</td><td>100,0</td></tr></tbody></table><p><strong>${applied?'A despesa artificial reduz indevidamente a base declarada em 15. Sua adição fiscal recompõe a base em 100.':'Na etapa 6, a simulação mostra a dedução indevida e a correção fiscal.'}</strong></p><p class="premise">Premissa hipotética expressa: a perda de 15 foi contabilizada e deduzida, mas é artificial e indedutível. A correção é extracontábil, no e-Lalur/e-Lacs; não altera os saldos do fluxo.</p>`:`<table><thead><tr><th>Base comum</th><th>Antes</th><th>Perda dedutível*</th><th>Após</th></tr></thead><tbody><tr><td>IRPJ/CSLL</td><td>100,0</td><td>${applied?'−15,0':'0,0'}</td><td>${applied?'85,0':'100,0'}</td></tr></tbody></table><p class="premise">* Cenário 1: dedutibilidade integral ilustrativa, a verificar. A perda já reduz o lucro; não se deduz novamente.</p>`}<p class="premise">IRPJ/CSLL é um rótulo conjunto: cada base parte de 100; elas não são somadas. Os 100 são uma premissa fiscal, não o valor dos recebíveis.</p></section>`}
-function groupResult(){const text=step<3?'T fornece recursos do próprio grupo; a dedução artificial ainda não ocorreu.':step===3?'D deduz a despesa artificial de 15: base declarada de IRPJ/CSLL passa de 100 para 85. F compra por 85; o rendimento das cotas ainda será apropriado.':step<6?'D deduziu 15; as cotas de T valorizam 15 antes das despesas. O resultado correspondente à perda de D beneficia empresa do mesmo grupo.':'D deduziu 15; T mantém ganho líquido de 14 nas cotas, após custos externos de 1. O resultado permanece economicamente no grupo, sob a premissa de titularidade integral.';return `<section class="group-result"><h3>Planejamento tributário agressivo · Simulação hipotética</h3><p>${text}</p><p><strong>Tese ilustrada:</strong> uso de despesa artificial para reduzir indevidamente a base tributável de D, preservando o resultado econômico no próprio grupo.</p><p class="premise">A artificialidade é uma premissa desta simulação, não uma conclusão extraída apenas do vínculo entre D e T. A redução declarada não equivale à economia líquida total do grupo.</p></section>`}
-function panel(group){const b=balances();const rows=[['T',b.Tcash,0,b.Tquota,b.Tr],['D',b.Ccash,b.Ccredit,0,b.Cresult],['F',b.Fcash,b.Fcredit,0,b.Fr],['A',step>=6?.5:0,0,0,step>=6?.5:0],['G',step>=6?.5:0,0,0,step>=6?.5:0]];const events=['T tem recursos disponíveis; D tem créditos a receber.','85 passam de T para F; T reconhece o investimento em cotas.','Formalização das cotas já reconhecidas: sem duplicar o aporte.','85 passam de F para D; créditos passam de D para F.','15 de rendimento acumulado em F refletem-se nas cotas.','Os devedores externos entregam 100 a F.','Despesas de 1 reduzem as cotas de 100 para 99.','Resultado líquido de F: 14. Valorização de T: 14.'];return `<article class="panel ${group&&step===9?'fiscal-correction':''} ${group?'same-group':''}"><div class="panel-top"><div class="group-banner ${group?'':'independent-banner'}">${group?'GRUPO ECONÔMICO · Cedentes (D) + Cotistas (T) · Beneficiário comum':'<span><span class="header-cedente">Cedentes (D)</span> e <span class="header-cotista">Cotistas (T)</span> são partes independentes</span>'}</div><div class="panel-head"><h2>${group?'B · Mesmo grupo econômico':'A · Partes independentes'}</h2><p>${group?'O caixa sai de T e chega a D, empresa do mesmo grupo, por meio de F.':'T financia a aquisição dos créditos de uma cedente independente.'}</p></div></div>${graphic(group)}<div class="event">${introStep===null?(step>=8?(group?(step===11?'FIDC zerado; D + T: investimento e perda nas cotas zero, caixa 184 e despesa de administração/gestão 1.':step===10?'Administradora recolhe IRRF de 2,10 ao Tesouro com recursos de F; cotas e caixa 96,90.':step===9?'D + T: ganho e perda de 15 eliminados; saldos zero. IRPJ/CSLL recomposto para 34,00.':'Agregação D + T: destaque somente nas linhas alteradas; cotas mantidas e FIDC separado.'):(step===11?'Desconsideração não aplicada ao cenário A; saldos da etapa 12 mantidos.':step===10?'FIDC entidade de investimento: sem come-cotas; cotas e caixa de F mantidos em 99.':'Partes independentes: não se apresenta um grupo econômico comum.')):events[step]):group?['D e T: empresas do mesmo grupo, com beneficiário econômico comum.','T estrutura F; D será cedente e o grupo deterá integralmente as cotas.','Contratos preparados. Recursos e recebíveis permanecem no grupo antes do aporte.'][introStep]:['D e T: beneficiários independentes.','T estrutura F para adquirir créditos de D, parte independente.','Contratos preparados entre partes independentes.'][introStep]}</div><section class="all-reasons ${group&&step>=8?'aggregate-phase':''}"><h2>${group&&step>=8?(step===11?'Desconsideração do FIDC':step===10?'IRRF Come cotas no FIDC':step===9?'Correção fiscal IRPJ/CSLL':'Consolidação de Cedentes (D) e Cotistas (T)'):'Livros razão · Cotistas, Cedente e FIDC'}</h2><p class="reason-key">R$ milhões · <span class="debit-line">D: débito</span> · <span class="credit-line">C: crédito</span> · Linhas com lançamentos ou saldos alterados em relação à etapa anterior destacadas</p><div class="reason-stage-body"><div class="reserved-books">${renderReason(group&&step>=8,group&&step>=9,group)}</div></div></section></article>`}
-let lastTaxRate=15;
-function currentTaxRate(){const raw=document.getElementById('group-t-rate').value;const rate=Number(raw);if(raw!==''&&Number.isFinite(rate)&&rate>=0&&rate<=100)lastTaxRate=rate;return lastTaxRate}
-function accountState(s){const b=balances(s),rate=currentTaxRate()/100;const tTax=0;const cBenefit=s>=3?5.1:0;return {T:{cash:b.Tcash,credit:0,quota:b.Tquota,capital:85,income:s>=4?15:0,expense:s>=6?1:0,tax:tTax,payable:tTax,result:b.Tr-tTax},D:{cash:b.Ccash,credit:b.Ccredit,quota:0,capital:66,income:0,expense:s>=3?15:0,tax:-cBenefit,payable:34-cBenefit,result:b.Cresult+cBenefit},F:{cash:b.Fcash,credit:b.Fcredit,quota:0,capital:s>=1?85:0,income:s>=4?15:0,expense:s>=6?1:0,tax:0,payable:0,result:b.Fr}}}
-function signed(n){return (n>0?'+':'')+fmt(n)}
-function deltaCell(n,previous){return `<span class="account-value ${n<0?'negative-value':n>0?'positive-value':'zero-value'}">${fmt(n)}</span><small class="account-delta ${n-previous<0?'negative-value':n-previous>0?'positive-value':'zero-value'}">Δ ${signed(n-previous)}</small>`}
-function accountsPanel(){const now=accountState(step),before=accountState(Math.max(0,step-1));const names={T:'Cotistas (T)',D:'Cedentes (D)',F:'FIDC (F)'};const parties=['T','D','F'];const table=(kind,rows)=>`<table class="${kind}"><thead><tr><th scope="col">Conta</th>${parties.map(id=>`<th scope="col">${names[id]}</th>`).join('')}</tr></thead><tbody>${rows.map(([label,value])=>`<tr><th scope="row">${label}</th>${parties.map(id=>`<td>${deltaCell(value(now[id]),value(before[id]))}</td>`).join('')}</tr>`).join('')}</tbody></table>`;return `<section class="accounts"><h3>Contas patrimoniais</h3><p class="account-key">Saldo acumulado · Δ da etapa · R$ milhões</p>${table('patrimony',[['Caixa',n=>n.cash],['Recebíveis',n=>n.credit],['Cotas',n=>n.quota],['Tributos a pagar',n=>n.payable],['PL*',n=>n.capital+n.result]])}<p class="account-foot">* Ativos = tributos a pagar + PL. Em D, provisão inicial de 34 sobre base de 100 e PL inicial de 66; DRE mostra apenas o efeito incremental da operação. ${step===1?'F: aporte de 85 aumenta o PL, sem receita na DRE.':''}</p><h3>Três DREs · Resultados acumulados</h3>${table('dre',[['Receitas / ganhos',n=>n.income],['Despesas / perdas',n=>n.expense],['Tributos*',n=>n.tax],['Resultado líquido',n=>n.result]])}<p class="account-foot">* Tributos positivos: despesa; negativos: benefício fiscal. T: sem imposto corrente antes do evento tributável neste modelo. D: benefício declarado de 5,10; adição fiscal não lançada. Não somar F e T.</p></section>`}
-const journalStages=[
- {rows:[],note:'Saldos iniciais no recorte: T, caixa e PL de 85; D, recebíveis de 100, tributos a pagar de 34 e PL de 66; F, zero. As demais contas e a origem desses saldos não são simuladas.',tax:'Sem novo efeito tributário nesta etapa.'},
- {rows:[['T','Investimento em cotas','Caixa / bancos',85,85],['F','Caixa / bancos','Cotas integralizadas — patrimônio do fundo',85,85]],note:'Integralização e reconhecimento do investimento ocorrem juntos. A etapa 5 apenas mostra a formalização das cotas, sem duplicar o aporte.',tax:'O aporte troca caixa por investimento em T e não gera receita da cessão em F. Nenhuma redução de base em D.'},
- {rows:[],note:'Formalização das cotas já reconhecidas na integralização. Sem novo lançamento de 85.',tax:'Sem novo efeito tributário; a base ilustrativa de D permanece 100.'},
- {rows:[['D','Caixa / bancos','Contas a receber',85,0],['D','Perda na cessão — resultado financeiro','Contas a receber',15,100],['F','Direitos creditórios adquiridos','Caixa / bancos',85,85]],note:'Lançamento composto de D: débito em caixa de 85, débito em perda de 15 e crédito em recebíveis de 100. Pressupõe cessão que permite a baixa dos créditos.',tax:'D: perda dedutível de 15 reduz a base ilustrativa de IRPJ/CSLL de 100 para 85. A hipótese é a mesma nos dois cenários. Se indedutível, a adição fiscal de 15 mantém a base em 100.'},
- {rows:[['F','Direitos creditórios — rendimento apropriado','Receita financeira',15,15],['T','Investimento em cotas','Ganho na avaliação das cotas',15,15]],note:'Resumo da apropriação ao longo do prazo em F. Para T, o exemplo presume pessoa jurídica e cotas avaliadas ao valor justo por meio do resultado; outros tratamentos exigem ajustes.',tax:'D: base de IRPJ/CSLL permanece em 85 no exemplo. F: rendimento integra a valorização das cotas. T: ganho contábil de 15 não define sozinho a base fiscal ou o momento de tributação; verificar os ajustes e o regime do cotista.'},
- {rows:[['F','Caixa / bancos','Direitos creditórios',100,100]],note:'Liquidação dos créditos pelos devedores. Os 100 recebidos não são uma nova receita integral: o rendimento de 15 já foi apropriado.',tax:'Não há nova redução de base em D. O recebimento em F não representa um segundo ganho de 100. Não se presume amortização ou resgate em T.'},
- {rows:[['F','Despesa de administração','Caixa / bancos',0.5,0.5],['F','Despesa de gestão','Caixa / bancos',0.5,0.5],['T','Perda na avaliação das cotas','Investimento em cotas',1,1]],note:'Taxas de A e G são despesas de F, reconhecidas e pagas na etapa. As DREs dos prestadores não são exibidas. F tem resultado líquido de 14; as cotas de T passam de 100 para 99.',tax:'D: base de IRPJ/CSLL permanece em 85. As despesas reduzem o resultado de F para 14; T acumula ganho contábil de 14. Nenhum imposto é quantificado sem as premissas fiscais.'},
- {rows:[],note:'Etapa de apresentação dos saldos finais, sem novo lançamento: D recebeu 85 e reconheceu perda de 15; T mantém cotas de 99 e nenhum tributo corrente a pagar no fluxo; F tem caixa de 99. Resultados incrementais após tributos: D −9,90; T +14; F +14.',tax:'D: redução ilustrativa de 15 na base comum de IRPJ/CSLL. A carga tributária total do grupo ainda depende da tributação de T e dos ajustes fiscais. A base reduzida em D não prova, isoladamente, economia tributária do grupo.'}
-];
-function journalPanel(){const j=journalStages[step];const projectedRows=stageJournal(step);const taxText=step<3?j.tax:'D: provisão de IRPJ/CSLL declarada de 34 → 28,90 e benefício incremental na DRE de 5,10. T: sem imposto corrente lançado, pois não há resgate, amortização ou distribuição no fluxo; sem tributação periódica na premissa adotada. No cenário 2, a adição fiscal da despesa artificial recompõe a base de 100 e o tributo de 34; essa correção não foi lançada.';const names={D:'Cedentes (D)',T:'Cotistas (T)',F:'FIDC (F)'};const money=n=>(n*1000000).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});const blocks=['T','D','F'].map(id=>{const entries=projectedRows.filter(r=>r[0]===id);const lines=[];for(const [part,d,c,dv,cv] of entries){if(dv)lines.push({type:'D',account:d,value:dv});if(cv)lines.push({type:'C',account:c,value:cv})}return `<section class="entry-block"><h4>${names[id]}:</h4>${lines.length?lines.map(l=>`<div class="entry-line ${l.type==='D'?'debit-line':'credit-line'}"><span class="entry-type">${l.type} —</span><span class="entry-account">${l.account}</span><span class="entry-amount">${money(l.value)}</span></div>`).join(''):'<p class="no-entry">Sem lançamento nesta etapa.</p>'}</section>`}).join('');return `<section class="journal"><h3>Lançamentos da etapa ${displayStage(step)}</h3><p><span class="debit-label">D = débito</span> · <span class="credit-label">C = crédito</span> · Valores em reais</p><div class="entry-blocks">${blocks}</div><details class="journal-premises"><summary>Premissas dos lançamentos</summary><p>${j.note}</p></details><div class="journal-tax"><strong>Impacto tributário da etapa</strong><p>${taxText}</p></div></section>`}
-const economicReadings=[
-'Antes da estrutura: D possui créditos de 100 e T possui caixa de 85. Recursos econômicos agregados: 185.',
-'T aporta 85 em F. O dinheiro que financiará a cedente vem do próprio beneficiário econômico, sob a premissa adicional.',
-'O caixa aportado em F tem como contrapartida as cotas de T. Ainda não há rendimento decorrente da cessão.',
-'T → F → D: os 85 saem de um bolso do beneficiário e chegam ao outro. D reconhece perda de 15, sob a hipótese de baixa dos créditos; F adquire por 85.',
-'D: perda artificial deduzida de 15; investimento de T em F: +15. Antes de despesas e tributos, a soma econômica D + T é zero. O resultado foi realocado dentro da estrutura.',
-'Os 100 recebidos vêm dos devedores externos. O recebimento liquida os créditos adquiridos; não cria um segundo rendimento de 100.',
-'D: perda artificial deduzida de 15; investimento de T em F: +14. Soma econômica D + T: −1, correspondente aos custos externos ilustrativos.',
-'Sem F, o conjunto D + T teria caixa de 185 após o recebimento dos créditos. Com F, tem caixa em D de 85 e cotas em T de 99: total de 184. Antes de tributos e sem custo de oportunidade, a diferença é o custo de 1. Eventual vantagem tributária depende de comprovação separada.'
-];
-function taxGroup(rate=15){return {cRelief:15*0.34,tTax:14*rate/100,groupDifference:15*0.34-14*rate/100,afterCorrection:-14*rate/100,afterCosts:15*0.34-14*rate/100-1}}
-function taxGroupPanel(){const raw=document.getElementById('group-t-rate').value;const rate=Number(raw);if(raw===''||!Number.isFinite(rate)||rate<0||rate>100)return '<p>Informe uma alíquota de 0 a 100%. Não se presume isenção ou alíquota reduzida para T.</p>';const t=taxGroup(rate);return `<p>Comparação futura, fora dos livros razão, supondo realização do ganho: premissas da simulação: D a 34%; T a ${rate.toLocaleString('pt-BR')}%; perda em D de 15; ganho líquido em T de 14. Não é apuração de um fundo real.</p><table><tbody><tr><th>Redução declarada de IRPJ/CSLL em D</th><td>15 × 34% = <strong>${t.cRelief.toFixed(2).replace('.',',')}</strong></td></tr><tr><th>Tributação futura estimada de T</th><td>14 × ${rate.toLocaleString('pt-BR')}% = <strong>${t.tTax.toFixed(2).replace('.',',')}</strong></td></tr><tr><th>Diferença tributária declarada do grupo</th><td><strong>${t.groupDifference.toFixed(2).replace('.',',')}</strong></td></tr><tr><th>Após adicionar a despesa artificial em D</th><td><strong>${t.afterCorrection.toFixed(2).replace('.',',')}</strong></td></tr></tbody></table><p><strong>5,10 em D não são 5,10 de economia definitiva do grupo.</strong> Em evento futuro, estima-se para T ${t.tTax.toFixed(2).replace('.',',')}; a diferença declarada é ${t.groupDifference.toFixed(2).replace('.',',')}. Se D e T forem tributados a 34%, a diferença de 0,34 corresponde a 34% do custo externo de 1.</p><p>Após custo de 1, a diferença econômica líquida antes da correção é ${t.afterCosts.toFixed(2).replace('.',',')}. Se T pagar em outro período, pode haver diferimento. A adição fiscal de 15 elimina a redução indevida em D; a diferença após a correção é ${t.afterCorrection.toFixed(2).replace('.',',')}, frente à referência sem FIDC, sob estas premissas.</p><p>A alíquota de T é assumida como carga efetiva total neste exemplo. A aplicação de 15% ao cotista real precisa considerar seu regime; para pessoa jurídica, IRRF pode ser antecipação e não carga definitiva. IRRF compensável não se soma novamente ao IRPJ. A carga total futura de T não foi lançada. A etapa 13 do cenário 2 registra apenas IRRF antecipado de 2,10, sem duplicar esse valor como despesa. A mera valorização fora da data de incidência não é tratada como evento de IRRF; não foram apurados tributos diferidos do cotista. A DRE de D mostra o benefício incremental de 5,10 frente à provisão inicial de 34. A etapa 12 registra a reversão do benefício em D no cenário 2, preservada na etapa 13.</p>`}
-function render(){document.querySelector('.current').classList.toggle('fiscal-correction',introStep===null&&step===9);document.querySelector('.current').classList.toggle('come-cotas',introStep===null&&step===10);requestAnimationFrame(fitLandscape);document.getElementById('group-tax-content').innerHTML=taxGroupPanel();document.getElementById('entry-content').innerHTML=`<div class="top-group-result"><strong>Cenário 2 · Hipótese de despesa artificial</strong><p>${step>=4?(step>=6?'Perda em D: 15 · Valorização de T antes dos tributos: 14 · Custos externos: 1.':'Perda em D: 15 · Ganho nas cotas de T: 15, antes das despesas.'):'O resultado beneficiará as cotas de T, do mesmo grupo, conforme a apropriação dos rendimentos.'}</p><p>Base de IRPJ/CSLL em D: ${step>=9?'85 + 15 = 100 corrigida; tributos recompostos: 34,00 (34%).':step>=3?'100 → 85 declarada; redução potencial: 5,10 (34%).':'100, antes da cessão.'}</p><p class="premise">Hipótese: estrutura meramente formal, sem transferência efetiva de riscos, com despesa artificial deduzida em D. Taxa de mercado não comprova substância econômica. O vínculo societário não comprova artificialidade. Evidências em Premissas.</p></div>`;document.getElementById('economic-reading').textContent=step===11?'Cenário B — alternativa 13.b a partir da etapa 12, sem os lançamentos de 13.a. No quadro do FIDC, débito de 15 em Receita financeira e crédito de 15 em Cotas integralizadas — patrimônio do fundo: receita zero e cotas integralizadas 100. Na sequência, débito de 100 em Cotas integralizadas e crédito de 100 em Caixa; débito de 1 em Caixa e créditos de 0,50 em Despesa de administração e de 0,50 em Despesa de gestão. Todas as contas do FIDC ficam zeradas. Em D + T: débito em Investimento em cotas e crédito em Perda na avaliação das cotas, 1; débito em Caixa / bancos e crédito em Investimento em cotas, 100; débito em Despesa de administração/gestão do FIDC e crédito em Caixa / bancos, 1. Investimento e perda nas cotas zerados; caixa agregado 184; despesa 1; IRPJ/CSLL a pagar 34; PL final 150. A correção fiscal e a eliminação econômica da etapa 12 são preservadas. Ajuste ilustrativo da hipótese de desconsideração, sem representar dissolução ou liquidação jurídica do fundo. O cenário A mantém os saldos da etapa 12.':step===10?'No cenário A, o FIDC é entidade de investimento: sem come-cotas, cotas e caixa de F permanecem 99 e não há IRRF lançado. No cenário B, a administradora realiza o recolhimento de 2,10 ao Tesouro com recursos do caixa de F, por conta dos cotistas. T mantém cotas de 96,90 e crédito de IRRF de 2,10: ativos totais de 99. O resultado de T permanece 14 e o resultado de F permanece 14. O imposto retido é antecipação de IRPJ, sem nova despesa neste recorte.':economicReadings[Math.min(step,7)];const stageInfo=introStep===null?stages[step]:constitutionStages[introStep];document.getElementById('num').textContent=introStep===null?displayStage(step):introStep+1;document.getElementById('title').textContent=stageInfo[0];document.getElementById('description').textContent=stageInfo[1];document.getElementById('panels').innerHTML=panel(false)+panel(true);compactLedgerNotes();document.getElementById('steps').innerHTML=constitutionStages.map((s,i)=>`<div class="step-item"><button data-intro="${i}" class="step-select ${introStep===i?'active':''}" aria-current="${introStep===i?'step':'false'}"><span class="step-index">${i+1}</span><span>${menuLabels[i]}</span></button><button type="button" class="step-info" data-info-intro="${i}" aria-label="Informações da etapa ${i+1}: ${s[0]}" aria-haspopup="dialog" aria-controls="premise-dialog" title="Premissas da etapa ${i+1}">i</button></div>`).join('')+stages.slice(1).map((s,j)=>{const i=j+1;return `<div class="step-item"><button data-step="${i}" class="step-select ${introStep===null&&i===step?'active':introStep===null&&i<step&&!(step===11&&i===10)?'done':''}" aria-current="${introStep===null&&i===step?'step':'false'}"><span class="step-index">${displayStage(i)}</span><span>${menuLabels[i+2]}</span></button><button type="button" class="step-info" data-info-step="${i}" aria-label="Informações da etapa ${displayStage(i)}: ${s[0]}" aria-haspopup="dialog" aria-controls="premise-dialog" title="Premissas da etapa ${displayStage(i)}">i</button></div>`}).join('');groupAlternativeSteps();document.getElementById('prev').disabled=introStep===0;document.getElementById('next').disabled=introStep===null&&step===stages.length-1;document.getElementById('play').textContent=timer?'Pausar':'Reproduzir'}
-
-const readingSources={
- law:'https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/lei/l14754.htm',
- cmn:'https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?numero=5111&tipo=Resolu%C3%A7%C3%A3o+CMN',
- cpc48:'https://www.cpc.org.br/Arquivos/Documentos/530_CPC_48_rev_19.pdf',
- cpc36:'https://www.cpc.org.br/Arquivos/Documentos/448_CPC_36_R3_rev%2008.pdf',
- rir:'https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/decreto/d9580.htm'
-};
-const stageReadingData={
- "1": [
-  "Identificam-se as partes e os saldos de abertura, sem nova operação contábil. No cenário A, D e T são independentes; no B, pressupõe-se beneficiário econômico final comum e titularidade integral.",
-  "A identidade do beneficiário não comprova, por si só, artificialidade, indedutibilidade ou ausência de enquadramento como entidade de investimento.",
-  "A análise compara os fluxos de cada parte e a leitura econômica de D + T; deve verificar cotistas externos, minoritários e quem suporta os riscos."
- ],
- "2": [
-  "A constituição jurídica do FIDC antecede o aporte. Esta etapa não movimenta os 85 nem reconhece rendimento.",
-  "O enquadramento tributário depende dos requisitos legais e da gestão efetiva. A é tratado como entidade de investimento; B só assume o regime não enquadrado na alternativa 13.a.",
-  "Constituir um fundo não demonstra transferência efetiva de riscos, nem cria, isoladamente, resultado econômico."
- ],
- "3": [
-  "Regulamento e contratos definem direitos e obrigações. O exame da transferência dos recebíveis deve considerar riscos, benefícios e controle, conforme CPC 48, itens 3.2.6 e 3.2.15.",
-  "A classificação como entidade de investimento e a dedutibilidade da despesa exigem análises próprias; a forma contratual não basta.",
-  "Devem ser examinados coobrigação, recompra, garantias, subordinação, gestão efetiva e destino dos rendimentos."
- ],
- "4": [
-  "T troca 85 de Caixa por Investimento em cotas; F recebe 85 e reconhece o patrimônio correspondente. Aporte é capital, não receita do fundo.",
-  "Não se simula rendimento tributável ou retenção nesta etapa. Aporte não se confunde com distribuição, amortização ou resgate.",
-  "Os recursos são de T; no cenário B, pertencem ao beneficiário econômico comum pressuposto no exemplo."
- ],
- "5": [
-  "A emissão das cotas confirma o investimento e o patrimônio registrados no aporte; não há segunda entrada de 85 nem nova receita.",
-  "O regime fiscal das cotas depende do enquadramento e dos eventos previstos na Lei 14.754/2023.",
-  "A representação jurídica em cotas não adiciona riqueza aos recursos aportados."
- ],
- "6": [
-  "A operação registrada mostra D recebendo 85, baixando Contas a receber de 100 e reconhecendo perda de 15; F reconhece créditos por 85. Em B, os registros representam a operação declarada sob a hipótese de despesa artificial, não a validação do tratamento adequado. Havendo retenção substancial de riscos e benefícios, o CPC 48, item 3.2.15, exige manter o recebível e reconhecer passivo pelos recursos recebidos.",
-  "No exemplo, D deduz os 15 e reduz a base de 100 para 85. Em A pressupõe-se dedução admissível; em B pressupõe-se dedução indevida, corrigida na etapa 12. Contabilização, substância e dedutibilidade devem ser examinadas separadamente.",
-  "A circulação de 85 entre T, F e D não comprova, isoladamente, despesa fictícia. Prazo, financiamento efetivo, risco e beneficiários precisam ser demonstrados."
- ],
- "7": [
-  "A etapa resume a apropriação de 15 ao longo do prazo em F e a valorização correspondente das cotas em T. Custo amortizado utiliza juros efetivos, quando essa for a classificação aplicável. T é mensurado ao valor justo por meio do resultado neste exemplo; não se utiliza equivalência patrimonial.",
-  "A valorização, por si só, não gera o IRRF do regime do art. 24. Até a etapa 12 não se simula incidência periódica. Tributos correntes e diferidos adicionais do cotista PJ não são calculados.",
-  "O resultado do fundo e a valorização das cotas representam a mesma geração econômica e não devem ser somados como ganhos independentes."
- ],
- "8": [
-  "Os devedores pagam 100 a F: o fundo troca Direitos creditórios por Caixa. Não reconhece novamente os 15 de rendimento já apropriados.",
-  "O recebimento dos créditos pelo FIDC não se confunde com distribuição, amortização ou resgate das cotas. O regime de IRRF é examinado separadamente.",
-  "Os devedores são externos ao grupo no exemplo. A entrada de caixa realiza o ativo de F, preservando o resultado já reconhecido."
- ],
- "9": [
-  "F registra despesas de administração e gestão de 0,50 cada e paga 1. T reconhece perda na avaliação das cotas de 1. O resultado líquido de F é 14 e seu PL é 99.",
-  "O custo externo é distinto da hipótese de deságio artificial. Sua dedutibilidade no contribuinte competente requer exame próprio.",
-  "O custo econômico externo total é 1. Sua repercussão no valor das cotas não constitui segundo custo para o mesmo beneficiário."
- ],
- "10": [
-  "T mantém cotas de 99, correspondentes ao aporte de 85 mais resultado líquido de 14. Ganho de 15 e perda de 1 mostram momentos diferentes da avaliação ao valor justo.",
-  "Não se presume resgate ou distribuição. A comparação de carga futura e o cálculo hipotético das premissas não substituem a apuração fiscal efetiva.",
-  "Não somar os 14 de F aos 14 de T. A valorização das cotas reflete o patrimônio do fundo."
- ],
- "11": [
-  "O quadro B agrega economicamente D + T, mantendo F separado e o investimento em cotas. PL de abertura: 85 + 66 = 151. Não é demonstração consolidada segundo CPC 36.",
-  "Agregação econômica não unifica contribuintes nem elimina obrigações tributárias de D e T.",
-  "Consolidação efetiva depende do controle e do perímetro aplicável. Incluindo F, eliminações abrangem investimento contra patrimônio e efeitos intragrupo, evitando duplicar o resultado do fundo."
- ],
- "12": [
-  "No quadro agregado B, elimina-se o ganho nas cotas e zera-se a perda na cessão com ajuste econômico de 15. O livro unificado Resultado na avaliação das cotas mantém perda de 1, referente aos custos externos. Separadamente, reverte-se o benefício tributário de 5,10. Essas eliminações não são lançamentos obrigatórios nas contas individuais de toda operação relacionada.",
-  "A hipótese de despesa indevidamente deduzida determina adição fiscal de 15: base de 85 para 100 e IRPJ/CSLL de 28,90 para 34,00. A adição no e-Lalur/e-Lacs não impõe, por si só, apagar a despesa contábil; a correção contábil depende do erro efetivamente identificado.",
-  "A eliminação econômica mostra a permanência do resultado em D + T. Ela não prova despesa fictícia nem substitui a avaliação de riscos, contratos e dedução efetiva."
- ],
- "13.a": [
-  "Somente B reconhece IRRF de 2,10, reduz as cotas e registra a obrigação de recolher; a administradora recolhe com recursos de F. T reconhece IRRF a compensar contra o investimento. PL e Caixa de F passam de 99 para 96,90.",
-  "Em B, pressupõe-se FIDC não enquadrado como entidade de investimento, data semestral, rendimento tributável de 14 e nenhuma retenção anterior: 14 × 15% = 2,10. Para T, PJ no regime indicado, trata-se de antecipação de IRPJ. A permanece sem come-cotas.",
-  "Em B, cotas de 96,90 e IRRF a compensar de 2,10 somam ativos de 99 em T. A retenção não cria despesa definitiva de 2,10 neste recorte."
- ],
- "13.b": [
-  "A alternativa parte da etapa 12 e exclui os lançamentos de 13.a. Reclassifica a receita de F para cotas, baixa as cotas contra caixa e transfere a representação dos custos para D + T. Os créditos nas despesas de F não significam devolução comprovada dos valores por administrador e gestor.",
-  "A desconsideração fiscal não determina automaticamente dissolução do fundo, pagamento, restituição de despesas ou esses lançamentos individuais. Mantém-se a correção fiscal da etapa 12; a alternativa demonstra apenas a recomposição ilustrativa escolhida.",
-  "F fica zerado. Em D + T: investimento e perda nas cotas zero, Caixa 184, despesa de administração/gestão 1, IRPJ/CSLL a pagar 34 e PL final 150. O custo externo de 1 permanece no grupo; sua eliminação no quadro F evita dupla contagem."
- ]
-};
-function readingLink(key,label){return '<a href="'+readingSources[key]+'" target="_blank" rel="noopener">'+label+'</a>'}
-function renderStageInformation(){
- const number=String(introStep===null?displayStage(step):introStep+1);
- const title=introStep===null?stages[step][0]:constitutionStages[introStep][0];
- const texts=stageReadingData[number];
- const accountingRef=number==='6'||number==='3'?readingLink('cpc48','CPC 48, itens 3.2.6 e 3.2.15'):number==='7'?readingLink('cpc48','CPC 48, itens 5.4.1 e 5.7.1'):number==='10'?readingLink('cpc48','CPC 48, item 5.7.1'):'Premissa e lançamentos do exemplo';
- const taxRef=number==='13.b'?'Hipótese ilustrativa; desconsideração fiscal não impõe automaticamente estes lançamentos':number==='12'||number==='6'||number==='9'?readingLink('rir','RIR/2018, art. 311 — critérios gerais de despesas no IRPJ; examinar também as regras específicas aplicáveis'):number==='13.a'?readingLink('law','Lei 14.754/2023, arts. 24, 26, 31, I, e 32, II'):readingLink('law','Lei 14.754/2023, arts. 18, 19, 23 e 24')+' · '+readingLink('cmn','Resolução CMN 5.111/2023, art. 2º');
- const economicRef=number==='11'||number==='12'?readingLink('cpc36','CPC 36, itens 7 e B86 — controle e consolidação; distintos desta agregação econômica'):'Hipótese econômica do exemplo; não constitui conclusão normativa sobre operação real';
- document.getElementById('stage-perspectives').innerHTML='<h2>Etapa '+number+' · '+title+'</h2>'+['Perspectiva contábil','Perspectiva tributária','Leitura econômica do grupo'].map((label,i)=>'<section class="reading-perspective"><h3>'+label+'</h3><p>'+texts[i]+'</p><p class="reading-reference">'+[accountingRef,taxRef,economicRef][i]+'</p></section>').join('');
- const fmt=value=>Math.abs(value)<1e-8?'0,00':value.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
- const fundPL=group=>books.F.filter(book=>['Caixa / bancos','Direitos creditórios','IRRF a recolher — cotistas'].includes(book[0])).reduce((sum,book)=>sum+bookData('F',book,step,group).balance,0);
- document.getElementById('closing-check').innerHTML='<h2>Conferência dos saldos · R$ milhões</h2><p>PL do FIDC na etapa selecionada: <strong>A — '+fmt(fundPL(false))+'</strong>; <strong>B — '+fmt(fundPL(true))+'</strong>. O PL inclui o resultado acumulado; não corresponde somente ao saldo da conta Cotas integralizadas.</p><table><thead><tr><th>Referência final</th><th>PL do FIDC — A</th><th>PL do FIDC — B</th></tr></thead><tbody><tr><td>12 · Antes das alternativas</td><td>99,00</td><td>99,00</td></tr><tr><td>13.a · Come-cotas</td><td>99,00</td><td>96,90</td></tr><tr><td>13.b · Desconsideração ilustrativa</td><td>99,00</td><td>0,00</td></tr></tbody></table><p>Na alternativa B 13.b, investimento e perda nas cotas ficam zerados; Caixa de D + T = 184,00; despesa externa = 1,00; todas as contas de F ficam zeradas. Os saldos ilustram as premissas, não validam a operação ou a base tributável de um fundo real.</p>';
-}
-
-function compactLedgerNotes(){
- const panels=[...document.querySelectorAll('.panel')];
- const notes=panels.map((panel,index)=>{
-  const note=panel.querySelector('.reserved-books>.reason-key:last-child');
-  const detail=`<h3>${index===0?'Partes independentes':'Mesmo grupo econômico'}</h3><p>${note.innerHTML}</p>`;
-  let summary='R$ milhões · Primeira linha: abertura · Destaque nas linhas alteradas. PL de abertura não inclui encerramento do resultado. Detalhes em Premissas.';
-  if(index===1&&step===8)summary='Agregação D + T: cotas mantidas e FIDC separado. PL: abertura 85 + incorporação de 66 na etapa 11 = 151. Somente linhas alteradas destacadas.';
-  if(index===1&&step===9)summary='Eliminação D + T: D — resultado na avaliação das cotas 15; C — perda na cessão 15. Ganho eliminado; permanece perda nas cotas de 1. IRPJ/CSLL: 34; benefício revertido: 5,10. Detalhes em Premissas.';
-  if(index===1&&step===10)summary='Come-cotas: 14 × 15% = 2,10. Cotas e caixa de F: 96,90; IRRF a compensar em T: 2,10; Administradora recolhe ao Tesouro com recursos de F. Resultado de F: 14. Detalhes em Premissas.';
-  if(step===11)summary=index===1?'13.b a partir de 12: receita reclassificada (15), cotas baixadas (100) e despesas revertidas (0,50 + 0,50). FIDC zerado; D + T: investimento e perda nas cotas zero; caixa 184 e despesa de administração/gestão 1. Sem come-cotas.':'Cenário A: saldos da etapa 12 mantidos; sem ajuste de desconsideração.';
-  if(index===0&&step===10)summary='FIDC entidade de investimento: sem come-cotas. Cotas e caixa de F mantidos em 99; sem lançamento de IRRF. Detalhes em Premissas.';
-  note.textContent=summary;return detail;
- });
- document.getElementById('ledger-notes').innerHTML='<h2>Leitura dos livros razão · etapa '+(introStep===null?displayStage(step):introStep+1)+'</h2>'+notes.join('');
- renderStageInformation();
-}
-
-function stageJournal(s,group=true){
- if(s===11)return group?[
- ['F','Receita financeira','Cotas integralizadas — patrimônio do fundo',15,15],
- ['F','Cotas integralizadas — patrimônio do fundo','Caixa / bancos',100,100],
- ['F','Caixa / bancos','Despesa de administração',0.5,0.5],
- ['F','Caixa / bancos','Despesa de gestão',0.5,0.5],
- ['T','Investimento em cotas','Perda na avaliação das cotas',1,1],
- ['T','Caixa / bancos','Investimento em cotas',100,100],
- ['T','Despesa de administração/gestão do FIDC','Caixa / bancos',1,1]
- ]:[];
- if(s===8)return [];
- if(s===9)return group?[['D','Benefício de IRPJ/CSLL na DRE','Tributos a pagar — IRPJ/CSLL',5.1,5.1]]:[];
- if(s===10)return group?[
- ['T','IRRF a compensar — come-cotas','Investimento em cotas',2.1,2.1],
- ['F','Cotas integralizadas — patrimônio do fundo','IRRF a recolher — cotistas',2.1,2.1],
- ['F','IRRF a recolher — cotistas','Caixa / bancos',2.1,2.1]
- ]:[];
- const rows=[...journalStages[s].rows];if(s===3)rows.push(['D','Tributos a pagar — IRPJ/CSLL','Benefício de IRPJ/CSLL na DRE',5.1,5.1]);return rows;
-}
-const books={
-T:[['Caixa / bancos',85,[]],['Investimento em cotas',0,[]],['PL de abertura',-85,[]],['Resultado na avaliação das cotas',0,['Ganho na avaliação das cotas','Perda na avaliação das cotas']],['Tributos a pagar',0,[]],['IRRF a compensar — come-cotas',0,[]],['Despesa de administração/gestão do FIDC',0,[]]],
-D:[['Caixa / bancos',0,[]],['Contas a receber',100,[]],['PL de abertura',-66,[]],['Perda na cessão — resultado financeiro',0,[]],['Tributos a pagar — IRPJ/CSLL',-34,[]],['Benefício de IRPJ/CSLL na DRE',0,[]]],
-F:[['Caixa / bancos',0,[]],['Direitos creditórios',0,['Direitos creditórios adquiridos','Direitos creditórios — rendimento apropriado']],['Cotas integralizadas — patrimônio do fundo',0,[]],['Receita financeira',0,[]],['Despesa de administração e gestão',0,['Despesa de administração','Despesa de gestão']],['IRRF a recolher — cotistas',0,[]]]};
-function bookData(party,book,until=step,group=true){const [name,opening,aliases]=book;let balance=opening;const rows=[];for(let i=1;i<=until;i++){if(until===11&&i===10)continue;let debit=0,credit=0;for(const [p,d,c,dv,cv] of stageJournal(i,group)){if(p!==party)continue;if(d===name||aliases.includes(d))debit+=dv;if(c===name||aliases.includes(c))credit+=cv;}if(debit||credit){balance+=debit-credit;rows.push({stage:i,debit,credit,balance});}}return {opening,rows,balance};}
-function rawConsolidatedBookData(party,book,until=8){const shared={'Caixa / bancos':'Caixa / bancos','PL de abertura':'PL de abertura','Tributos a pagar':'Tributos a pagar — IRPJ/CSLL'};const data=bookData(party,book,until);if(party!=='T'||!shared[book[0]])return data;const other=bookData('D',books.D.find(b=>b[0]===shared[book[0]]),until);if(book[0]==='PL de abertura'){if(until<8)return data;const debit=Math.max(other.balance,0),credit=Math.max(-other.balance,0);return {opening:data.opening,rows:[...data.rows,{stage:8,debit,credit,balance:data.balance+other.balance}],balance:data.balance+other.balance};}const rows=[];for(let i=1;i<=until;i++){const a=data.rows.find(r=>r.stage===i),b=other.rows.find(r=>r.stage===i);if(a||b)rows.push({stage:i,debit:(a?.debit||0)+(b?.debit||0),credit:(a?.credit||0)+(b?.credit||0)});}let balance=data.opening+other.opening;for(const row of rows){balance+=row.debit-row.credit;row.balance=balance;}return {opening:data.opening+other.opening,rows,balance};}
-function consolidatedBookData(party,book,until=8){
- const data=rawConsolidatedBookData(party,book,until);
- if(until<9)return data;
- const debit=party==='T'&&(book[0]==='Ganho na avaliação das cotas'||book[2].includes('Ganho na avaliação das cotas'))?15:0;
- const credit=party==='D'&&book[0]==='Perda na cessão — resultado financeiro'?15:0;
- if(!debit&&!credit)return data;
- const rows=[...data.rows,{stage:9,debit,credit}].sort((a,b)=>a.stage-b.stage);
- let balance=data.opening;
- for(const row of rows){balance+=row.debit-row.credit;row.balance=balance;}
- return {...data,rows,balance};
-}
-function correctedBookData(party,book,until=step){return consolidatedBookData(party,book,until);}
-function renderReason(consolidated=false,correction=false,group=true){
- const amount=v=>Math.abs(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
- const balance=v=>`<span class="${v>0?'debit-line':v<0?'credit-line':'zero-value'}">${amount(v)}${v?' '+(v>0?'D':'C'):''}</span>`;
- const category=book=>{
-  const name=book[0];
-  if(['Caixa / bancos','Contas a receber','Direitos creditórios','Investimento em cotas','IRRF a compensar — come-cotas'].includes(name))return 'assets';
-  if(['Tributos a pagar','Tributos a pagar — IRPJ/CSLL','IRRF a recolher — cotistas'].includes(name))return 'liabilities';
-  if(['PL de abertura','Cotas integralizadas — patrimônio do fundo'].includes(name))return 'equity';
-  return 'results';
- };
-
- const card=(party,book)=>{
-  const data=correction?correctedBookData(party,book):consolidated?consolidatedBookData(party,book):bookData(party,book,step,group);
-  const rowCount=rows=>rows.reduce((total,r)=>total+(r.debit?1:0)+(r.credit?1:0),0);
-  const remaining=Math.max(0,Math.max(rowCount(consolidatedBookData(party,book,10).rows),rowCount(consolidatedBookData(party,book,11).rows))-rowCount(data.rows));
-  const previousStage=step===11?9:Math.max(0,step-1);
-  const previous=group&&previousStage>=8?consolidatedBookData(party,book,previousStage):bookData(party,book,previousStage,group);
-  const changed=(value,old)=>introStep===null&&step>0&&Math.abs(value-old)>1e-8;
-  const hidden=consolidated&&party==='D'&&['Caixa / bancos','PL de abertura','Tributos a pagar — IRPJ/CSLL'].includes(book[0]);
-  const movement=(value,type)=>value?'<span class="'+(type==='D'?'debit-line':'credit-line')+'">'+amount(value)+' '+type+'</span>':'';
-  return `<article class="reason-card ${consolidated&&party==='T'&&book[0]==='Investimento em cotas'?'combined-quota-investment ':''}${consolidated&&party==='T'&&book[0]==='IRRF a compensar — come-cotas'?'combined-irrf-credit ':''}${(!group||step<8)&&party==='T'&&book[0]==='IRRF a compensar — come-cotas'?'compact-irrf-credit ':''}${hidden?'consolidated-placeholder':''}" ${hidden?'aria-hidden="true"':''}><h4>${consolidated&&party==='T'&&book[0]==='Tributos a pagar'?'Tributos a pagar — IRPJ/CSLL':book[0]}</h4><table><thead><tr><th>Et.</th><th>Movimento</th><th>Saldo</th></tr></thead><tbody><tr class="opening-row ${changed(data.opening,previous.opening)?'changed-posting':''}"><td></td><td>${movement(Math.abs(data.opening),data.opening>0?'D':'C')}</td><td>${balance(data.opening)}</td></tr>${data.rows.map(r=>{
-   const old=previous.rows.find(v=>v.stage===r.stage);
-   const oldDebitBalance=old?old.balance+old.credit:previous.balance;
-   const debitBalance=r.balance+r.credit;
-   const line=(value,type,currentBalance,oldValue,oldBalance)=>{
-    const altered=changed(value,oldValue)||changed(currentBalance,oldBalance);
-    return '<tr class="'+(altered?'changed-posting':'')+'"><td>'+displayStage(r.stage)+'</td><td>'+movement(value,type)+'</td><td>'+balance(currentBalance)+'</td></tr>';
-   };
-   const names=[book[0],...book[2]];
-   const firstEntry=stageJournal(r.stage,group).find(([p,d,c])=>p===party&&(names.includes(d)||names.includes(c)));
-   const creditFirst=r.debit&&r.credit&&firstEntry&&!names.includes(firstEntry[1])&&names.includes(firstEntry[2]);
-   if(creditFirst)return line(r.credit,'C',r.balance-r.debit,old?.credit||0,old?old.balance-old.debit:previous.balance)+line(r.debit,'D',r.balance,old?.debit||0,old?.balance??previous.balance);
-   return (r.debit?line(r.debit,'D',debitBalance,old?.debit||0,oldDebitBalance):'')+(r.credit?line(r.credit,'C',r.balance,old?.credit||0,old?.balance??previous.balance):'');
-  }).join('')}${Array.from({length:remaining},()=>'<tr class="reserved-posting" aria-hidden="true"><td>&nbsp;</td><td></td><td></td></tr>').join('')}</tbody></table></article>`;
- };
- const entities=consolidated?[{id:'combined',label:'Cedentes (D) + Cotistas (T)',parties:['T','D']},{id:'F',label:'FIDC (F)',parties:['F']}]:[{id:'T',label:'Cotistas (T)',parties:['T']},{id:'D',label:'Cedentes (D)',parties:['D']},{id:'F',label:'FIDC (F)',parties:['F']}];
- return `<div class="reason-columns financial-books ${consolidated?'financial-combined':''}">${entities.map(entity=>{
-  const items=entity.parties.flatMap(party=>books[party].filter(book=>!(party==='T'&&book[0]==='Tributos a pagar'&&!consolidated)&&(group||book[0]!=='Despesa de administração/gestão do FIDC')&&!(consolidated&&party==='D'&&['Caixa / bancos','PL de abertura','Tributos a pagar — IRPJ/CSLL'].includes(book[0]))).map(book=>({party,book})));
-  return `<section class="reason-party reason-entity book-party-${entity.id}"><h3 class="${entity.id==='combined'?'combined-party-heading':'party-'+entity.id}">${entity.label}</h3><div class="financial-grid">${[['assets','Ativo'],['liabilities','Passivo'],['equity','Patrimônio líquido'],['results','Resultado']].map(([kind,label])=>`<section class="account-group group-${kind}" aria-label="${label} · ${entity.label}"><h4 class="account-group-heading">${label}</h4><div class="account-group-cards">${items.filter(item=>category(item.book)===kind).map(item=>card(item.party,item.book)).join('')}</div></section>`).join('')}</div></section>`;
- }).join('')}</div><p class="reason-key">${step===11&&group?'Alternativa 13.b — Desconsideração do FIDC: parte dos saldos da etapa 12 e exclui todos os lançamentos de 13.a. Débito em Receita financeira e crédito em Cotas integralizadas — patrimônio do fundo, 15. Em seguida: débito de 100 em Cotas integralizadas e crédito de 100 em Caixa / bancos; débito de 1,00 em Caixa / bancos e créditos de 0,50 em Despesa de administração e de 0,50 em Despesa de gestão. Todas as contas do FIDC têm saldo final zero, inclusive caixa, cotas, receitas, despesas e IRRF. Em Cedentes + Cotistas: D — Investimento em cotas 1 / C — Perda na avaliação das cotas 1; D — Caixa / bancos 100 / C — Investimento em cotas 100; D — Despesa de administração/gestão do FIDC 1 / C — Caixa / bancos 1. Saldo do investimento e da perda nas cotas: zero; caixa agregado: 85 + 100 − 1 = 184; despesa de administração/gestão: 1; tributos a pagar: 34; PL final: 150. Ajustes ilustrativos da hipótese apresentada; não representam pagamentos ou reembolsos comprovados. Sem retenção, recolhimento ou crédito de IRRF. Ajuste ilustrativo da hipótese apresentada, sem dissolução jurídica do fundo. Destaques comparados à etapa 12. ':''}${step===10&&group?'Come-cotas: T debita IRRF a compensar e credita cotas, 2,10. F debita patrimônio de cotistas e credita IRRF a recolher, 2,10; a administradora efetua o recolhimento ao Tesouro com recursos de F, que debita IRRF a recolher e credita caixa, 2,10. Cotas e caixa de F: 96,90; patrimônio líquido de F: 96,90 (85 − 2,10 + 14). Crédito de IRRF em T: 2,10; IRRF a recolher em F: zero após pagamento. IRRF não é despesa de F nem nova despesa de T. ':''}${correction?'Etapa 12 — ajuste de eliminação econômica no quadro agregado D + T: débito em Resultado na avaliação das cotas, 15, e crédito em Perda na cessão — resultado financeiro, 15. O ganho de 15 é eliminado e a perda na cessão fica zerada; o resultado na avaliação das cotas mantém saldo devedor de 1 pelos custos externos. Ajuste apenas do quadro agregado sob a premissa de ausência de ganho e perda econômicos para o beneficiário comum; não é lançamento individual nas empresas nem consolidação completa pelo CPC 36, pois F permanece separado. Os registros individuais anteriores são preservados. Correção fiscal de D: débito no benefício de IRPJ/CSLL e crédito em tributos a pagar, 5,10. A eliminação econômica não substitui o ajuste fiscal na apuração individual de D. Benefício: zero; tributos: 34; resultado incremental D + T: −1, referente aos custos externos; PL final D + T: 150. FIDC separado. ':consolidated?'Grupo D + T: caixa, PL de abertura e tributos somados; cotas mantidas. FIDC separado. Base inicial hipotética: 100; declarada: 85; corrigida: 100. ':''}${step===7?'Etapa 10: saldos mantidos, sem alteração ou novo lançamento. ':step===8&&consolidated?'Etapa 11: somente linhas alteradas pela agregação de D + T destacadas. No PL, a linha 11 incorpora os 66 de D ao saldo inicial de 85 de T: saldo agregado de 151. É movimentação do quadro agregado, sem novo lançamento nas empresas. ':''}Primeira linha: saldos de abertura. PL de abertura não inclui encerramento das contas de resultado. ${correction?'Correção fiscal ilustrativa reconhecida nesta etapa, sob premissa de perda indedutível.':'Correção fiscal ainda não lançada.'} ${step===11&&group?'D + T: baixa integral do investimento contra caixa e reconhecimento direto da despesa de 1, sem IRRF.':step===10&&group?'T: IRRF antecipado de 2,10, compensável com IRPJ; não se compensa com CSLL. O rendimento tributável é 14, não o PL de 99.':'T: sem IRRF lançado; não há resgate, amortização ou distribuição no fluxo.'} ${correction?'Base tributável de D: 85 + 15 = 100. Reversão tributária de 5,10 apenas no cenário 2; sem resgate de cotas e sem incluir F no grupo.':'Registros individuais iguais nos dois cenários sob as premissas.'}</p>`;
-}
-
-function pause(){clearInterval(timer);timer=null;render()}
-function start(){if(step===stages.length-1&&introStep===null){step=0;introStep=0;}timer=setInterval(()=>{advance();render();if(step===stages.length-1&&introStep===null)pause()},Number(document.getElementById('speed').value));render()}
-document.getElementById('play').onclick=()=>timer?pause():start();document.getElementById('prev').onclick=()=>{pause();retreat();render()};document.getElementById('next').onclick=()=>{pause();advance();render()};document.getElementById('reset').onclick=()=>{pause();step=0;introStep=0;render()};document.getElementById('steps').onclick=e=>{const info=e.target.closest('.step-info');const button=info?info.parentElement.querySelector('.step-select'):e.target.closest('[data-step],[data-intro]');if(button){pause();const intro=button.dataset.intro;const selected=button.dataset.step;if(intro!==undefined){introStep=Number(intro);step=0;}else{introStep=null;step=Number(selected);}render();if(info){document.querySelector(intro!==undefined?'[data-info-intro="'+intro+'"]':'[data-info-step="'+selected+'"]').focus();document.getElementById('premise-dialog').showModal();}}};document.getElementById('speed').onchange=()=>{if(timer){pause();start()}};render();
-document.getElementById('group-t-rate').oninput=()=>{render()};
-document.getElementById('close-premises').onclick=()=>document.getElementById('premise-dialog').close();
-document.getElementById('fullscreen').onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen()}catch{document.getElementById('fullscreen').textContent='Use F11 para tela cheia'}};
-
-function alignFinancialGroups(){
- const grids=[...document.querySelectorAll('.financial-grid')];
- for(const grid of grids){grid.style.gridTemplateRows='';grid.querySelector('.group-equity').style.paddingTop='';}
- if(!window.matchMedia('(min-device-width:1151px) and (orientation:landscape)').matches||!grids.length)return;
- const height=kind=>Math.max(...grids.map(grid=>grid.querySelector('.group-'+kind).offsetHeight));
- const gap=6;
- const passivo=height('liabilities');
- const pl=Math.max(height('equity'),height('assets')-passivo-gap);
- for(const grid of grids)grid.style.gridTemplateRows=passivo+'px '+pl+'px auto';
- // Align the bottom of equity books with the second row of asset books.
- for(const grid of grids){
-  const equity=grid.querySelector('.group-equity');
-  const equityCard=equity.querySelector('.reason-card');
-  const assets=grid.querySelector('.group-assets .account-group-cards');
-  const firstTop=assets.children[0]?.getBoundingClientRect().top;
-  const secondRow=[...assets.children].find(card=>card.getBoundingClientRect().top>firstTop+1);
-  if(!equityCard||!secondRow)continue;
-  const scale=grid.getBoundingClientRect().width/grid.offsetWidth||1;
-  const shift=Math.max(0,(secondRow.getBoundingClientRect().bottom-equityCard.getBoundingClientRect().bottom)/scale);
-  equity.style.paddingTop=shift+'px';
- }
- const alignedPl=Math.max(pl,height('equity'));
- for(const grid of grids)grid.style.gridTemplateRows=passivo+'px '+alignedPl+'px auto';
-}
-
-function fitLandscape(){
- const main=document.querySelector('main');main.style.zoom='1';main.style.width='';main.style.minHeight='';main.style.margin='';
- const landscape=window.screen.width>1150&&window.innerWidth>window.innerHeight;
- if(!landscape){alignFinancialGroups();document.getElementById('premise-dialog').style.zoom='1';return;}
- const browserZoom=Math.max(0.25,Math.min(5,window.outerWidth/window.innerWidth||1));
- const width=Math.max(2848,window.outerWidth||window.innerWidth);
- main.style.width=width+'px';main.style.minHeight='1080px';
- alignFinancialGroups();
- const height=main.getBoundingClientRect().height;
- const scale=Math.min(1,(window.innerWidth-4)*browserZoom/width,(window.innerHeight-4)*browserZoom/height);
- main.style.zoom=String(scale);main.style.margin='0 auto';
- document.getElementById('premise-dialog').style.zoom=String(1/scale);
-}
-window.addEventListener('resize',()=>requestAnimationFrame(fitLandscape));
-document.addEventListener('fullscreenchange',()=>requestAnimationFrame(fitLandscape));
-document.querySelector('.group-tax-box').addEventListener('toggle',()=>requestAnimationFrame(fitLandscape));
-if(document.fonts)document.fonts.ready.then(fitLandscape);
-</script></body></html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Fluxos do FIDC</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <div>
+          <h1>Fluxos do FIDC <span class="draft-status">Simulação preliminar · DRAFT</span></h1>
+        </div>
+        <span class="pill">Valores em R$ milhões</span>
+      </header>
+      <section class="toolbar" aria-label="Controles da simulação">
+        <div class="controls">
+          <button id="play">Reproduzir</button><button id="prev">Etapa anterior</button
+          ><button id="next">Próxima etapa</button><button id="reset">Reiniciar</button
+          ><button id="fullscreen">Tela cheia</button><label for="speed">Intervalo</label
+          ><select id="speed">
+            <option value="2500">2,5 segundos</option>
+            <option value="4500" selected>4,5 segundos</option>
+            <option value="7000">7,0 segundos</option>
+          </select>
+        </div>
+        <nav class="steps" id="steps" aria-label="Selecionar etapa"></nav>
+      </section>
+      <section class="current" aria-live="polite">
+        <div class="number" id="num"></div>
+        <div>
+          <h2 id="title"></h2>
+          <p id="description"></p>
+        </div>
+      </section>
+      <div class="workbench"><div class="panels" id="panels"></div></div>
+      <dialog id="premise-dialog">
+        <button id="close-premises">Fechar</button>
+        <section class="notes" aria-label="Leitura econômica e hipótese tributária">
+          <p class="draft-note">
+            <strong>Simulação preliminar · DRAFT.</strong> Material em elaboração, sujeito a revisão
+            das premissas, dos lançamentos e do tratamento tributário. Não constitui conclusão
+            definitiva sobre uma operação ou fundo real.
+          </p>
+          <h2>Cedentes e Cotistas com beneficiário econômico final comum</h2>
+          <p>
+            <strong>Premissa adicional desta leitura:</strong> D e T têm o mesmo beneficiário
+            econômico final, que detém integralmente os interesses econômicos considerados no
+            exemplo. Pertencer ao mesmo grupo, por si só, não prova essa identidade: ela precisa ser
+            verificada, inclusive quanto a minoritários e cotistas externos.
+          </p>
+          <section id="stage-perspectives" aria-live="polite"></section>
+          <section id="closing-check" aria-live="polite"></section>
+          <section id="ledger-notes"></section>
+          <div id="entry-content" aria-live="polite"></div>
+          <details class="group-tax-box">
+            <summary>Diferença tributária do grupo · exemplo hipotético</summary>
+            <label class="tax-rate-label"
+              >Alíquota sobre o ganho de T — premissa (%)
+              <input id="group-t-rate" type="number" min="0" max="100" step="0.1" value="15"
+            /></label>
+            <div id="group-tax-content" aria-live="polite"></div>
+          </details>
+          <div id="economic-reading" aria-live="polite" class="aggregate"></div>
+          <section class="reading-guidance">
+            <h2>Critérios de entidade de investimento</h2>
+            <p>
+              Para o enquadramento tributário, a
+              <a
+                href="https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/lei/l14754.htm"
+                target="_blank"
+                rel="noopener"
+                >Lei 14.754/2023, art. 23</a
+              >, regulamentada pela
+              <a
+                href="https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?numero=5111&tipo=Resolu%C3%A7%C3%A3o+CMN"
+                target="_blank"
+                rel="noopener"
+                >Resolução CMN 5.111/2023, art. 2º</a
+              >, exige gestão profissional com poderes efetivos de investimento e desinvestimento
+              discricionários e propósito de retorno por apreciação do capital, renda ou ambos.
+              Devem ser examinadas a estrutura, a atuação dos gestores e as hipóteses da resolução;
+              a constituição formal, a relação entre cedente e cotista ou a concentração da
+              carteira, isoladamente, não resolvem a classificação. A Resolução CVM 175 disciplina o
+              funcionamento dos fundos, mas não substitui esses critérios tributários. Para o regime
+              de FIDC, observar também o
+              <a
+                href="https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/lei/l14754.htm"
+                target="_blank"
+                rel="noopener"
+                >art. 19 da Lei 14.754/2023 — composição mínima de 67% de direitos creditórios e
+                regras de enquadramento</a
+              >.
+            </p>
+            <p>
+              <strong>Premissas independentes:</strong> A é tratado como entidade de investimento,
+              cumpridos os demais requisitos dos arts. 18 e 24. Em B, a alternativa 13.a assume
+              expressamente o não enquadramento para demonstrar o art. 26. Ser do mesmo grupo não
+              determina automaticamente come-cotas. A classificação tributária também não deve ser
+              confundida com o conceito contábil de entidade de investimento do CPC 36.
+            </p>
+            <h2>Operação registrada e tratamento contábil adequado</h2>
+            <p>
+              Os lançamentos iniciais de B mostram a operação declarada, com perda de 15 e dedução
+              pressuposta como indevida. Eles não representam aprovação desse tratamento. Se houver
+              retenção substancial de riscos e benefícios, o
+              <a
+                href="https://www.cpc.org.br/Arquivos/Documentos/530_CPC_48_rev_19.pdf"
+                target="_blank"
+                rel="noopener"
+                >CPC 48, item 3.2.15</a
+              >
+              exige manter o recebível e reconhecer um passivo pela contraprestação recebida. Pode
+              existir despesa financeira verdadeira ao longo do prazo; sua existência e
+              dedutibilidade exigem análise própria. A etapa 12 separa recomposição fiscal e
+              eliminação econômica no quadro D + T; não implementa uma nova sequência de
+              contabilização como empréstimo garantido.
+            </p>
+            <h2>Alcance da alternativa 13.b</h2>
+            <p>
+              A etapa 13.b é uma recomposição econômica ilustrativa a partir de 12, excludente de
+              13.a. A receita financeira de F é reclassificada para cotas; o investimento é baixado
+              contra caixa; o custo externo de 1 é representado em D + T. Os créditos nas despesas
+              de F e o débito em Caixa não afirmam que administrador e gestor devolveram os valores.
+              A desconsideração fiscal não implica automaticamente dissolução, liquidação jurídica,
+              transferências bancárias, restituições ou esses lançamentos individuais. Tais fatos,
+              se efetivos, exigem documentação e tratamento contábil próprio.
+            </p>
+            <h2>Referências por assunto</h2>
+            <table class="reference-map">
+              <thead>
+                <tr>
+                  <th>Assunto</th>
+                  <th>Dispositivo e aplicação</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Baixa e retenção de riscos</td>
+                  <td>
+                    <a
+                      href="https://www.cpc.org.br/Arquivos/Documentos/530_CPC_48_rev_19.pdf"
+                      target="_blank"
+                      rel="noopener"
+                      >CPC 48, itens 3.2.6, 3.2.15 e 3.2.16</a
+                    >
+                    — distinguir baixa, manutenção integral e envolvimento contínuo.
+                  </td>
+                </tr>
+                <tr>
+                  <td>Mensuração e resultado</td>
+                  <td>
+                    <a
+                      href="https://www.cpc.org.br/Arquivos/Documentos/530_CPC_48_rev_19.pdf"
+                      target="_blank"
+                      rel="noopener"
+                      >CPC 48, itens 5.1.1, 5.4.1 e 5.7.1</a
+                    >
+                    — reconhecimento inicial, juros efetivos e valor justo por meio do resultado,
+                    conforme a classificação aplicável.
+                  </td>
+                </tr>
+                <tr>
+                  <td>Entidade de investimento</td>
+                  <td>
+                    <a
+                      href="https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/lei/l14754.htm"
+                      target="_blank"
+                      rel="noopener"
+                      >Lei 14.754/2023, arts. 18, 19 e 23</a
+                    >
+                    e
+                    <a
+                      href="https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?numero=5111&tipo=Resolu%C3%A7%C3%A3o+CMN"
+                      target="_blank"
+                      rel="noopener"
+                      >Resolução CMN 5.111/2023, art. 2º</a
+                    >
+                    — requisitos tributários e gestão profissional.
+                  </td>
+                </tr>
+                <tr>
+                  <td>Momento da retenção</td>
+                  <td>
+                    <a
+                      href="https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/lei/l14754.htm"
+                      target="_blank"
+                      rel="noopener"
+                      >Lei 14.754/2023, arts. 24 e 26</a
+                    >
+                    — regime sem incidência periódica e regime periódico, respectivamente.
+                  </td>
+                </tr>
+                <tr>
+                  <td>Responsável e compensação</td>
+                  <td>
+                    <a
+                      href="https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/lei/l14754.htm"
+                      target="_blank"
+                      rel="noopener"
+                      >Lei 14.754/2023, arts. 31, I, e 32, II</a
+                    >
+                    — administradora retém e recolhe; IRRF como antecipação de IRPJ para a PJ no
+                    regime indicado.
+                  </td>
+                </tr>
+                <tr>
+                  <td>Dedutibilidade</td>
+                  <td>
+                    <a
+                      href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/decreto/d9580.htm"
+                      target="_blank"
+                      rel="noopener"
+                      >RIR/2018, art. 311</a
+                    >
+                    — critérios gerais de despesas para IRPJ; verificar comprovação e demais regras
+                    específicas. A alíquota combinada de 34% e a correção de 5,10 são premissas
+                    numéricas do exemplo, não conclusões extraídas isoladamente desse artigo.
+                  </td>
+                </tr>
+                <tr>
+                  <td>Consolidação</td>
+                  <td>
+                    <a
+                      href="https://www.cpc.org.br/Arquivos/Documentos/448_CPC_36_R3_rev%2008.pdf"
+                      target="_blank"
+                      rel="noopener"
+                      >CPC 36, itens 7 e B86</a
+                    >
+                    — controle, perímetro e eliminações. A agregação econômica D + T desta página
+                    mantém F separado e não equivale à consolidação.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <p>
+              Os números, a artificialidade pressuposta no cenário B e os ajustes econômicos são
+              hipóteses didáticas. Esta página não atribui ao CARF jurisprudência uniforme sobre
+              FIDC cativo nem apresenta conclusão sobre fundo real. Uma análise de precedentes deve
+              identificar número do acórdão, órgão julgador, data, fatos e fundamentos aplicáveis.
+            </p>
+          </section>
+          <h2 style="margin-top: 18px">Momento da tributação das cotas</h2>
+          <p>
+            Até a etapa 12, não se simula data de incidência periódica. No cenário A, o FIDC é
+            classificado como entidade de investimento e enquadrado nos arts. 18 e 24, sem
+            tributação periódica. Na etapa 13.a, apenas o cenário B adota expressamente a premissa
+            de FIDC não classificado como entidade de investimento (art. 26): último dia útil de
+            maio ou novembro, rendimento tributável de 14, sem retenções anteriores, e IRRF de 15% =
+            2,10. O enquadramento é premissa didática independente do vínculo entre cedente e
+            cotista. A administradora retém o imposto mediante redução das cotas e realiza o
+            recolhimento ao Tesouro, com recursos do FIDC, por conta dos cotistas (art. 31, I). A
+            saída de caixa e a baixa de IRRF a recolher são registradas no fundo; não constituem
+            despesa própria da administradora. T é PJ no lucro real, presumido ou arbitrado, com
+            IRRF compensável com IRPJ (art. 32, II); não é despesa tributária definitiva nem imposto
+            sobre o lucro do fundo. Nos fundos enquadrados no art. 18 da Lei 14.754/2023, o art. 24
+            prevê IRRF na distribuição de rendimentos, amortização ou resgate. A mera valorização
+            não gera IRRF neste regime. O enquadramento precisa ser verificado; outros regimes podem
+            ter tributação periódica. A ausência de IRRF não resolve, por si só, o reconhecimento de
+            tributos correntes ou diferidos do cotista pessoa jurídica. Nesta simulação, não se
+            calculam esses efeitos adicionais.
+          </p>
+          <h2 style="margin-top: 18px">Planejamento tributário agressivo — hipótese simulada</h2>
+          <p>
+            Neste cenário hipotético, a despesa de cessão é artificial, foi deduzida em D e o
+            resultado correspondente beneficia T, do mesmo grupo. A simulação demonstra a dedução
+            indevida e a permanência econômica do resultado no grupo; a adição fiscal da despesa
+            indedutível recompõe a base. A premissa não é conclusão sobre um fundo real.
+          </p>
+          <h2 style="margin-top: 18px">Substância econômica, riscos e taxa de desconto</h2>
+          <p>
+            <strong
+              >Na hipótese simulada, estruturas meramente formais entre partes relacionadas, sem
+              efetiva assunção ou transferência dos riscos que justificariam a cessão, são
+              utilizadas para gerar e deduzir despesas artificiais na cedente, reduzindo
+              indevidamente as bases de IRPJ/CSLL. Isso pode ocorrer mesmo sem prejuízo econômico
+              líquido para o grupo e ainda que a taxa de desconto coincida com a de mercado: o preço
+              de mercado não supre a ausência de substância econômica.</strong
+            >
+          </p>
+          <p>
+            A análise deve verificar a execução dos contratos, a origem dos recursos, o destino dos
+            rendimentos e quem efetivamente suporta os riscos. Havendo prejuízo fiscal ou base
+            negativa, a dedução pode ampliá-los, sem necessariamente reduzir tributos correntes. A
+            retenção de riscos não torna, isoladamente, fictício um custo financeiro real: sua
+            existência, contabilização e dedutibilidade devem ser examinadas separadamente.
+          </p>
+          <h2 style="margin-top: 18px">Como verificar a hipótese de despesa artificial</h2>
+          <p>
+            <strong>Hipótese a testar:</strong> os 15 de deságio não têm fundamento econômico
+            demonstrado, o resultado beneficia o mesmo grupo e a despesa reduz a base de IRPJ/CSLL
+            de D. Circulação intragrupo e vínculo societário não bastam para comprovar
+            artificialidade.
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Ponto a verificar</th>
+                <th style="text-align: left">Evidência necessária</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Origem e destino do dinheiro</td>
+                <td style="text-align: left">
+                  Extratos conciliados: aporte de T → F, pagamento de F → D e recebimento dos
+                  devedores. A circulação comprova o caminho dos recursos, não a inexistência da
+                  despesa.
+                </td>
+              </tr>
+              <tr>
+                <td>Transferência dos riscos</td>
+                <td style="text-align: left">
+                  Contratos, coobrigação, garantias, recompra, subordinação e perdas efetivas:
+                  identificar quem suporta a inadimplência e os demais riscos.
+                </td>
+              </tr>
+              <tr>
+                <td>Fundamento do deságio de 15</td>
+                <td style="text-align: left">
+                  Laudo de preço e comparação de prazo, risco de crédito e taxas de mercado, em
+                  conjunto com a substância econômica e a transferência efetiva de riscos. O uso de
+                  taxa de mercado não legitima uma estrutura meramente formal; a diferença entre
+                  valor nominal de 100 e preço de 85, isoladamente, também não comprova
+                  artificialidade.
+                </td>
+              </tr>
+              <tr>
+                <td>Beneficiário econômico</td>
+                <td style="text-align: left">
+                  Cadeia societária, titularidade, classes de cotas, direitos econômicos e cotistas
+                  externos: quantificar quanto do resultado efetivamente pertence ao grupo.
+                </td>
+              </tr>
+              <tr>
+                <td>Dedução fiscal efetiva</td>
+                <td style="text-align: left">
+                  ECD, ECF, e-Lalur/e-Lacs e memória de apuração: confirmar se a despesa de 15
+                  reduziu a base ou já foi adicionada fiscalmente.
+                </td>
+              </tr>
+              <tr>
+                <td>Tributação em T</td>
+                <td style="text-align: left">
+                  Rendimentos, bases tributáveis, IRRF, compensações e períodos: verificar a carga
+                  total, além da retenção.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <p>
+            <strong>Teste contábil — CPC 48, item 3.2.15:</strong> se D retiver substancialmente os
+            riscos e benefícios, deve manter o recebível e reconhecer um passivo pelos recursos
+            recebidos. Isso pode tornar incorreta a baixa com perda imediata de 15, mas não exclui
+            um custo financeiro verdadeiro ao longo do prazo.
+          </p>
+          <p>
+            <strong>Distinguir as conclusões:</strong> despesa fictícia, despesa real contabilizada
+            incorretamente e despesa real fiscalmente indedutível são situações diferentes. A
+            eliminação intragrupo na consolidação também não prova despesa fictícia nas contas
+            individuais; exige examinar o controle e o perímetro de consolidação.
+          </p>
+          <p>
+            <strong>Não presumir uma economia de 34% menos 15%.</strong> O art. 32, II, da Lei
+            14.754/2023 trata o IRRF como antecipação do IRPJ para pessoas jurídicas no lucro real,
+            presumido ou arbitrado. É necessário medir a tributação total em D e T, os períodos de
+            reconhecimento e eventuais créditos; não apenas a retenção no fundo.
+          </p>
+          <p>
+            Referências:
+            <a
+              href="https://www.gov.br/receitafederal/pt-br/assuntos/orientacao-tributaria/tributos/CSLL"
+              target="_blank"
+              rel="noopener"
+              >RFB — apuração da CSLL</a
+            >
+            ·
+            <a
+              href="https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/lei/l14754.htm"
+              target="_blank"
+              rel="noopener"
+              >Lei 14.754/2023, arts. 18, 23, 24, 26, 31 e 32</a
+            >
+            ·
+            <a
+              href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/decreto/d9580.htm"
+              target="_blank"
+              rel="noopener"
+              >RIR/2018, art. 311</a
+            >
+            ·
+            <a
+              href="https://www.cpc.org.br/Arquivos/Documentos/530_CPC_48_rev_19.pdf"
+              target="_blank"
+              rel="noopener"
+              >CPC 48, seção 3.2</a
+            >
+            ·
+            <a
+              href="https://www.cpc.org.br/Arquivos/Documentos/448_CPC_36_R3_rev%2008.pdf"
+              target="_blank"
+              rel="noopener"
+              >CPC 36, item B86(c)</a
+            >.
+          </p>
+        </section>
+        <div class="legend">
+          <span><i class="swatch" style="background: var(--blue)"></i>Dinheiro</span
+          ><span><i class="swatch" style="background: var(--gold)"></i>Recebíveis</span
+          ><span><i class="swatch" style="background: var(--purple)"></i>Cotas e valorização</span>
+        </div>
+        <details class="notes" open>
+          <summary>Premissas do exemplo</summary>
+          <p>
+            Aporte de 85; créditos nominais e contábeis de 100; aquisição por 85; recebimento
+            integral; despesas totais de 1, divididas didaticamente entre A (0,5) e G (0,5). Sem
+            inadimplência, outros custos ou remuneração do caixa; os tributos projetados seguem as
+            premissas de D e T. Uma única classe de cotas. T é pessoa jurídica, com avaliação das
+            cotas ao valor justo por meio do resultado neste exemplo. Os saldos incluem a provisão
+            de IRPJ/CSLL de D, sem pagamento. T não tem imposto corrente lançado antes de evento
+            tributável. Para D, parte-se de provisão inicial de 34 e PL de 66; a DRE do recorte
+            apresenta apenas efeitos incrementais da cessão. Para T, a comparação de carga total
+            futura continua separada dos lançamentos; na etapa 13.a do cenário B, 15% é a alíquota
+            do IRRF antecipado. O fluxo não simula resgate, amortização ou distribuição; até a etapa
+            12 não simula incidência periódica; a etapa 13.a do cenário B demonstra come-cotas e
+            recolhimento. No cenário A, o FIDC é entidade de investimento e não há come-cotas. Não
+            calcula tributos diferidos ou outros ajustes fiscais do cotista PJ. No cenário 2,
+            assume-se despesa artificial contabilizada e indevidamente deduzida, beneficiário
+            econômico comum e titularidade integral; a etapa 12 reconhece a reversão do benefício de
+            IRPJ/CSLL em D, mantida nas alternativas 13.a e 13.b.
+          </p>
+          <p>
+            Os saldos de caixa são relativos ao exemplo. Os devedores são externos ao grupo. No
+            cenário 2, D e T são empresas distintas do mesmo grupo; A e G ficam fora do perímetro
+            ilustrativo.
+          </p>
+          <p>
+            No cenário A, a perda de 15 em D pressupõe cessão que permita a baixa dos créditos. No
+            cenário B, representa a operação declarada sob a hipótese de despesa artificial; o
+            tratamento contábil adequado depende do exame dos riscos e benefícios, inclusive da
+            manutenção do recebível e do reconhecimento de passivo, quando exigidos pelo CPC 48. O
+            rendimento de 15 em F é apropriado ao longo do prazo: a etapa 7 resume essa evolução. A
+            valorização em T representa sua participação no resultado de F e não deve ser somada a
+            ele como outro ganho econômico.
+          </p>
+          <p>
+            O quadro do grupo agrega economicamente D e T e inclui o investimento em cotas. Não é
+            demonstração contábil consolidada. A simulação não determina transferência de riscos,
+            dedutibilidade, tributação ou enquadramento como entidade de investimentos. A
+            constituição jurídica e os contratos antecedem o aporte; taxas podem ser pagas ao longo
+            do prazo.
+          </p>
+        </details>
+      </dialog>
+    </main>
+    <script type="module" src="assets/js/app.js"></script>
+  </body>
+</html>

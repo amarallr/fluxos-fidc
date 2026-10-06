@@ -12,22 +12,23 @@ Simulação interativa e hipotética dos fluxos de um FIDC, com comparação ent
 
 1. No GitHub, escolha **Code → Download ZIP**.
 2. Extraia o ZIP.
-3. Abra `index.html` em um navegador atualizado.
+3. Sirva a pasta por HTTP, por exemplo com `python -m http.server 8000`.
+4. Abra `http://localhost:8000` em um navegador atualizado.
 
-O arquivo reúne HTML, CSS e JavaScript e funciona sem instalação ou servidor. Inclui layout para computador e celular, navegação por etapas, diagramas e livros razão.
+A página usa HTML, CSS e módulos nativos de JavaScript, sem framework, banco de dados ou servidor de aplicação. O servidor HTTP local é necessário para carregar os módulos; abrir por `file://` pode ser bloqueado pelo navegador.
 
 ## Leiaute e navegação
 
-No computador em paisagem, as 13 etapas aparecem em uma única linha e a simulação se ajusta à página. A numeração começa em 1 (Beneficiários), seguida de Constituição e Contratos. Os livros razão e diagramas usam a mesma numeração. Explicações detalhadas estão em **Premissas**.
+No computador em paisagem, o menu tem 13 colunas, com 13.a acima de 13.b e a simulação se ajusta à página. A numeração começa em 1 (Beneficiários), seguida de Constituição e Contratos. Os livros razão e diagramas usam a mesma numeração. Explicações detalhadas estão em nos ícones de informação de cada etapa.
 
 ## Etapas finais
 
 - **11. Grupo:** agregação somente de Cedentes (D) + Cotistas (T), com FIDC (F) separado e cotas mantidas no ativo.
-- **12. Correção fiscal — recomposição do IRPJ/CSLL na Cedente/Cotista:** sob a hipótese de perda indedutível, reversão do benefício de R$ 5,10 milhões e recomposição dos tributos a pagar de R$ 28,90 milhões para R$ 34 milhões.
+- **12. Correção fiscal IRPJ/CSLL:** sob a hipótese de perda indedutível, reversão do benefício de R$ 5,10 milhões e recomposição dos tributos a pagar de R$ 28,90 milhões para R$ 34 milhões.
 
-- **13. IRRF Come cotas no FIDC:** no cenário B, premissa expressa de FIDC não classificado como entidade de investimento, sujeito ao art. 26 da Lei 14.754/2023. Rendimento tributável de R$ 14 milhões × 15% = R$ 2,10 milhões, no último dia útil de maio ou novembro, sem retenções anteriores. O vínculo societário não determina esse enquadramento.
+- **13.a Come-cotas:** no cenário B, premissa expressa de FIDC não classificado como entidade de investimento, sujeito ao art. 26 da Lei 14.754/2023. Rendimento tributável de R$ 14 milhões × 15% = R$ 2,10 milhões, no último dia útil de maio ou novembro, sem retenções anteriores. O vínculo societário não determina esse enquadramento.
 
-Lançamentos da etapa 13 (R$ milhões):
+Lançamentos da etapa 13.a (R$ milhões):
 
 | Entidade | Débito | Crédito | Valor |
 | --- | --- | --- | ---: |
@@ -39,4 +40,18 @@ Após o recolhimento: cotas e caixa do FIDC de R$ 96,90 milhões; crédito de IR
 
 Base tributável inicial hipotética de R$ 100 milhões. Os números e tratamentos são premissas didáticas; não constituem apuração de fundo real. A marca PRELIMINAR · DRAFT integra a simulação.
 
-Atualizado em 05/10/2026, com layout móvel e etapas numeradas de 1 a 13. Alterações no site original não atualizam automaticamente este repositório.
+## Organização e manutenção
+
+- `assets/js/data.js`: premissas, etapas, contas e partidas.
+- `assets/js/accounting.js`: regras de cálculo e agregação, independentes da interface.
+- `assets/js/ledger.js`, `diagram.js` e `information.js`: apresentação.
+- `assets/js/layout.js`: alinhamento e zoom proporcional.
+- `assets/js/app.js`: navegação e controles.
+- `assets/css/styles.css`: estilos organizados e regras responsivas.
+
+Consulte [o guia de manutenção](docs/manutencao.md). Para verificar as regras contábeis, execute `npm test` com Node.js 20 ou superior; não é necessário instalar dependências.
+
+A etapa **13.b Desconsideração do FIDC** é uma alternativa a 13.a: parte da etapa 12, sem come-cotas, e demonstra os ajustes ilustrativos que zeram as contas do FIDC. Mantém o investimento em cotas e a perda nas cotas zerados em D + T, caixa de 184 e despesa de administração/gestão de 1.
+
+A versão anterior à reorganização está preservada na branch `backup/antes-modularizacao-2026-10-06`.
+
