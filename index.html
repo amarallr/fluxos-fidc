@@ -583,6 +583,10 @@ function renderReason(consolidated=false,correction=false,group=true){
     const altered=changed(value,oldValue)||changed(currentBalance,oldBalance);
     return '<tr class="'+(altered?'changed-posting':'')+'"><td>'+displayStage(r.stage)+'</td><td>'+movement(value,type)+'</td><td>'+balance(currentBalance)+'</td></tr>';
    };
+   const names=[book[0],...book[2]];
+   const firstEntry=stageJournal(r.stage,group).find(([p,d,c])=>p===party&&(names.includes(d)||names.includes(c)));
+   const creditFirst=r.debit&&r.credit&&firstEntry&&!names.includes(firstEntry[1])&&names.includes(firstEntry[2]);
+   if(creditFirst)return line(r.credit,'C',r.balance-r.debit,old?.credit||0,old?old.balance-old.debit:previous.balance)+line(r.debit,'D',r.balance,old?.debit||0,old?.balance??previous.balance);
    return (r.debit?line(r.debit,'D',debitBalance,old?.debit||0,oldDebitBalance):'')+(r.credit?line(r.credit,'C',r.balance,old?.credit||0,old?.balance??previous.balance):'');
   }).join('')}${Array.from({length:remaining},()=>'<tr class="reserved-posting" aria-hidden="true"><td>&nbsp;</td><td></td><td></td></tr>').join('')}</tbody></table></article>`;
  };
