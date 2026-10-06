@@ -210,7 +210,7 @@
 }
 
 /* Compact landscape composition: clear alternatives and more room for the books. */
-.step-alternatives{display:grid;gap:3px;min-width:0;grid-template-rows:auto 1fr 1fr}
+.step-alternatives{display:grid;gap:3px;min-width:0;grid-template-rows:1fr 1fr}
 .alternatives-label{font-size:12px;line-height:14px;color:var(--muted);font-weight:600;text-align:center}
 .step-alternatives .step-select{display:flex;align-items:center;justify-content:center;gap:7px;padding-right:20px}
 .step-alternatives .step-index{margin:0}
@@ -289,7 +289,7 @@ function groupAlternativeSteps(){
  alternatives.className='step-alternatives';
  alternatives.setAttribute('role','group');
  alternatives.setAttribute('aria-label','Etapas alternativas após a correção fiscal');
- alternatives.innerHTML='<span class="alternatives-label">Alternativas</span>';
+ 
  for(const number of [10,11])alternatives.append(menu.querySelector('[data-step="'+number+'"]').closest('.step-item'));
  menu.append(alternatives);
 }
