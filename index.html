@@ -195,6 +195,19 @@
  .financial-books.financial-combined .book-party-combined .group-results .account-group-cards{grid-template-columns:repeat(3,110px)}
  .financial-books .reason-card{width:110px;min-width:110px;max-width:110px;height:120px;min-height:120px;max-height:120px}
 }
+
+/* Improve readability while keeping the fixed ledger dimensions. */
+@media screen{
+ .steps button{font-size:16px}
+ .workbench .panel>svg text{font-size:22px!important}
+ .workbench .panel>svg .flow-label{font-size:20px!important}
+ .account-group-heading{font-size:14px}
+ .financial-books .reason-entity>h3{font-size:16px}
+}
+@media screen and (min-width:1151px) and (orientation:landscape){
+ .financial-books .reason-card h4{font-size:14px;line-height:14px}
+ .financial-books .reason-card table{font-size:14px}
+}
 </style></head><body><main>
 <header><div><h1>Fluxos do FIDC <span class="draft-status">Simulação preliminar · DRAFT</span></h1></div><span class="pill">Valores em R$ milhões</span></header>
 <section class="toolbar" aria-label="Controles da simulação"><div class="controls"><button id="play">Reproduzir</button><button id="prev">Etapa anterior</button><button id="next">Próxima etapa</button><button id="reset">Reiniciar</button><button id="fullscreen">Tela cheia</button><label for="speed">Intervalo</label><select id="speed"><option value="4500">4,5 segundos</option><option value="7000">7 segundos</option><option value="2500">2,5 segundos</option></select></div><nav class="steps" id="steps" aria-label="Selecionar etapa"></nav></section>
