@@ -6,8 +6,8 @@ import {
   constitutionStages,
   readingSources,
   stageReadingData,
-} from "./data.js?v=47a526d3aea3";
-import { bookData } from "./accounting.js?v=eeff23eba26a";
+} from "./data.js?v=24091f3dc908";
+import { bookData } from "./accounting.js?v=140a3a046e39";
 function readingLink(key, label) {
   return '<a href="' + readingSources[key] + '" target="_blank" rel="noopener">' + label + "</a>";
 }
@@ -75,7 +75,7 @@ function renderStageInformation({ step, introStep }) {
     fmt(fundPL(false)) +
     "</strong>; <strong>B — " +
     fmt(fundPL(true)) +
-    "</strong>. O PL inclui o resultado acumulado; não corresponde somente ao saldo da conta Cotas integralizadas.</p><table><thead><tr><th>Referência final</th><th>PL do FIDC — A</th><th>PL do FIDC — B</th></tr></thead><tbody><tr><td>12.a · Correção Fiscal IRPJ</td><td>99,00</td><td>99,00</td></tr><tr><td>13 · Come-cotas</td><td>99,00</td><td>96,90</td></tr><tr><td>12.b · Desconsideração ilustrativa</td><td>99,00</td><td>0,00</td></tr></tbody></table><p>Na alternativa B 12.b, investimento e perda nas cotas ficam zerados; Caixa de D + T = 184,00; despesa externa = 1,00; todas as contas de F ficam zeradas. Os saldos ilustram as premissas, não validam a operação ou a base tributável de um fundo real.</p>";
+    "</strong>. O PL inclui o resultado acumulado; não corresponde somente ao saldo da conta Cotas integralizadas.</p><table><thead><tr><th>Referência final</th><th>PL do FIDC — A</th><th>PL do FIDC — B</th></tr></thead><tbody><tr><td>12.a · Ajuste IRPJ/CSLL</td><td>99,00</td><td>99,00</td></tr><tr><td>13 · Come-cotas</td><td>99,00</td><td>96,90</td></tr><tr><td>12.b · Desconsideração ilustrativa</td><td>99,00</td><td>0,00</td></tr></tbody></table><p>Na alternativa B 12.b, investimento e perda nas cotas ficam zerados; Caixa de D + T = 184,00; despesa externa = 1,00; todas as contas de F ficam zeradas. Os saldos ilustram as premissas, não validam a operação ou a base tributável de um fundo real.</p>";
 }
 
 export function compactLedgerNotes({ step, introStep }) {

@@ -46,9 +46,9 @@ export const stages = [
     "8. Grupo",
   ],
   [
-    "Correção Fiscal IRPJ",
+    "Ajuste IRPJ/CSLL",
     "Cenário B: eliminação econômica no quadro D + T — débito no ganho nas cotas e crédito na perda na cessão, 15, zerando ambas as contas. Recomposição fiscal: base de 85 para 100 e reversão do benefício de 5,10. FIDC separado.",
-    "12.a Correção Fiscal IRPJ",
+    "12.a Ajuste IRPJ/CSLL",
   ],
   [
     "IRRF Come cotas no FIDC",
@@ -77,7 +77,7 @@ export const menuLabels = [
   "Despesas",
   "Resultado",
   "Grupo",
-  "Correção Fiscal IRPJ",
+  "Ajuste IRPJ/CSLL",
   "Come-cotas",
   "Desconsideração do FIDC",
 ];

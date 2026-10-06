@@ -1,5 +1,5 @@
 /** Diagrama SVG do fluxo selecionado. */
-import { stages } from "./data.js?v=47a526d3aea3";
+import { stages } from "./data.js?v=24091f3dc908";
 function compactDiagram(svg) {
   const y = (value) => (value >= 194 ? value - 50 : value >= 40 ? value - 30 : value);
   return svg

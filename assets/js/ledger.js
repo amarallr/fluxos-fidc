@@ -1,6 +1,6 @@
 /** Apresentação dos livros razão; os cálculos vêm de accounting.js. */
-import { books, displayStage } from "./data.js?v=47a526d3aea3";
-import { stageJournal, bookData, consolidatedBookData, correctedBookData } from "./accounting.js?v=eeff23eba26a";
+import { books, displayStage } from "./data.js?v=24091f3dc908";
+import { stageJournal, bookData, consolidatedBookData, correctedBookData } from "./accounting.js?v=140a3a046e39";
 export function renderReason(
   consolidated = false,
   correction = false,

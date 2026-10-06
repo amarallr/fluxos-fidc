@@ -24,7 +24,7 @@ No computador em paisagem, o menu tem 13 colunas, com 13 acima de 12.b e a simul
 ## Etapas finais
 
 - **11. Grupo:** agregação somente de Cedentes (D) + Cotistas (T), com FIDC (F) separado e cotas mantidas no ativo.
-- **12.a Correção Fiscal IRPJ:** sob a hipótese de perda indedutível, reversão do benefício de R$ 5,10 milhões e recomposição dos tributos a pagar de R$ 28,90 milhões para R$ 34 milhões.
+- **12.a Ajuste IRPJ/CSLL:** sob a hipótese de perda indedutível, reversão do benefício de R$ 5,10 milhões e recomposição dos tributos a pagar de R$ 28,90 milhões para R$ 34 milhões.
 
 - **13 Come-cotas:** no cenário B, premissa expressa de FIDC não classificado como entidade de investimento, sujeito ao art. 26 da Lei 14.754/2023. Rendimento tributável de R$ 14 milhões × 15% = R$ 2,10 milhões, no último dia útil de maio ou novembro, sem retenções anteriores. O vínculo societário não determina esse enquadramento.
 

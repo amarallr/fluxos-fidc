@@ -1,5 +1,5 @@
 /** Motor contábil puro: não depende do DOM nem do estado da interface. */
-import { books, journalStages } from "./data.js?v=47a526d3aea3";
+import { books, journalStages } from "./data.js?v=24091f3dc908";
 export function stageJournal(s, group = true) {
   if (s === 11)
     return group
