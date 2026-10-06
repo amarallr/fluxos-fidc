@@ -301,6 +301,16 @@
  .reason-key,.all-reasons .reason-key:last-child{font-size:14.25px;line-height:17.81px}
  .reserved-books>.reason-key:last-child{height:43px;min-height:43px}
 }
+
+/* One movement column; retain gross debit and credit rows and running balances. */
+.reason-card th:nth-child(2){text-align:right}
+@media screen and (min-device-width:1151px) and (orientation:landscape){
+ .financial-books .account-group-cards{grid-auto-rows:222px}
+ .financial-books .reason-card{height:222px;min-height:222px;max-height:222px}
+ .financial-books .reason-card th,.financial-books .reason-card td{line-height:19px;height:20px;padding-left:2px;padding-right:2px}
+ .financial-books .reason-card tr{height:20px}
+ .financial-books .reason-card th:first-child{width:2.1em}
+}
 </style></head><body><main>
 <header><div><h1>Fluxos do FIDC <span class="draft-status">Simulação preliminar · DRAFT</span></h1></div><span class="pill">Valores em R$ milhões</span></header>
 <section class="toolbar" aria-label="Controles da simulação"><div class="controls"><button id="play">Reproduzir</button><button id="prev">Etapa anterior</button><button id="next">Próxima etapa</button><button id="reset">Reiniciar</button><button id="fullscreen">Tela cheia</button><label for="speed">Intervalo</label><select id="speed"><option value="4500">4,5 segundos</option><option value="7000">7 segundos</option><option value="2500">2,5 segundos</option></select></div><nav class="steps" id="steps" aria-label="Selecionar etapa"></nav></section>
@@ -555,7 +565,27 @@ function renderReason(consolidated=false,correction=false,group=true){
   if(['PL de abertura','Cotas integralizadas — patrimônio do fundo'].includes(name))return 'equity';
   return 'results';
  };
- const card=(party,book)=>{const data=correction?correctedBookData(party,book):consolidated?consolidatedBookData(party,book):bookData(party,book,step,group);const remaining=Math.max(0,Math.max(consolidatedBookData(party,book,10).rows.length,consolidatedBookData(party,book,11).rows.length)-data.rows.length);const previousStage=step===11?9:Math.max(0,step-1);const previous=group&&previousStage>=8?consolidatedBookData(party,book,previousStage):bookData(party,book,previousStage,group);const changed=(value,old)=>introStep===null&&step>0&&Math.abs(value-old)>1e-8;const hidden=consolidated&&party==='D'&&['Caixa / bancos','PL de abertura','Tributos a pagar — IRPJ/CSLL'].includes(book[0]);return `<article class="reason-card ${hidden?'consolidated-placeholder':''}" ${hidden?'aria-hidden="true"':''}><h4>${consolidated&&party==='T'&&book[0]==='Tributos a pagar'?'Tributos a pagar — IRPJ/CSLL':book[0]}</h4><table><thead><tr><th>Et.</th><th class="debit-line">D</th><th class="credit-line">C</th><th>Saldo</th></tr></thead><tbody><tr class="opening-row ${changed(data.opening,previous.opening)?'changed-posting':''}"><td></td><td class="debit-line ">${data.opening>0?amount(data.opening):''}</td><td class="credit-line ">${data.opening<0?amount(data.opening):''}</td><td class="">${balance(data.opening)}</td></tr>${data.rows.map(r=>{const old=previous.rows.find(v=>v.stage===r.stage);const rowChanged=changed(r.debit,old?.debit||0)||changed(r.credit,old?.credit||0)||changed(r.balance,old?.balance??previous.balance);return `<tr class="${rowChanged?'changed-posting':''}"><td>${displayStage(r.stage)}</td><td class="debit-line ">${r.debit?amount(r.debit):''}</td><td class="credit-line ">${r.credit?amount(r.credit):''}</td><td class="">${balance(r.balance)}</td></tr>`}).join('')}${Array.from({length:remaining},()=>'<tr class="reserved-posting" aria-hidden="true"><td>&nbsp;</td><td></td><td></td><td></td></tr>').join('')}</tbody></table></article>`};
+
+ const card=(party,book)=>{
+  const data=correction?correctedBookData(party,book):consolidated?consolidatedBookData(party,book):bookData(party,book,step,group);
+  const rowCount=rows=>rows.reduce((total,r)=>total+(r.debit?1:0)+(r.credit?1:0),0);
+  const remaining=Math.max(0,Math.max(rowCount(consolidatedBookData(party,book,10).rows),rowCount(consolidatedBookData(party,book,11).rows))-rowCount(data.rows));
+  const previousStage=step===11?9:Math.max(0,step-1);
+  const previous=group&&previousStage>=8?consolidatedBookData(party,book,previousStage):bookData(party,book,previousStage,group);
+  const changed=(value,old)=>introStep===null&&step>0&&Math.abs(value-old)>1e-8;
+  const hidden=consolidated&&party==='D'&&['Caixa / bancos','PL de abertura','Tributos a pagar — IRPJ/CSLL'].includes(book[0]);
+  const movement=(value,type)=>value?'<span class="'+(type==='D'?'debit-line':'credit-line')+'">'+amount(value)+' '+type+'</span>':'';
+  return `<article class="reason-card ${hidden?'consolidated-placeholder':''}" ${hidden?'aria-hidden="true"':''}><h4>${consolidated&&party==='T'&&book[0]==='Tributos a pagar'?'Tributos a pagar — IRPJ/CSLL':book[0]}</h4><table><thead><tr><th>Et.</th><th>Movimento</th><th>Saldo</th></tr></thead><tbody><tr class="opening-row ${changed(data.opening,previous.opening)?'changed-posting':''}"><td></td><td>${movement(Math.abs(data.opening),data.opening>0?'D':'C')}</td><td>${balance(data.opening)}</td></tr>${data.rows.map(r=>{
+   const old=previous.rows.find(v=>v.stage===r.stage);
+   const oldDebitBalance=old?old.balance+old.credit:previous.balance;
+   const debitBalance=r.balance+r.credit;
+   const line=(value,type,currentBalance,oldValue,oldBalance)=>{
+    const altered=changed(value,oldValue)||changed(currentBalance,oldBalance);
+    return '<tr class="'+(altered?'changed-posting':'')+'"><td>'+displayStage(r.stage)+'</td><td>'+movement(value,type)+'</td><td>'+balance(currentBalance)+'</td></tr>';
+   };
+   return (r.debit?line(r.debit,'D',debitBalance,old?.debit||0,oldDebitBalance):'')+(r.credit?line(r.credit,'C',r.balance,old?.credit||0,old?.balance??previous.balance):'');
+  }).join('')}${Array.from({length:remaining},()=>'<tr class="reserved-posting" aria-hidden="true"><td>&nbsp;</td><td></td><td></td></tr>').join('')}</tbody></table></article>`;
+ };
  const entities=consolidated?[{id:'combined',label:'Cedentes (D) + Cotistas (T)',parties:['T','D']},{id:'F',label:'FIDC (F)',parties:['F']}]:[{id:'T',label:'Cotistas (T)',parties:['T']},{id:'D',label:'Cedentes (D)',parties:['D']},{id:'F',label:'FIDC (F)',parties:['F']}];
  return `<div class="reason-columns financial-books ${consolidated?'financial-combined':''}">${entities.map(entity=>{
   const items=entity.parties.flatMap(party=>books[party].filter(book=>(group||book[0]!=='Despesa de administração/gestão do FIDC')&&!(consolidated&&party==='D'&&['Caixa / bancos','PL de abertura','Tributos a pagar — IRPJ/CSLL'].includes(book[0]))).map(book=>({party,book})));
