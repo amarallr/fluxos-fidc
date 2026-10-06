@@ -259,6 +259,43 @@
 #premise-dialog .reading-perspective{padding:6px 12px;border-left:3px solid #b7cfe3;background:#f8fbfe;margin:8px 0}
 #premise-dialog .reference-map td,#premise-dialog .reference-map th{text-align:left;white-space:normal}
 #premise-dialog table{table-layout:auto}
+
+/* Raise the stage row and enlarge landscape typography with matching vertical space. */
+@media screen and (min-device-width:1151px) and (orientation:landscape){
+ .steps{align-items:start;margin-top:2px}
+ .steps .step-item{align-self:start;height:68px}
+ .steps .step-select,.steps .step-alternatives .step-select{height:68px;min-height:68px;max-height:68px;font-size:16.96px;line-height:19.08px}
+ .steps .step-alternatives{height:138px;grid-template-rows:68px 68px}
+ .step-index{font-size:18.02px;line-height:21.2px}
+ header h1{font-size:22.26px}header p{font-size:14.84px}
+ .draft-status{font-size:13.78px}.pill{font-size:12.72px}
+ .controls button,.controls select,.controls label{font-size:16.96px}
+ .current h2{font-size:18.02px}.current p{font-size:14.84px;line-height:16.96px}
+ .number{font-size:16.96px;width:36px;height:36px}
+ .workbench .group-banner{font-size:14.84px;min-height:34px}
+ .workbench .panel-head{height:32px;min-height:32px}
+ .workbench .panel-head h2{font-size:16.96px}
+ .workbench .panel>svg{height:177px;max-height:177px}
+ .workbench .panel>svg text{font-size:23.32px!important}
+ .workbench .panel>svg .flow-label{font-size:21.2px!important}
+ .workbench .panel>svg .group-caption{font-size:25.44px!important}
+ .workbench .panel>svg .economic-group-title{font-size:27.56px!important}
+ .workbench .panel>svg .economic-group-subtitle{font-size:21.2px!important}
+ .workbench .event{font-size:14.84px;height:34px;min-height:34px}
+ .all-reasons h2{font-size:16.96px}
+ .financial-books .reason-entity>h3{font-size:18.02px;height:36px;min-height:36px;max-height:36px}
+ .account-group-heading{font-size:15.9px;line-height:18.02px}
+ .financial-books .account-group-cards{grid-template-columns:204px;grid-auto-rows:191px}
+ .financial-books .group-results .account-group-cards,.financial-books.financial-combined .book-party-combined .group-assets .account-group-cards{grid-template-columns:repeat(2,204px)}
+ .financial-books.financial-combined .book-party-combined .group-results .account-group-cards{grid-template-columns:repeat(3,204px)}
+ .financial-books .reason-card{width:204px;min-width:204px;max-width:204px;height:191px;min-height:191px;max-height:191px}
+ .financial-books .reason-card h4{font-size:14.84px;line-height:14.84px;height:51px;min-height:51px;max-height:51px}
+ .financial-books .reason-card table{font-size:15.9px}
+ .financial-books .reason-card th,.financial-books .reason-card td{line-height:16.96px;height:19.08px}
+ .financial-books .reason-card tr{height:19.08px}
+ .reason-key,.all-reasons .reason-key:last-child{font-size:12.72px;line-height:15.9px}
+ .reserved-books>.reason-key:last-child{height:43px;min-height:43px}
+}
 </style></head><body><main>
 <header><div><h1>Fluxos do FIDC <span class="draft-status">Simulação preliminar · DRAFT</span></h1></div><span class="pill">Valores em R$ milhões</span></header>
 <section class="toolbar" aria-label="Controles da simulação"><div class="controls"><button id="play">Reproduzir</button><button id="prev">Etapa anterior</button><button id="next">Próxima etapa</button><button id="reset">Reiniciar</button><button id="fullscreen">Tela cheia</button><label for="speed">Intervalo</label><select id="speed"><option value="4500">4,5 segundos</option><option value="7000">7 segundos</option><option value="2500">2,5 segundos</option></select></div><nav class="steps" id="steps" aria-label="Selecionar etapa"></nav></section>
@@ -544,7 +581,7 @@ function fitLandscape(){
  const landscape=window.screen.width>1150&&window.innerWidth>window.innerHeight;
  if(!landscape){alignFinancialGroups();document.getElementById('premise-dialog').style.zoom='1';return;}
  const browserZoom=Math.max(0.25,Math.min(5,window.outerWidth/window.innerWidth||1));
- const width=Math.max(2560,window.outerWidth||window.innerWidth);
+ const width=Math.max(2576,window.outerWidth||window.innerWidth);
  main.style.width=width+'px';main.style.minHeight='1080px';
  alignFinancialGroups();
  const height=main.getBoundingClientRect().height;
