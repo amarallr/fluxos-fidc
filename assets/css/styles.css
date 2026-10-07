@@ -2035,12 +2035,12 @@ header h1 {
 }
 
 /* Raised terminal stages and larger landscape type with fixed expanded ledger boxes. */
-@media screen and (min-device-width: 1157px) and (orientation: landscape) {
+@media screen and (min-device-width: 1160px) and (orientation: landscape) {
   main {
     position: relative;
   }
   header {
-    min-height: 44px;
+    min-height: 46px;
     align-items: center;
     margin-bottom: 2px;
   }
@@ -2059,92 +2059,92 @@ header h1 {
   }
   .steps .step-item {
     align-self: start;
-    height: 76px;
+    height: 80px;
   }
   .steps .step-select[data-step],
   .steps .step-select[data-intro],
   .steps .step-alternatives .step-select {
-    height: 76px;
-    min-height: 76px;
-    max-height: 76px;
-    font-size: 19px;
-    line-height: 21.37px;
+    height: 80px;
+    min-height: 80px;
+    max-height: 80px;
+    font-size: 19.95px;
+    line-height: 22.46px;
   }
   .steps .step-alternatives {
-    height: 190px;
-    grid-template-rows: 76px 76px;
+    height: 162px;
+    grid-template-rows: 80px 80px;
   }
   .step-index {
-    font-size: 20.18px;
-    line-height: 23.74px;
+    font-size: 21.19px;
+    line-height: 24.93px;
   }
   header h1 {
-    font-size: 24.93px;
+    font-size: 26.18px;
   }
   header p {
-    font-size: 16.62px;
+    font-size: 17.45px;
   }
   .draft-status {
-    font-size: 15.43px;
+    font-size: 16.2px;
   }
   .pill {
-    font-size: 14.25px;
+    font-size: 14.96px;
   }
   .controls button,
   .controls select,
   .controls label {
-    font-size: 19px;
+    font-size: 19.95px;
   }
   .current h2 {
-    font-size: 20.18px;
+    font-size: 21.19px;
   }
   .current p {
-    font-size: 16.62px;
-    line-height: 19px;
+    font-size: 17.45px;
+    line-height: 19.95px;
   }
   .number {
-    font-size: 19px;
-    width: 36px;
-    height: 40px;
+    font-size: 19.95px;
+    width: 38px;
+    height: 42px;
   }
   .workbench .group-banner {
-    font-size: 16.62px;
-    min-height: 38px;
+    font-size: 17.45px;
+    min-height: 40px;
   }
   .workbench .panel-head {
-    height: 36px;
-    min-height: 36px;
-  }
-  .workbench .panel-head h2 {
-    font-size: 19px;
-  }
-  .workbench .panel > svg {
-    height: 190px;
-    max-height: 190px;
-  }
-  .workbench .panel > svg text {
-    font-size: 26.12px !important;
-  }
-  .workbench .panel > svg .flow-label {
-    font-size: 23.74px !important;
-  }
-  .workbench .event {
-    font-size: 16.62px;
     height: 38px;
     min-height: 38px;
   }
-  .all-reasons h2 {
-    font-size: 19px;
+  .workbench .panel-head h2 {
+    font-size: 19.95px;
   }
-  .financial-books .reason-entity > h3 {
-    font-size: 20.18px;
+  .workbench .panel > svg {
+    height: 200px;
+    max-height: 200px;
+  }
+  .workbench .panel > svg text {
+    font-size: 27.43px !important;
+  }
+  .workbench .panel > svg .flow-label {
+    font-size: 24.93px !important;
+  }
+  .workbench .event {
+    font-size: 17.45px;
     height: 40px;
     min-height: 40px;
-    max-height: 40px;
+  }
+  .all-reasons h2 {
+    font-size: 19.95px;
+  }
+  .financial-books .reason-entity > h3 {
+    font-size: 21.19px;
+    height: 42px;
+    min-height: 42px;
+    max-height: 42px;
   }
   .account-group-heading {
-    font-size: 17.81px;
-    line-height: 20.18px;
+    font-size: 18.7px;
+    line-height: 21.19px;
   }
   .financial-books .account-group-cards {
     grid-template-columns: 226px;
@@ -2166,14 +2166,14 @@ header h1 {
     max-height: 214px;
   }
   .financial-books .reason-card h4 {
-    font-size: 16.62px;
-    line-height: 16.62px;
-    height: 57px;
-    min-height: 57px;
-    max-height: 57px;
+    font-size: 17.45px;
+    line-height: 17.45px;
+    height: 60px;
+    min-height: 60px;
+    max-height: 60px;
   }
   .financial-books .reason-card table {
-    font-size: 17.81px;
+    font-size: 18.7px;
   }
   .financial-books .reason-card th:first-child {
     width: auto;
@@ -2182,7 +2182,7 @@ header h1 {
   .financial-books .reason-card td {
     padding-left: 0;
     padding-right: 0;
-    line-height: 19px;
+    line-height: 19.95px;
     height: 21.37px;
   }
   .financial-books .reason-card tr {
@@ -2190,8 +2190,8 @@ header h1 {
   }
   .reason-key,
   .all-reasons .reason-key:last-child {
-    font-size: 14.25px;
-    line-height: 17.81px;
+    font-size: 14.96px;
+    line-height: 18.7px;
   }
   .reserved-books > .reason-key:last-child {
     height: 43px;
@@ -2205,22 +2205,22 @@ header h1 {
 }
 @media screen and (min-device-width: 1151px) and (orientation: landscape) {
   .financial-books .account-group-cards {
-    grid-auto-rows: 234px;
+    grid-auto-rows: 246px;
   }
   .financial-books .reason-card {
-    height: 234px;
-    min-height: 234px;
-    max-height: 234px;
+    height: 246px;
+    min-height: 246px;
+    max-height: 246px;
   }
   .financial-books .reason-card th,
   .financial-books .reason-card td {
-    line-height: 19px;
-    height: 20px;
+    line-height: 19.95px;
+    height: 21px;
     padding-left: 2px;
     padding-right: 2px;
   }
   .financial-books .reason-card tr {
-    height: 20px;
+    height: 21px;
   }
   .financial-books .reason-card th:first-child {
     width: 2.1em;
@@ -2230,20 +2230,20 @@ header h1 {
 /* Compact equity and result boxes while reserving all future postings. */
 @media screen and (min-device-width: 1151px) and (orientation: landscape) {
   .financial-books .group-equity .account-group-cards {
-    grid-auto-rows: 174px;
+    grid-auto-rows: 183px;
   }
   .financial-books .group-equity .reason-card {
-    height: 174px;
-    min-height: 174px;
-    max-height: 174px;
+    height: 183px;
+    min-height: 183px;
+    max-height: 183px;
   }
   .financial-books .group-results .account-group-cards {
-    grid-auto-rows: 190px;
+    grid-auto-rows: 200px;
   }
   .financial-books .group-results .reason-card {
-    height: 190px;
-    min-height: 190px;
-    max-height: 190px;
+    height: 200px;
+    min-height: 200px;
+    max-height: 200px;
   }
 }
 
@@ -2261,9 +2261,9 @@ header h1 {
 /* Compact IRRF credit books in A and in B before the aggregate phase (stage 11). */
 @media screen and (min-device-width: 1151px) and (orientation: landscape) {
   .financial-books .reason-card.compact-irrf-credit {
-    height: 144px;
-    min-height: 144px;
-    max-height: 144px;
+    height: 152px;
+    min-height: 152px;
+    max-height: 152px;
     align-self: start;
   }
 }
