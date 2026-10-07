@@ -21,7 +21,7 @@ function compactDiagram(svg) {
 export function graphic(group, { step, introStep }) {
   const paymentToTreasury = group && step === 10;
   const box = (id, label, x, y, w = 170) =>
-    `<g><rect class="node ${paymentToTreasury && (id === "A" || id === "Treasury") ? "active" : ""} ${group && (id === "T" || id === "D") && label !== "Devedores" ? "group-member" : !group && id === "T" ? "independent-cotista" : !group && id === "D" && label === "Cedentes (D)" ? "independent-cedente" : ""}" x="${x}" y="${y}" width="${w}" height="44" rx="8"/><text x="${x + w / 2}" y="${y + 28}" text-anchor="middle" font-size="19" style="${id === "A" ? "font-size:25.2px!important" : ""}">${label}</text></g>`;
+    `<g><rect class="node ${paymentToTreasury && (id === "A" || id === "Treasury") ? "active" : ""} ${group && (id === "T" || id === "D") && label !== "Devedores" ? "group-member" : !group && id === "T" ? "independent-cotista" : !group && id === "D" && label === "Cedentes (D)" ? "independent-cedente" : ""}" x="${x}" y="${y}" width="${w}" height="44" rx="8"/><text x="${x + w / 2}" y="${y + 28}" text-anchor="middle" font-size="19" >${label}</text></g>`;
   const data = {
     0:
       introStep === 0

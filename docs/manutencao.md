@@ -33,7 +33,7 @@ Para ampliar o exemplo, ajuste primeiro os dados e o motor contábil, depois a a
 
 Para testar a página localmente, sirva a pasta por HTTP, por exemplo `python -m http.server 8000`, e abra `http://localhost:8000`. Módulos nativos devem ser carregados por HTTP; abrir `index.html` diretamente por `file://` pode ser bloqueado pelo navegador.
 
-O CSS mantém a ordem da cascata aprovada. Foram removidas declarações substituídas no mesmo seletor e contexto e regras dos componentes antigos. Ao alterar uma dimensão, edite a regra que a define em vez de acrescentar mais uma sobrescrita ao fim do arquivo. As regras de paisagem usam a dimensão do dispositivo para preservar o zoom proporcional.
+O CSS usa uma composição fluida com pontos de quebra baseados na largura do viewport. Edite a regra responsável por cada componente, evitando sobrescritas acumuladas. O modo `data-view="reading"` não aplica zoom; `data-view="overview"` ativa a escala de apresentação em computador em paisagem. A escolha `data-scenario` altera somente a visibilidade dos painéis, preservando o estado contábil.
 
 ## Restauração
 
@@ -41,6 +41,8 @@ A versão anterior à separação está preservada na branch `backup/antes-modul
 
 ## Proporções visuais
 
-As variáveis no bloco de composição paisagem de `styles.css` definem largura da tela de referência, fontes, largura dos livros, altura de cabeçalhos e linhas, dimensões de ativo/PL/resultado e botões. `layout.js` lê `--canvas-width` para o ajuste proporcional. O resumo da etapa ocupa a área livre abaixo das primeiras onze etapas; `stageSummaries` fornece textos curtos sem alterar as premissas completas. Os números usam fonte tabular mais compacta para preservar as três colunas.
+A leitura padrão conserva o tamanho do texto, sem obrigar a simulação inteira a caber em uma tela. Livros razão usam altura conforme os lançamentos existentes; linhas de reserva aparecem somente em visão geral. O resumo da etapa usa `stageSummaries`, mantendo o detalhamento no diálogo. Os indicadores vêm de `bookData`, sem regras fiscais novas na interface.
+
+A reprodução segue até 13 e termina. 12.b é uma alternativa selecionada no menu, com retorno para 12.a. Conferir também os filtros A/B, ambas as exibições, foco de teclado, abertura/fechamento das premissas e telas estreitas. O cabeçalho do grupo usa “agregação econômica”, pois o perímetro exclui F e não representa consolidação integral pelo CPC 36.
 
 A composição anterior à revisão visual está preservada em `backup/antes-revisao-visual-2026-10-07`, commit `e206f097c59b04456bb6823fc58d5bc5a7d1a48c`.

@@ -6,7 +6,8 @@ function alignFinancialGroups() {
     grid.querySelector(".group-equity").style.paddingTop = "";
   }
   if (
-    !window.matchMedia("(min-device-width:1151px) and (orientation:landscape)").matches ||
+    document.body.dataset.view !== "overview" ||
+    !window.matchMedia("(min-width:1151px) and (orientation:landscape)").matches ||
     !grids.length
   )
     return;
@@ -44,13 +45,13 @@ export function fitLandscape() {
   main.style.width = "";
   main.style.minHeight = "";
   main.style.margin = "";
-  const landscape = window.screen.width > 1150 && window.innerWidth > window.innerHeight;
+  const landscape = document.body.dataset.view === "overview" && window.innerWidth > 1150 && window.innerWidth > window.innerHeight;
   if (!landscape) {
     alignFinancialGroups();
     document.getElementById("premise-dialog").style.zoom = "1";
     return;
   }
-  const browserZoom = Math.max(0.25, Math.min(5, window.outerWidth / window.innerWidth || 1));
+  const browserZoom = 1;
   const designWidth = Number(getComputedStyle(main).getPropertyValue("--canvas-width")) || 2848;
   const width = Math.max(designWidth, window.outerWidth || window.innerWidth);
   main.style.width = width + "px";

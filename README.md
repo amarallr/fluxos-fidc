@@ -19,7 +19,9 @@ A página usa HTML, CSS e módulos nativos de JavaScript, sem framework, banco d
 
 ## Leiaute e navegação
 
-No computador em paisagem, o menu tem 13 colunas, com 13 acima de 12.b e a simulação se ajusta à página. A numeração começa em 1 (Beneficiários), seguida de Constituição e Contratos. Os livros razão e diagramas usam a mesma numeração. Explicações detalhadas estão em nos ícones de informação de cada etapa.
+A leitura confortável é o padrão, com tipografia legível, rolagem vertical e livros organizados por entidade. Compare A e B ou selecione apenas um cenário. Em telas menores os painéis são empilhados. A opção **Visão geral**, em computador em paisagem, ajusta a composição à tela para apresentação.
+
+Selecione uma etapa pelo menu e abra **i** ou **Premissas e fontes** para consultar o detalhamento. Os indicadores mostram caixa do FIDC, investimento em cotas nos registros individuais de T e resultado acumulado do FIDC, em R$ milhões. A reprodução termina em 13. A alternativa **12.b** é selecionada diretamente; seu botão **Etapa anterior** retorna a 12.a.
 
 ## Etapas finais
 
