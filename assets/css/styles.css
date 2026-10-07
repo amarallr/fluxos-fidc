@@ -1875,8 +1875,8 @@ header h1 {
 .step-alternatives .step-select {
   display: flex;
   align-items: center;
-  gap: 7px;
-  padding-right: 20px;
+  gap: 5px;
+  padding-right: 18px;
 }
 .step-alternatives .step-index {
   margin: 0;
@@ -2216,8 +2216,8 @@ header h1 {
   .financial-books .reason-card td {
     line-height: 19.95px;
     height: 21px;
-    padding-left: 2px;
-    padding-right: 2px;
+    padding-left: 1px;
+    padding-right: 1px;
   }
   .financial-books .reason-card tr {
     height: 21px;
