@@ -1875,8 +1875,8 @@ header h1 {
 .step-alternatives .step-select {
   display: flex;
   align-items: center;
-  gap: 5px;
-  padding-right: 18px;
+  gap: 3px;
+  padding-right: 14px;
 }
 .step-alternatives .step-index {
   margin: 0;
