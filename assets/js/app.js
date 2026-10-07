@@ -1,10 +1,10 @@
 /** Estado de navegação, controles e composição da página. */
-import { stages, displayStage, menuLabels, constitutionStages, economicReadings } from "./data.js?v=24091f3dc908";
-import { taxGroup } from "./accounting.js?v=140a3a046e39";
-import { graphic } from "./diagram.js?v=a3febcae65f3";
-import { renderReason } from "./ledger.js?v=238e5b398701";
-import { compactLedgerNotes } from "./information.js?v=7a42f4596a1b";
-import { fitLandscape } from "./layout.js?v=d4db82a7ff41";
+import { stages, stageSummaries, displayStage, menuLabels, constitutionStages, economicReadings } from "./data.js?v=56aaed425420";
+import { taxGroup } from "./accounting.js?v=10dd816f519f";
+import { graphic } from "./diagram.js?v=b0b075d48cf3";
+import { renderReason } from "./ledger.js?v=9ff163eed0c4";
+import { compactLedgerNotes } from "./information.js?v=e45771bfe4fd";
+import { fitLandscape } from "./layout.js?v=37eee3030f57";
 let step = 0,
   timer = null,
   introStep = 0;
@@ -80,7 +80,8 @@ function render() {
   document.getElementById("num").textContent =
     introStep === null ? displayStage(step) : introStep + 1;
   document.getElementById("title").textContent = stageInfo[0];
-  document.getElementById("description").textContent = stageInfo[1];
+  document.getElementById("description").textContent =
+    introStep === null ? stageSummaries[step] || stageInfo[1] : stageInfo[1];
   document.getElementById("panels").innerHTML = panel(false) + panel(true);
   compactLedgerNotes({ step, introStep });
   document.getElementById("steps").innerHTML =

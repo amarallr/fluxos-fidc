@@ -6,8 +6,8 @@ import {
   constitutionStages,
   readingSources,
   stageReadingData,
-} from "./data.js?v=24091f3dc908";
-import { bookData } from "./accounting.js?v=140a3a046e39";
+} from "./data.js?v=56aaed425420";
+import { bookData } from "./accounting.js?v=10dd816f519f";
 function readingLink(key, label) {
   return '<a href="' + readingSources[key] + '" target="_blank" rel="noopener">' + label + "</a>";
 }

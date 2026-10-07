@@ -62,6 +62,13 @@ export const stages = [
   ],
 ];
 
+/** Short on-canvas summaries; full explanations remain in stages and information dialogs. */
+export const stageSummaries = {
+  9: "Cenário B: eliminações de 15 no quadro D + T e reversão do benefício de 5,10. Base recomposta para 100; IRPJ/CSLL a pagar: 34. FIDC separado.",
+  10: "A: entidade de investimento, sem come-cotas. B: rendimento de 14 × 15% = IRRF de 2,10. Administradora recolhe ao Tesouro; cotista reconhece crédito compensável.",
+  11: "Alternativa B a partir de 12.a, sem come-cotas: FIDC e investimento zerados; caixa de D + T: 184; despesa externa: 1. Ajuste ilustrativo, sem liquidação jurídica do fundo.",
+};
+
 export const displayStage = (value) =>
   value === 9 ? "12.a" : value === 10 ? 13 : value === 11 ? "12.b" : value + 3;
 

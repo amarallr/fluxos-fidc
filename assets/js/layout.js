@@ -51,7 +51,8 @@ export function fitLandscape() {
     return;
   }
   const browserZoom = Math.max(0.25, Math.min(5, window.outerWidth / window.innerWidth || 1));
-  const width = Math.max(2848, window.outerWidth || window.innerWidth);
+  const designWidth = Number(getComputedStyle(main).getPropertyValue("--canvas-width")) || 2848;
+  const width = Math.max(designWidth, window.outerWidth || window.innerWidth);
   main.style.width = width + "px";
   main.style.minHeight = "1080px";
   alignFinancialGroups();

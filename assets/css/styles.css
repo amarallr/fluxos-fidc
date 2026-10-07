@@ -1876,7 +1876,7 @@ header h1 {
   display: flex;
   align-items: center;
   gap: 3px;
-  padding-right: 14px;
+  padding-right: 4px;
 }
 .step-alternatives .step-index {
   margin: 0;
@@ -2035,17 +2035,47 @@ header h1 {
 }
 
 /* Raised terminal stages and larger landscape type with fixed expanded ledger boxes. */
-@media screen and (min-device-width: 1160px) and (orientation: landscape) {
+@media screen and (min-device-width: 1151px) and (orientation: landscape) {
   main {
+    --canvas-width: 2848;
+    --ui-font: 21px;
+    --account-label-font: 19px;
+    --ledger-font: 21px;
+    --ledger-width: 226px;
+    --ledger-title-height: 64px;
+    --posting-row-height: 24px;
+    --asset-height: 270px;
+    --equity-height: 196px;
+    --result-height: 214px;
+    --compact-credit-height: calc(var(--stage-height) * 2 + var(--stage-gap));
+    --stage-height: 86px;
+    --stage-gap: 4px;
+    --header-height: 46px;
     position: relative;
   }
   header {
-    min-height: 46px;
+    min-height: var(--header-height);
     align-items: center;
     margin-bottom: 2px;
   }
   .toolbar {
-    padding-top: 2px;
+    padding: 2px 4px 4px;
+    background: transparent;
+    border-radius: 0;
+    margin-bottom: 8px;
+  }
+  .current {
+    position: absolute;
+    top: calc(var(--header-height) + var(--stage-height) + 12px);
+    left: 14px;
+    width: calc(84.6154% - 30px);
+    min-height: var(--stage-height);
+    margin: 0;
+    padding: 8px 12px;
+    border: 1px solid #d8e3ec;
+    border-radius: 8px;
+    background: #f4f8fb;
+    gap: 12px;
   }
   .toolbar .controls {
     position: absolute;
@@ -2059,56 +2089,57 @@ header h1 {
   }
   .steps .step-item {
     align-self: start;
-    height: 80px;
+    height: var(--stage-height);
   }
   .steps .step-select[data-step],
   .steps .step-select[data-intro],
   .steps .step-alternatives .step-select {
-    height: 80px;
-    min-height: 80px;
-    max-height: 80px;
-    font-size: 19.95px;
+    height: var(--stage-height);
+    min-height: var(--stage-height);
+    max-height: var(--stage-height);
+    font-size: var(--ui-font);
     line-height: 22.46px;
   }
   .steps .step-alternatives {
-    height: 162px;
-    grid-template-rows: 80px 80px;
+    height: calc(var(--stage-height) * 2 + var(--stage-gap));
+    grid-template-rows: var(--stage-height) var(--stage-height);
+    gap: var(--stage-gap);
   }
   .step-index {
-    font-size: 21.19px;
+    font-size: 22px;
     line-height: 24.93px;
   }
   header h1 {
-    font-size: 26.18px;
+    font-size: 30px;
   }
   header p {
-    font-size: 17.45px;
+    font-size: 18px;
   }
   .draft-status {
     font-size: 16.2px;
   }
   .pill {
-    font-size: 14.96px;
+    font-size: 16px;
   }
   .controls button,
   .controls select,
   .controls label {
-    font-size: 19.95px;
+    font-size: var(--ui-font);
   }
   .current h2 {
-    font-size: 21.19px;
+    font-size: 22px;
   }
   .current p {
-    font-size: 17.45px;
-    line-height: 19.95px;
+    font-size: 18px;
+    line-height: 23px;
   }
   .number {
-    font-size: 19.95px;
-    width: 38px;
-    height: 42px;
+    font-size: var(--ui-font);
+    width: 48px;
+    height: 48px;
   }
   .workbench .group-banner {
-    font-size: 17.45px;
+    font-size: 18px;
     min-height: 40px;
   }
   .workbench .panel-head {
@@ -2116,64 +2147,66 @@ header h1 {
     min-height: 38px;
   }
   .workbench .panel-head h2 {
-    font-size: 19.95px;
+    font-size: var(--ui-font);
   }
   .workbench .panel > svg {
     height: 200px;
     max-height: 200px;
   }
   .workbench .panel > svg text {
-    font-size: 27.43px !important;
+    font-size: 29px !important;
   }
   .workbench .panel > svg .flow-label {
-    font-size: 24.93px !important;
+    font-size: 26px !important;
   }
   .workbench .event {
-    font-size: 17.45px;
+    font-size: 18px;
     height: 40px;
     min-height: 40px;
   }
   .all-reasons h2 {
-    font-size: 19.95px;
+    font-size: var(--ui-font);
   }
   .financial-books .reason-entity > h3 {
-    font-size: 21.19px;
+    font-size: 22px;
     height: 42px;
     min-height: 42px;
     max-height: 42px;
   }
   .account-group-heading {
-    font-size: 18.7px;
+    font-size: var(--account-label-font);
     line-height: 21.19px;
   }
   .financial-books .account-group-cards {
-    grid-template-columns: 226px;
+    grid-template-columns: var(--ledger-width);
     grid-auto-rows: 214px;
   }
   .financial-books .group-results .account-group-cards,
   .financial-books.financial-combined .book-party-combined .group-assets .account-group-cards {
-    grid-template-columns: repeat(2, 226px);
+    grid-template-columns: repeat(2, var(--ledger-width));
   }
   .financial-books.financial-combined .book-party-combined .group-results .account-group-cards {
-    grid-template-columns: repeat(3, 226px);
+    grid-template-columns: repeat(3, var(--ledger-width));
   }
   .financial-books .reason-card {
-    width: 226px;
-    min-width: 226px;
-    max-width: 226px;
+    width: var(--ledger-width);
+    min-width: var(--ledger-width);
+    max-width: var(--ledger-width);
     height: 214px;
     min-height: 214px;
     max-height: 214px;
   }
   .financial-books .reason-card h4 {
-    font-size: 17.45px;
-    line-height: 17.45px;
-    height: 60px;
-    min-height: 60px;
-    max-height: 60px;
+    font-size: var(--account-label-font);
+    line-height: 20px;
+    height: var(--ledger-title-height);
+    min-height: var(--ledger-title-height);
+    max-height: var(--ledger-title-height);
   }
   .financial-books .reason-card table {
-    font-size: 18.7px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: var(--ledger-font);
+    font-variant-numeric: tabular-nums;
   }
   .financial-books .reason-card th:first-child {
     width: auto;
@@ -2182,7 +2215,7 @@ header h1 {
   .financial-books .reason-card td {
     padding-left: 0;
     padding-right: 0;
-    line-height: 19.95px;
+    line-height: 23px;
     height: 21.37px;
   }
   .financial-books .reason-card tr {
@@ -2190,7 +2223,143 @@ header h1 {
   }
   .reason-key,
   .all-reasons .reason-key:last-child {
-    font-size: 14.96px;
+    font-size: 16px;
+    line-height: 18.7px;
+  }
+  .reserved-books > .reason-key:last-child {
+    height: 43px;
+    min-height: 43px;
+  }
+}
+
+/* One movement column; retain gross debit and credit rows and running balances. */
+.reason-card th:nth-child(2) {
+  text-align: right;
+}
+@media screen and (min-device-width: 1151px) and (orientation: landscape) {
+  .financial-books .account-group-cards {
+    grid-auto-rows: var(--asset-height);
+  }
+  .financial-books .reason-card {
+    height: var(--asset-height);
+    min-height: var(--asset-height);
+    max-height: var(--asset-height);
+  }
+  .financial-books .reason-card th,
+  .financial-books .reason-card td {
+    line-height: 22px;
+    height: var(--posting-row-height);
+    padding-left: 1px;
+    padding-right: 1px;
+  }
+  .financial-books .reason-card tr {
+    height: var(--posting-row-height);
+  }
+  .financial-books .reason-card th:first-child {
+    width: 2em;
+  }
+}
+
+/* Compact equity and result boxes while reserving all future postings. */
+@media screen and (min-device-width: 1151px) and (orientation: landscape) {
+  .financial-books .group-equity .account-group-cards {
+    grid-auto-rows: var(--equity-height);
+  }
+  .financial-books .group-equity .reason-card {
+    height: var(--equity-height);
+    min-height: var(--equity-height);
+    max-height: var(--equity-height);
+  }
+  .financial-books .group-results .account-group-cards {
+    grid-auto-rows: var(--result-height);
+  }
+  .financial-books .group-results .reason-card {
+    height: var(--result-height);
+    min-height: var(--result-height);
+    max-height: var(--result-height);
+  }
+}
+
+/* A single aligned result row per entity; the combined group contains four books. */
+@media screen and (min-device-width: 1151px) and (orientation: landscape) {
+  .financial-books .group-results .account-group-cards {
+    grid-template-columns: repeat(2, var(--ledger-width));
+    grid-auto-flow: column;
+  }
+  .financial-books.financial-combined .book-party-combined .group-results .account-group-cards {
+    grid-template-columns: repeat(4, var(--ledger-width));
+  }
+}
+
+/* Compact IRRF credit books in A and in B before the aggregate phase (stage 11). */
+@media screen and (min-device-width: 1151px) and (orientation: landscape) {
+  .financial-books .reason-card.compact-irrf-credit {
+    height: var(--compact-credit-height);
+    min-height: var(--compact-credit-height);
+    max-height: var(--compact-credit-height);
+    align-self: start;
+  }
+}
+
+/* Bring the shared result row closer to the balance-sheet books. */
+@media screen and (min-device-width: 1151px) and (orientation: landscape) {
+  .financial-books .group-results {
+    margin-top: -96px;
+  }
+}
+
+/* Preserve the cotista cash/investment column in the combined group. */
+@media screen and (min-device-width: 1151px) and (orientation: landscape) {
+  .financial-combined .book-party-combined .group-assets .combined-quota-investment {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .financial-combined .book-party-combined .group-assets .combined-irrf-credit {
+    grid-column: 2;
+    grid-row: 2;
+  }
+}
+t(2, var(--ledger-width));
+  }
+  .financial-books.financial-combined .book-party-combined .group-results .account-group-cards {
+    grid-template-columns: repeat(3, var(--ledger-width));
+  }
+  .financial-books .reason-card {
+    width: var(--ledger-width);
+    min-width: var(--ledger-width);
+    max-width: var(--ledger-width);
+    height: 214px;
+    min-height: 214px;
+    max-height: 214px;
+  }
+  .financial-books .reason-card h4 {
+    font-size: var(--account-label-font);
+    line-height: 20px;
+    height: var(--ledger-title-height);
+    min-height: var(--ledger-title-height);
+    max-height: var(--ledger-title-height);
+  }
+  .financial-books .reason-card table {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: var(--ledger-font);
+    font-variant-numeric: tabular-nums;
+  }
+  .financial-books .reason-card th:first-child {
+    width: auto;
+  }
+  .financial-books .reason-card th,
+  .financial-books .reason-card td {
+    padding-left: 0;
+    padding-right: 0;
+    line-height: 23px;
+    height: 21.37px;
+  }
+  .financial-books .reason-card tr {
+    height: 21.37px;
+  }
+  .reason-key,
+  .all-reasons .reason-key:last-child {
+    font-size: 16px;
     line-height: 18.7px;
   }
   .reserved-books > .reason-key:last-child {

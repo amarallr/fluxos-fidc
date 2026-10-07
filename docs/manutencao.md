@@ -38,3 +38,9 @@ O CSS mantém a ordem da cascata aprovada. Foram removidas declarações substit
 ## Restauração
 
 A versão anterior à separação está preservada na branch `backup/antes-modularizacao-2026-10-06`, no commit `c4b4f12eb517f66a165e1fecd91b379b93f74b44`. Ela permite restaurar integralmente a apresentação anterior à separação dos arquivos.
+
+## Proporções visuais
+
+As variáveis no bloco de composição paisagem de `styles.css` definem largura da tela de referência, fontes, largura dos livros, altura de cabeçalhos e linhas, dimensões de ativo/PL/resultado e botões. `layout.js` lê `--canvas-width` para o ajuste proporcional. O resumo da etapa ocupa a área livre abaixo das primeiras onze etapas; `stageSummaries` fornece textos curtos sem alterar as premissas completas. Os números usam fonte tabular mais compacta para preservar as três colunas.
+
+A composição anterior à revisão visual está preservada em `backup/antes-revisao-visual-2026-10-07`, commit `e206f097c59b04456bb6823fc58d5bc5a7d1a48c`.
