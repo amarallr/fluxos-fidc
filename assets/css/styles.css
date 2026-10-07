@@ -2052,6 +2052,7 @@ header h1 {
     --stage-gap: 4px;
     --header-height: 46px;
     position: relative;
+    font-family: Arial, Helvetica, sans-serif;
   }
   header {
     min-height: var(--header-height);
@@ -2255,6 +2256,9 @@ header h1 {
   .financial-books .reason-card tr {
     height: var(--posting-row-height);
   }
+  .financial-books .reason-card th {
+    font-size: 19px;
+  }
   .financial-books .reason-card th:first-child {
     width: 2em;
   }
@@ -2305,142 +2309,6 @@ header h1 {
 @media screen and (min-device-width: 1151px) and (orientation: landscape) {
   .financial-books .group-results {
     margin-top: -96px;
-  }
-}
-
-/* Preserve the cotista cash/investment column in the combined group. */
-@media screen and (min-device-width: 1151px) and (orientation: landscape) {
-  .financial-combined .book-party-combined .group-assets .combined-quota-investment {
-    grid-column: 1;
-    grid-row: 2;
-  }
-  .financial-combined .book-party-combined .group-assets .combined-irrf-credit {
-    grid-column: 2;
-    grid-row: 2;
-  }
-}
-t(2, var(--ledger-width));
-  }
-  .financial-books.financial-combined .book-party-combined .group-results .account-group-cards {
-    grid-template-columns: repeat(3, var(--ledger-width));
-  }
-  .financial-books .reason-card {
-    width: var(--ledger-width);
-    min-width: var(--ledger-width);
-    max-width: var(--ledger-width);
-    height: 214px;
-    min-height: 214px;
-    max-height: 214px;
-  }
-  .financial-books .reason-card h4 {
-    font-size: var(--account-label-font);
-    line-height: 20px;
-    height: var(--ledger-title-height);
-    min-height: var(--ledger-title-height);
-    max-height: var(--ledger-title-height);
-  }
-  .financial-books .reason-card table {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: var(--ledger-font);
-    font-variant-numeric: tabular-nums;
-  }
-  .financial-books .reason-card th:first-child {
-    width: auto;
-  }
-  .financial-books .reason-card th,
-  .financial-books .reason-card td {
-    padding-left: 0;
-    padding-right: 0;
-    line-height: 23px;
-    height: 21.37px;
-  }
-  .financial-books .reason-card tr {
-    height: 21.37px;
-  }
-  .reason-key,
-  .all-reasons .reason-key:last-child {
-    font-size: 16px;
-    line-height: 18.7px;
-  }
-  .reserved-books > .reason-key:last-child {
-    height: 43px;
-    min-height: 43px;
-  }
-}
-
-/* One movement column; retain gross debit and credit rows and running balances. */
-.reason-card th:nth-child(2) {
-  text-align: right;
-}
-@media screen and (min-device-width: 1151px) and (orientation: landscape) {
-  .financial-books .account-group-cards {
-    grid-auto-rows: 246px;
-  }
-  .financial-books .reason-card {
-    height: 246px;
-    min-height: 246px;
-    max-height: 246px;
-  }
-  .financial-books .reason-card th,
-  .financial-books .reason-card td {
-    line-height: 19.95px;
-    height: 21px;
-    padding-left: 1px;
-    padding-right: 1px;
-  }
-  .financial-books .reason-card tr {
-    height: 21px;
-  }
-  .financial-books .reason-card th:first-child {
-    width: 2.1em;
-  }
-}
-
-/* Compact equity and result boxes while reserving all future postings. */
-@media screen and (min-device-width: 1151px) and (orientation: landscape) {
-  .financial-books .group-equity .account-group-cards {
-    grid-auto-rows: 183px;
-  }
-  .financial-books .group-equity .reason-card {
-    height: 183px;
-    min-height: 183px;
-    max-height: 183px;
-  }
-  .financial-books .group-results .account-group-cards {
-    grid-auto-rows: 200px;
-  }
-  .financial-books .group-results .reason-card {
-    height: 200px;
-    min-height: 200px;
-    max-height: 200px;
-  }
-}
-
-/* A single aligned result row per entity; the combined group contains four books. */
-@media screen and (min-device-width: 1151px) and (orientation: landscape) {
-  .financial-books .group-results .account-group-cards {
-    grid-template-columns: repeat(2, 226px);
-    grid-auto-flow: column;
-  }
-  .financial-books.financial-combined .book-party-combined .group-results .account-group-cards {
-    grid-template-columns: repeat(4, 226px);
-  }
-}
-
-/* Compact IRRF credit books in A and in B before the aggregate phase (stage 11). */
-@media screen and (min-device-width: 1151px) and (orientation: landscape) {
-  .financial-books .reason-card.compact-irrf-credit {
-    height: 152px;
-    min-height: 152px;
-    max-height: 152px;
-    align-self: start;
-  }
-}
-
-/* Bring the shared result row closer to the balance-sheet books. */
-@media screen and (min-device-width: 1151px) and (orientation: landscape) {
-  .financial-books .group-results {
-    margin-top: -84px;
   }
 }
 
