@@ -41,7 +41,7 @@ A versão anterior à separação está preservada na branch `backup/antes-modul
 
 ## Proporções visuais
 
-A leitura padrão conserva o tamanho do texto, sem obrigar a simulação inteira a caber em uma tela. Livros razão usam altura conforme os lançamentos existentes; linhas de reserva aparecem somente em visão geral. O resumo da etapa usa `stageSummaries`, mantendo o detalhamento no diálogo. Os indicadores vêm de `bookData`, sem regras fiscais novas na interface.
+O padrão em computador em paisagem ajusta a composição inteira a uma única tela. A leitura confortável é opcional e conserva o tamanho do texto com rolagem vertical. Livros razão usam altura conforme os lançamentos existentes; linhas de reserva aparecem somente em visão geral. O resumo da etapa usa `stageSummaries`, mantendo o detalhamento no diálogo. Os indicadores vêm de `bookData`, sem regras fiscais novas na interface.
 
 A reprodução segue até 13 e termina. 12.b é uma alternativa selecionada no menu, com retorno para 12.a. Conferir também os filtros A/B, ambas as exibições, foco de teclado, abertura/fechamento das premissas e telas estreitas. O cabeçalho do grupo usa “agregação econômica”, pois o perímetro exclui F e não representa consolidação integral pelo CPC 36.
 

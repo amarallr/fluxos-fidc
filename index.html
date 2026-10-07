@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Fluxos do FIDC · Simulação contábil e tributária</title>
     <meta name="description" content="Compare os fluxos de um FIDC entre partes independentes e empresas do mesmo grupo, com livros razão e premissas contábeis e tributárias por etapa." />
-    <link rel="stylesheet" href="assets/css/styles.css?v=cbd4805e17d8" />
+    <link rel="stylesheet" href="assets/css/styles.css?v=f4d7cdda90e0" />
   </head>
-  <body data-view="reading" data-scenario="both">
+  <body data-view="overview" data-scenario="both">
     <a class="skip-link" href="#simulation">Ir para a simulação</a>
     <main>
       <header>
@@ -40,7 +40,7 @@
           <p id="description"></p>
         </div>
       </section>
-      <section class="view-toolbar" aria-label="Apresentação dos cenários"><div class="scenario-switch" role="group" aria-label="Cenários visíveis"><button data-scenario="both" aria-pressed="true">Comparar A e B</button><button data-scenario="a" aria-pressed="false">A · Independentes</button><button data-scenario="b" aria-pressed="false">B · Mesmo grupo</button></div><label for="view-mode">Exibição <select id="view-mode"><option value="reading">Leitura confortável</option><option value="overview">Visão geral</option></select></label></section>
+      <section class="view-toolbar" aria-label="Apresentação dos cenários"><div class="scenario-switch" role="group" aria-label="Cenários visíveis"><button data-scenario="both" aria-pressed="true">Comparar A e B</button><button data-scenario="a" aria-pressed="false">A · Independentes</button><button data-scenario="b" aria-pressed="false">B · Mesmo grupo</button></div><label for="view-mode">Exibição <select id="view-mode"><option value="overview" selected>Uma tela · paisagem</option><option value="reading">Leitura confortável</option></select></label></section>
       <div class="flow-legend" aria-label="Legenda do diagrama"><span><i class="swatch money-swatch"></i>Dinheiro</span><span><i class="swatch credit-swatch"></i>Direitos creditórios</span><span><i class="swatch quota-swatch"></i>Cotas e contratos</span><span>D = cedentes · T = cotistas · F = FIDC</span></div>
       <div class="workbench"><div class="panels" id="panels"></div></div>
       <footer class="page-footer"><strong>Como interpretar</strong><p>O vínculo entre cedente e cotista não define, sozinho, o regime tributário do FIDC. O quadro D + T é uma agregação econômica com o fundo separado; não é uma demonstração consolidada pelo CPC 36.</p><span>Exemplo hipotético · consulte as premissas de cada etapa</span></footer>
@@ -463,6 +463,6 @@
         </details>
       </dialog>
     </main>
-    <script type="module" src="assets/js/app.js?v=0dcc910ec0bc"></script>
+    <script type="module" src="assets/js/app.js?v=d61e39e2affd"></script>
   </body>
 </html>

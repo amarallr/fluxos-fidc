@@ -19,7 +19,7 @@ A página usa HTML, CSS e módulos nativos de JavaScript, sem framework, banco d
 
 ## Leiaute e navegação
 
-A leitura confortável é o padrão, com tipografia legível, rolagem vertical e livros organizados por entidade. Compare A e B ou selecione apenas um cenário. Em telas menores os painéis são empilhados. A opção **Visão geral**, em computador em paisagem, ajusta a composição à tela para apresentação.
+O padrão no computador em paisagem é **Uma tela · paisagem**: menu, diagramas, indicadores e livros razão são ajustados proporcionalmente para caber em uma única tela. Compare A e B ou selecione apenas um cenário. A opção **Leitura confortável** usa rolagem vertical, sem escala automática. Em telas menores os painéis são empilhados.
 
 Selecione uma etapa pelo menu e abra **i** ou **Premissas e fontes** para consultar o detalhamento. Os indicadores mostram caixa do FIDC, investimento em cotas nos registros individuais de T e resultado acumulado do FIDC, em R$ milhões. A reprodução termina em 13. A alternativa **12.b** é selecionada diretamente; seu botão **Etapa anterior** retorna a 12.a.
 
