@@ -1,10 +1,10 @@
 /** Estado de navegação, controles e composição da página. */
-import { stages, stageSummaries, displayStage, menuLabels, constitutionStages, economicReadings, books } from "./data.js?v=56aaed425420";
-import { bookData, taxGroup } from "./accounting.js?v=10dd816f519f";
-import { graphic } from "./diagram.js?v=ccb13a889e56";
+import { stages, stageSummaries, displayStage, menuLabels, constitutionStages, economicReadings } from "./data.js?v=56aaed425420";
+import { taxGroup } from "./accounting.js?v=10dd816f519f";
+import { graphic } from "./diagram.js?v=b0b075d48cf3";
 import { renderReason } from "./ledger.js?v=9ff163eed0c4";
 import { compactLedgerNotes } from "./information.js?v=e45771bfe4fd";
-import { fitLandscape } from "./layout.js?v=b016b2171868";
+import { fitLandscape } from "./layout.js?v=37eee3030f57";
 let step = 0,
   timer = null,
   introStep = 0;
@@ -15,7 +15,7 @@ function advance() {
       introStep = null;
       step = 1;
     }
-  } else step = Math.min(10, step + 1);
+  } else step = Math.min(stages.length - 1, step + 1);
 }
 
 function retreat() {
@@ -23,7 +23,7 @@ function retreat() {
   else if (step === 1) {
     step = 0;
     introStep = 2;
-  } else step = step === 11 ? 9 : Math.max(1, step - 1);
+  } else step = Math.max(1, step - 1);
 }
 
 function groupAlternativeSteps() {
@@ -39,12 +39,6 @@ function groupAlternativeSteps() {
     alternatives.append(menu.querySelector('[data-step="' + number + '"]').closest(".step-item"));
 }
 function panel(group) {
-  const balance = (party, name) => bookData(party, books[party].find(b => b[0] === name), step, group).balance;
-  const format = v => (Math.abs(v) < 1e-8 ? 0 : v).toLocaleString("pt-BR", {minimumFractionDigits: 2, maximumFractionDigits: 2});
-  const metrics = `<dl class="metrics"><div><dt>Caixa do FIDC</dt><dd>${format(balance("F", "Caixa / bancos"))}</dd></div><div><dt>Cotas em T</dt><dd>${format(balance("T", "Investimento em cotas"))}</dd></div><div><dt>Resultado do FIDC</dt><dd>${format(-balance("F", "Receita financeira") - balance("F", "Despesa de administração e gestão"))}</dd></div></dl>`;
-  const premise = group
-    ? "Beneficiário comum e titularidade integral são premissas. Na etapa 13, assume-se FIDC não classificado como entidade de investimento."
-    : "Cessão com baixa dos recebíveis admitida na premissa. Para a etapa 13, assume-se FIDC classificado como entidade de investimento.";
   const events = [
     "T tem recursos disponíveis; D tem créditos a receber.",
     "85 passam de T para F; T reconhece o investimento em cotas.",
@@ -55,7 +49,7 @@ function panel(group) {
     "Despesas de 1 reduzem as cotas de 100 para 99.",
     "Resultado líquido de F: 14. Valorização de T: 14.",
   ];
-  return `<article class="panel ${group && step === 9 ? "fiscal-correction" : ""} ${group ? "same-group" : ""}"><div class="panel-top"><div class="group-banner ${group ? "" : "independent-banner"}">${group ? "GRUPO ECONÔMICO · Cedentes (D) + Cotistas (T) · Beneficiário comum" : '<span><span class="header-cedente">Cedentes (D)</span> e <span class="header-cotista">Cotistas (T)</span> são partes independentes</span>'}</div><div class="panel-head"><h2>${group ? "B · Mesmo grupo econômico" : "A · Partes independentes"}</h2><p>${group ? "O caixa sai de T e chega a D, empresa do mesmo grupo, por meio de F." : "T financia a aquisição dos créditos de uma cedente independente."}</p></div></div><p class="scenario-premise">${premise}</p>${metrics}<p class="metric-note">${step === 11 && group ? "Saldos ilustrativos de 12.b; ajustes não representam liquidação jurídica." : "Saldos em R$ milhões · cotas nos registros individuais de T."}</p>${graphic(group, { step, introStep })}<div class="event">${introStep === null ? (step >= 8 ? (group ? (step === 11 ? "FIDC zerado; D + T: investimento e perda nas cotas zero, caixa 184 e despesa de administração/gestão 1." : step === 10 ? "Administradora recolhe IRRF de 2,10 ao Tesouro com recursos de F; cotas e caixa 96,90." : step === 9 ? "D + T: ganho e perda de 15 eliminados; saldos zero. IRPJ/CSLL recomposto para 34,00." : "Agregação D + T: destaque somente nas linhas alteradas; cotas mantidas e FIDC separado.") : step === 11 ? "Desconsideração não aplicada ao cenário A; saldos da etapa 12.a mantidos." : step === 10 ? "FIDC entidade de investimento: sem come-cotas; cotas e caixa de F mantidos em 99." : "Partes independentes: não se apresenta um grupo econômico comum.") : events[step]) : group ? ["D e T: empresas do mesmo grupo, com beneficiário econômico comum.", "T estrutura F; D será cedente e o grupo deterá integralmente as cotas.", "Contratos preparados. Recursos e recebíveis permanecem no grupo antes do aporte."][introStep] : ["D e T: beneficiários independentes.", "T estrutura F para adquirir créditos de D, parte independente.", "Contratos preparados entre partes independentes."][introStep]}</div><section class="all-reasons ${group && step >= 8 ? "aggregate-phase" : ""}"><h2>${group && step >= 8 ? (step === 11 ? "Desconsideração do FIDC" : step === 10 ? "IRRF Come cotas no FIDC" : step === 9 ? "Ajuste IRPJ/CSLL" : "Agregação econômica de Cedentes (D) + Cotistas (T)") : "Livros razão · Cotistas, Cedente e FIDC"}</h2><p class="reason-key">R$ milhões · <span class="debit-line">D: débito</span> · <span class="credit-line">C: crédito</span> · Linhas com lançamentos ou saldos alterados em relação à etapa anterior destacadas</p><div class="reason-stage-body"><div class="reserved-books">${renderReason(group && step >= 8, group && step >= 9, group, { step, introStep })}</div></div></section></article>`;
+  return `<article class="panel ${group && step === 9 ? "fiscal-correction" : ""} ${group ? "same-group" : ""}"><div class="panel-top"><div class="group-banner ${group ? "" : "independent-banner"}">${group ? "GRUPO ECONÔMICO · Cedentes (D) + Cotistas (T) · Beneficiário comum" : '<span><span class="header-cedente">Cedentes (D)</span> e <span class="header-cotista">Cotistas (T)</span> são partes independentes</span>'}</div><div class="panel-head"><h2>${group ? "B · Mesmo grupo econômico" : "A · Partes independentes"}</h2><p>${group ? "O caixa sai de T e chega a D, empresa do mesmo grupo, por meio de F." : "T financia a aquisição dos créditos de uma cedente independente."}</p></div></div>${graphic(group, { step, introStep })}<div class="event">${introStep === null ? (step >= 8 ? (group ? (step === 11 ? "FIDC zerado; D + T: investimento e perda nas cotas zero, caixa 184 e despesa de administração/gestão 1." : step === 10 ? "Administradora recolhe IRRF de 2,10 ao Tesouro com recursos de F; cotas e caixa 96,90." : step === 9 ? "D + T: ganho e perda de 15 eliminados; saldos zero. IRPJ/CSLL recomposto para 34,00." : "Agregação D + T: destaque somente nas linhas alteradas; cotas mantidas e FIDC separado.") : step === 11 ? "Desconsideração não aplicada ao cenário A; saldos da etapa 12.a mantidos." : step === 10 ? "FIDC entidade de investimento: sem come-cotas; cotas e caixa de F mantidos em 99." : "Partes independentes: não se apresenta um grupo econômico comum.") : events[step]) : group ? ["D e T: empresas do mesmo grupo, com beneficiário econômico comum.", "T estrutura F; D será cedente e o grupo deterá integralmente as cotas.", "Contratos preparados. Recursos e recebíveis permanecem no grupo antes do aporte."][introStep] : ["D e T: beneficiários independentes.", "T estrutura F para adquirir créditos de D, parte independente.", "Contratos preparados entre partes independentes."][introStep]}</div><section class="all-reasons ${group && step >= 8 ? "aggregate-phase" : ""}"><h2>${group && step >= 8 ? (step === 11 ? "Desconsideração do FIDC" : step === 10 ? "IRRF Come cotas no FIDC" : step === 9 ? "Ajuste IRPJ/CSLL" : "Consolidação de Cedentes (D) e Cotistas (T)") : "Livros razão · Cotistas, Cedente e FIDC"}</h2><p class="reason-key">R$ milhões · <span class="debit-line">D: débito</span> · <span class="credit-line">C: crédito</span> · Linhas com lançamentos ou saldos alterados em relação à etapa anterior destacadas</p><div class="reason-stage-body"><div class="reserved-books">${renderReason(group && step >= 8, group && step >= 9, group, { step, introStep })}</div></div></section></article>`;
 }
 function taxGroupPanel() {
   const raw = document.getElementById("group-t-rate").value;
@@ -86,7 +80,6 @@ function render() {
   document.getElementById("num").textContent =
     introStep === null ? displayStage(step) : introStep + 1;
   document.getElementById("title").textContent = stageInfo[0];
-  document.getElementById("phase").textContent = introStep !== null ? "Preparação" : step <= 3 ? "Estruturação e cessão" : step <= 7 ? "Evolução da operação" : "Leitura econômica e fiscal";
   document.getElementById("description").textContent =
     introStep === null ? stageSummaries[step] || stageInfo[1] : stageInfo[1];
   document.getElementById("panels").innerHTML = panel(false) + panel(true);
@@ -107,7 +100,7 @@ function render() {
       .join("");
   groupAlternativeSteps();
   document.getElementById("prev").disabled = introStep === 0;
-  document.getElementById("next").disabled = introStep === null && step >= 10;
+  document.getElementById("next").disabled = introStep === null && step === stages.length - 1;
   document.getElementById("play").textContent = timer ? "Pausar" : "Reproduzir";
 }
 function pause() {
@@ -116,7 +109,7 @@ function pause() {
   render();
 }
 function start() {
-  if (step >= 10 && introStep === null) {
+  if (step === stages.length - 1 && introStep === null) {
     step = 0;
     introStep = 0;
   }
@@ -124,7 +117,7 @@ function start() {
     () => {
       advance();
       render();
-      if (step >= 10 && introStep === null) pause();
+      if (step === stages.length - 1 && introStep === null) pause();
     },
     Number(document.getElementById("speed").value),
   );
@@ -164,9 +157,6 @@ document.getElementById("steps").onclick = (e) => {
       step = Number(selected);
     }
     render();
-    if (!info) {
-      document.querySelector(intro !== undefined ? `[data-intro="${intro}"]` : `[data-step="${selected}"]`).focus({preventScroll: true});
-    }
     if (info) {
       document
         .querySelector(
@@ -205,30 +195,3 @@ document
   .querySelector(".group-tax-box")
   .addEventListener("toggle", () => requestAnimationFrame(fitLandscape));
 if (document.fonts) document.fonts.ready.then(fitLandscape);
-
-// View controls change presentation only; the accounting state is shared.
-document.getElementById("view-mode").onchange = e => {
-  document.body.dataset.view = e.target.value;
-  requestAnimationFrame(fitLandscape);
-};
-document.querySelector(".scenario-switch").onclick = e => {
-  const button = e.target.closest("[data-scenario]");
-  if (!button) return;
-  document.body.dataset.scenario = button.dataset.scenario;
-  for (const option of document.querySelectorAll(".scenario-switch button"))
-    option.setAttribute("aria-pressed", String(option === button));
-  requestAnimationFrame(fitLandscape);
-};
-document.getElementById("open-premises").onclick = () => {
-  if (timer) pause();
-  document.getElementById("premise-dialog").showModal();
-};
-document.addEventListener("keydown", e => {
-  if (document.getElementById("premise-dialog").open || e.altKey || e.ctrlKey || e.metaKey ||
-      e.target.closest("input, select, textarea, button, a")) return;
-  if (e.key === "ArrowRight" && !document.getElementById("next").disabled) {
-    e.preventDefault(); pause(); advance(); render();
-  } else if (e.key === "ArrowLeft") {
-    e.preventDefault(); pause(); retreat(); render();
-  }
-});

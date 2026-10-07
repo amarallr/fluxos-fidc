@@ -3,23 +3,18 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Fluxos do FIDC · Simulação contábil e tributária</title>
-    <meta name="description" content="Compare os fluxos de um FIDC entre partes independentes e empresas do mesmo grupo, com livros razão e premissas contábeis e tributárias por etapa." />
-    <link rel="stylesheet" href="assets/css/styles.css?v=f4d7cdda90e0" />
+    <title>Fluxos do FIDC</title>
+    <link rel="stylesheet" href="assets/css/styles.css?v=735b8af13247" />
   </head>
-  <body data-view="overview" data-scenario="both">
-    <a class="skip-link" href="#simulation">Ir para a simulação</a>
+  <body>
     <main>
       <header>
         <div>
-          <p class="eyebrow">LABORATÓRIO CONTÁBIL E TRIBUTÁRIO</p>
-          <h1>Fluxos do FIDC</h1>
-          <p class="intro">Uma operação, duas perspectivas. Acompanhe o dinheiro, os recebíveis e os efeitos nas cotas.</p>
+          <h1>Fluxos do FIDC <span class="draft-status">Simulação preliminar · DRAFT</span></h1>
         </div>
-        <div class="header-meta"><span class="draft-status">Simulação preliminar · DRAFT</span><span class="pill">Valores em R$ milhões</span></div>
+        <span class="pill">Valores em R$ milhões</span>
       </header>
       <section class="toolbar" aria-label="Controles da simulação">
-        <div class="toolbar-heading"><div><span class="eyebrow">PERCURSO DA OPERAÇÃO</span><p>Selecione uma etapa. Abra “i” para consultar suas premissas.</p></div><button id="open-premises" aria-haspopup="dialog" aria-controls="premise-dialog">Premissas e fontes ↗</button></div>
         <div class="controls">
           <button id="play">Reproduzir</button><button id="prev">Etapa anterior</button
           ><button id="next">Próxima etapa</button><button id="reset">Reiniciar</button
@@ -30,21 +25,17 @@
             <option value="7000">7,0 segundos</option>
           </select>
         </div>
-        <p class="route-note">12.a recompõe o IRPJ/CSLL. Depois, escolha 13 ou a alternativa 12.b; seus lançamentos não se acumulam.</p>
         <nav class="steps" id="steps" aria-label="Selecionar etapa"></nav>
       </section>
-      <section class="current" id="simulation" tabindex="-1" aria-live="polite">
+      <section class="current" aria-live="polite">
         <div class="number" id="num"></div>
         <div>
-          <span class="eyebrow" id="phase"></span><h2 id="title"></h2>
+          <h2 id="title"></h2>
           <p id="description"></p>
         </div>
       </section>
-      <section class="view-toolbar" aria-label="Apresentação dos cenários"><div class="scenario-switch" role="group" aria-label="Cenários visíveis"><button data-scenario="both" aria-pressed="true">Comparar A e B</button><button data-scenario="a" aria-pressed="false">A · Independentes</button><button data-scenario="b" aria-pressed="false">B · Mesmo grupo</button></div><label for="view-mode">Exibição <select id="view-mode"><option value="overview" selected>Uma tela · paisagem</option><option value="reading">Leitura confortável</option></select></label></section>
-      <div class="flow-legend" aria-label="Legenda do diagrama"><span><i class="swatch money-swatch"></i>Dinheiro</span><span><i class="swatch credit-swatch"></i>Direitos creditórios</span><span><i class="swatch quota-swatch"></i>Cotas e contratos</span><span>D = cedentes · T = cotistas · F = FIDC</span></div>
       <div class="workbench"><div class="panels" id="panels"></div></div>
-      <footer class="page-footer"><strong>Como interpretar</strong><p>O vínculo entre cedente e cotista não define, sozinho, o regime tributário do FIDC. O quadro D + T é uma agregação econômica com o fundo separado; não é uma demonstração consolidada pelo CPC 36.</p><span>Exemplo hipotético · consulte as premissas de cada etapa</span></footer>
-      <dialog id="premise-dialog" aria-label="Premissas e fontes da etapa">
+      <dialog id="premise-dialog">
         <button id="close-premises">Fechar</button>
         <section class="notes" aria-label="Leitura econômica e hipótese tributária">
           <p class="draft-note">
@@ -463,6 +454,6 @@
         </details>
       </dialog>
     </main>
-    <script type="module" src="assets/js/app.js?v=d61e39e2affd"></script>
+    <script type="module" src="assets/js/app.js?v=ea92c02ca82b"></script>
   </body>
 </html>

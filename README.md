@@ -19,9 +19,7 @@ A página usa HTML, CSS e módulos nativos de JavaScript, sem framework, banco d
 
 ## Leiaute e navegação
 
-O padrão no computador em paisagem é **Uma tela · paisagem**: menu, diagramas, indicadores e livros razão são ajustados proporcionalmente para caber em uma única tela. Compare A e B ou selecione apenas um cenário. A opção **Leitura confortável** usa rolagem vertical, sem escala automática. Em telas menores os painéis são empilhados.
-
-Selecione uma etapa pelo menu e abra **i** ou **Premissas e fontes** para consultar o detalhamento. Os indicadores mostram caixa do FIDC, investimento em cotas nos registros individuais de T e resultado acumulado do FIDC, em R$ milhões. A reprodução termina em 13. A alternativa **12.b** é selecionada diretamente; seu botão **Etapa anterior** retorna a 12.a.
+No computador em paisagem, o menu tem 13 colunas, com 13 acima de 12.b e a simulação se ajusta à página. A numeração começa em 1 (Beneficiários), seguida de Constituição e Contratos. Os livros razão e diagramas usam a mesma numeração. Explicações detalhadas estão em nos ícones de informação de cada etapa.
 
 ## Etapas finais
 
