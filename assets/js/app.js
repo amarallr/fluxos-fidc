@@ -1,7 +1,7 @@
 /** Estado de navegação, controles e composição da página. */
 import { stages, displayStage, menuLabels, constitutionStages, economicReadings } from "./data.js?v=24091f3dc908";
 import { taxGroup } from "./accounting.js?v=140a3a046e39";
-import { graphic } from "./diagram.js?v=b83e40334fdd";
+import { graphic } from "./diagram.js?v=f0476001de8a";
 import { renderReason } from "./ledger.js?v=238e5b398701";
 import { compactLedgerNotes } from "./information.js?v=7a42f4596a1b";
 import { fitLandscape } from "./layout.js?v=d4db82a7ff41";

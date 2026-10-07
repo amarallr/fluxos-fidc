@@ -177,6 +177,18 @@ svg text {
 .money {
   stroke: var(--blue);
 }
+/* Emphasize the administrator's IRRF remittance to the Treasury at stage 13. */
+.payment-emphasis {
+  fill: none;
+  stroke: #ffedbd;
+  stroke-width: 18;
+  stroke-linecap: round;
+}
+.flow.tax-payment {
+  stroke-width: 7;
+  stroke-dasharray: none;
+  animation: none;
+}
 .credit {
   stroke: var(--gold);
 }
