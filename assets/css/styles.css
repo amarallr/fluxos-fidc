@@ -2323,3 +2323,11 @@ header h1 {
     grid-row: 2;
   }
 }
+
+/* Link acessível à documentação, alinhado ao indicador sem criar uma nova faixa. */
+.header-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+.readme-link { display: inline-flex; align-items: center; border: 1px solid #b7c8d7; border-radius: 8px; padding: 5px 10px; background: #fff; color: var(--ink); font-size: 14px; font-weight: 600; text-decoration: none; white-space: nowrap; }
+.readme-link:hover { background: #e7f0f8; text-decoration: underline; }
+.readme-link:focus-visible { outline: 3px solid #459bdc; outline-offset: 2px; }
+@media (max-width: 650px) { .header-actions { gap: 6px; } .readme-link { font-size: 12px; padding: 4px 7px; } }
+@media print { .readme-link { display: none; } }
